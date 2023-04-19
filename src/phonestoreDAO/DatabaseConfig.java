@@ -13,11 +13,11 @@ import java.util.Properties;
  * @author duong
  */
 public class DatabaseConfig {
-    private String server;
-    private String database;
-    private String username;
-    private String password;
-    private int port;
+    private static String server;
+    private static String database;
+    private static String username;
+    private static String password;
+    private static int port;
 
     public DatabaseConfig(){
         

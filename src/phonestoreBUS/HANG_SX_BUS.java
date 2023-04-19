@@ -5,11 +5,12 @@
 package phonestoreBUS;
 import java.io.IOException;
 import java.util.ArrayList;
-import phonestoreDAO.ConfigReader;
 import phonestoreDAO.DatabaseConfig;
-import phonestoreDAO.HANG_SX_DAO;
+import phonestoreDAO.*;
 import ObjectData.Hang_SX;
 import java.sql.SQLException;
+import phonestoreDAO.Config;
+import phonestoreDAO.HANG_SX_DAO;
 /**
  *
  * @author duong
@@ -22,15 +23,12 @@ public class HANG_SX_BUS {
     static ArrayList<Hang_SX> hang_sx = new ArrayList<>();
     
     //khai báo DAO
-    HANG_SX_DAO dt = new HANG_SX_DAO();
+    HANG_SX_DAO hangsx = new HANG_SX_DAO();
     
+    //gọi từ khi mở window
     //lấy data hãng sản xuất đưa lên arraylist trung gian
     public void getHang_sx() throws SQLException{
-        
+        hang_sx = hangsx.readHANG_SX();
     }
-    
-    //lấy database config
-    public void getDBConfig(){
         
-    }
 }

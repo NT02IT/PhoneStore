@@ -28,13 +28,13 @@ public class HANG_SX_DAO {
         
     }
     
+    //lấy dữ liệu các hãng sx từ database và trả về 1 arraylist chứa các hãng sx
     public ArrayList readHANG_SX() throws SQLException{
         ArrayList<Hang_SX> hsx = new ArrayList<>();
         try {
             String sql = "Select * from HANG_SX";
-            DatabaseConfig cf = new DatabaseConfig();
-            cf.readConfig();
             MyConnection connect = new MyConnection();
+            DatabaseConfig cf = new DatabaseConfig();
             conn = connect.get(cf);
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -48,5 +48,5 @@ public class HANG_SX_DAO {
             Logger.getLogger(HANG_SX_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return hsx;
-    }
+    }   
 }

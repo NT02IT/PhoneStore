@@ -30,9 +30,6 @@ public class menuGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnConnect = new javax.swing.JButton();
-        btnHang_sx = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -40,47 +37,19 @@ public class menuGUI extends javax.swing.JFrame {
             }
         });
 
-        btnConnect.setText("Connect");
-        btnConnect.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConnectActionPerformed(evt);
-            }
-        });
-
-        btnHang_sx.setText("Hang_sx");
-        btnHang_sx.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHang_sxActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(252, 252, 252)
-                .addComponent(btnHang_sx)
-                .addGap(66, 66, 66)
-                .addComponent(btnConnect)
-                .addContainerGap(203, Short.MAX_VALUE))
+            .addGap(0, 671, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(237, 237, 237)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHang_sx)
-                    .addComponent(btnConnect))
-                .addContainerGap(213, Short.MAX_VALUE))
+            .addGap(0, 473, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConnectActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
@@ -91,11 +60,6 @@ public class menuGUI extends javax.swing.JFrame {
             Logger.getLogger(menuGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
-
-    private void btnHang_sxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHang_sxActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnHang_sxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,7 +97,5 @@ public class menuGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConnect;
-    private javax.swing.JButton btnHang_sx;
     // End of variables declaration//GEN-END:variables
 }
