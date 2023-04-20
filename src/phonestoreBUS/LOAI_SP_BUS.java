@@ -3,32 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package phonestoreBUS;
+
+import ObjectData.Loai_SP;
 import java.io.IOException;
 import java.util.ArrayList;
-import phonestoreDAO.DatabaseConfig;
-import phonestoreDAO.*;
-import ObjectData.Hang_SX;
-import java.sql.SQLException;
-import phonestoreDAO.Config;
-import phonestoreDAO.HANG_SX_DAO;
+import phonestoreDAO.LOAI_SP_DAO;
+
 /**
  *
  * @author duong
  */
-public class HANG_SX_BUS {
-    public HANG_SX_BUS(){
+public class LOAI_SP_BUS {
+    public LOAI_SP_BUS(){
         
     }
+    
     //khai báo arraylist trung gian, lưu trữ dữ liệu để thực hiện truy xuất mà ko cần load database
-    static ArrayList<Hang_SX> hang_sx = new ArrayList<>();
+    static ArrayList<Loai_SP> loai_sp = new ArrayList<>();
     
     //khai báo DAO
-    HANG_SX_DAO hangsx = new HANG_SX_DAO();
+    LOAI_SP_DAO loaisp = new LOAI_SP_DAO();
     
     //gọi từ khi mở window
     //lấy data hãng sản xuất đưa lên arraylist trung gian
-    public void getHang_sx() throws SQLException{
-        hang_sx = hangsx.readHANG_SX();
+    public void getLoai_sp() throws IOException{
+        loai_sp = loaisp.readLOAI_SP();
     }
-        
 }

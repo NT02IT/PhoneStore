@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  *
  * @author duong
  */
+//hàm addconfig sẽ đọc và lưu các config vào đối tượng DatabaseConfig
 public class Config {
     public void AddConfig(){
         try {

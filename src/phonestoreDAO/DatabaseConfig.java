@@ -13,6 +13,7 @@ import java.util.Properties;
  * @author duong
  */
 public class DatabaseConfig {
+    //các đối tượng config
     private static String server;
     private static String database;
     private static String username;
@@ -23,8 +24,9 @@ public class DatabaseConfig {
         
     }
     
+    //hàm đọc các config sql server từ file txt
     public void readConfig() throws IOException {
-        String filename = "E:\\Studying_files\\Java\\PhoneStore\\src\\phonestoreDAO\\server.txt";
+        String filename = "E:\\Studying_files\\Java\\PhoneStore\\src\\phonestoreDAO\\server.txt";//đường dẫn đến file txt
         
         Properties properties = new Properties();
         properties.load(new FileReader(filename));
