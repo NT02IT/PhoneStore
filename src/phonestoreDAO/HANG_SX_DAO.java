@@ -4,7 +4,7 @@
  */
 package phonestoreDAO;
 
-import ObjectData.Hang_SX;
+import DTO.Hang_SX;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;

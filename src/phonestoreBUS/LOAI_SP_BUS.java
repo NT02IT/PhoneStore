@@ -4,7 +4,7 @@
  */
 package phonestoreBUS;
 
-import ObjectData.Loai_SP;
+import DTO.Loai_SP;
 import java.io.IOException;
 import java.util.ArrayList;
 import phonestoreDAO.LOAI_SP_DAO;

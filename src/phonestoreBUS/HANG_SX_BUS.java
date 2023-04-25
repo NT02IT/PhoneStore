@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import phonestoreDAO.DatabaseConfig;
 import phonestoreDAO.*;
-import ObjectData.Hang_SX;
+import DTO.Hang_SX;
 import java.sql.SQLException;
 import phonestoreDAO.Config;
 import phonestoreDAO.HANG_SX_DAO;

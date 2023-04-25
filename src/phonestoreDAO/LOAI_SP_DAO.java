@@ -5,7 +5,7 @@
 package phonestoreDAO;
 
 import phonestoreDAO.DatabaseConfig;
-import ObjectData.Loai_SP;
+import DTO.Loai_SP;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
