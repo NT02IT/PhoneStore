@@ -5,30 +5,29 @@
 package phonestoreBUS;
 import java.io.IOException;
 import java.util.ArrayList;
-import phonestoreDAO.DatabaseConfig;
 import phonestoreDAO.*;
 import DTO.Hang_SX;
 import java.sql.SQLException;
-import phonestoreDAO.Config;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import phonestoreDAO.HANG_SX_DAO;
 /**
  *
  * @author duong
  */
 public class HANG_SX_BUS {
+    private ArrayList<Hang_SX> listHang;
+    private HANG_SX_DAO hangsx_DAO = new HANG_SX_DAO();
+       
     public HANG_SX_BUS(){
-        
+        readHANG_SX_BUS();
     }
-    //khai báo arraylist trung gian, lưu trữ dữ liệu để thực hiện truy xuất mà ko cần load database
-    static ArrayList<Hang_SX> hang_sx = new ArrayList<>();
     
-    //khai báo DAO
-    HANG_SX_DAO hangsx = new HANG_SX_DAO();
-    
-    //gọi từ khi mở window
-    //lấy data hãng sản xuất đưa lên arraylist trung gian
-    public void getHang_sx() throws SQLException{
-        hang_sx = hangsx.readHANG_SX();
+    public void readHANG_SX_BUS(){
+        try {
+            this.listHang = hangsx_DAO.readHANG_SX();
+        } catch (SQLException ex) {
+            Logger.getLogger(HANG_SX_BUS.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-        
 }

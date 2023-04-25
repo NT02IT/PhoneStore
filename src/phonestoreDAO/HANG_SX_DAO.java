@@ -20,9 +20,6 @@ import java.util.logging.Logger;
  * @author duong
  */
 public class HANG_SX_DAO {
-    private Connection conn = null;
-    private Statement stmt = null;
-    private ResultSet rs = null;
     
     public HANG_SX_DAO(){
         
@@ -31,21 +28,14 @@ public class HANG_SX_DAO {
     //lấy dữ liệu các hãng sx từ database và trả về 1 arraylist chứa các hãng sx
     public ArrayList readHANG_SX() throws SQLException{
         ArrayList<Hang_SX> hsx = new ArrayList<>();
-        try {
-            String sql = "Select * from HANG_SX";
-            MyConnection connect = new MyConnection();
-            DatabaseConfig cf = new DatabaseConfig();
-            conn = connect.get(cf);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                Hang_SX data = new Hang_SX();
-                data.setMaHang(rs.getString("MaHang"));
-                data.setTenHang(rs.getString("TenHang"));
-                hsx.add(data);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(HANG_SX_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        String sql = "Select * from HANG_SX";
+        Statement stmt = MyConnection.conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            Hang_SX data = new Hang_SX();
+            data.setMaHang(rs.getString("MaHang"));
+            data.setTenHang(rs.getString("TenHang"));
+            hsx.add(data);
         }
         return hsx;
     }   

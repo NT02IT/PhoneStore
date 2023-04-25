@@ -4,7 +4,6 @@
  */
 package phonestoreDAO;
 
-import phonestoreDAO.DatabaseConfig;
 import DTO.Loai_SP;
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,9 +19,6 @@ import java.util.logging.Logger;
  * @author duong
  */
 public class LOAI_SP_DAO {
-    private Connection conn = null;
-    private Statement stmt = null;
-    private ResultSet rs = null;
     
     public LOAI_SP_DAO(){
         
@@ -33,11 +29,8 @@ public class LOAI_SP_DAO {
         ArrayList<Loai_SP> loai_sp = new ArrayList<>();
         try {
             String sql = "Select * from LOAI_SP";
-            MyConnection connect = new MyConnection();
-            DatabaseConfig cf = new DatabaseConfig();
-            conn = connect.get(cf);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
+            Statement stmt = MyConnection.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
                 Loai_SP loaisp = new Loai_SP();
                 loaisp.setMaLoai(rs.getString("MaLoai"));

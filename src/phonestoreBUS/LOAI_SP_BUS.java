@@ -7,6 +7,8 @@ package phonestoreBUS;
 import DTO.Loai_SP;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import phonestoreDAO.LOAI_SP_DAO;
 
 /**
@@ -14,19 +16,18 @@ import phonestoreDAO.LOAI_SP_DAO;
  * @author duong
  */
 public class LOAI_SP_BUS {
+    private ArrayList<Loai_SP> listLoaisp;
+    private LOAI_SP_DAO loaisp_DAO = new LOAI_SP_DAO();
+    
     public LOAI_SP_BUS(){
-        
+        readLOAI_SP_BUS();
     }
     
-    //khai báo arraylist trung gian, lưu trữ dữ liệu để thực hiện truy xuất mà ko cần load database
-    static ArrayList<Loai_SP> loai_sp = new ArrayList<>();
-    
-    //khai báo DAO
-    LOAI_SP_DAO loaisp = new LOAI_SP_DAO();
-    
-    //gọi từ khi mở window
-    //lấy data hãng sản xuất đưa lên arraylist trung gian
-    public void getLoai_sp() throws IOException{
-        loai_sp = loaisp.readLOAI_SP();
+    public void readLOAI_SP_BUS(){
+        try {
+            this.listLoaisp = loaisp_DAO.readLOAI_SP();
+        } catch (IOException ex) {
+            Logger.getLogger(LOAI_SP_BUS.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
