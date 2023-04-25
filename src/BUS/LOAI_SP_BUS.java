@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package phonestoreBUS;
+package BUS;
 
 import DTO.Loai_SP;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import phonestoreDAO.LOAI_SP_DAO;
+import DAO.LOAI_SP_DAO;
 
 /**
  *
