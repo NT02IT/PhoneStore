@@ -34,12 +34,10 @@ public class MyConnection {
         } catch (IOException ex) {
             Logger.getLogger(MyConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
-    public void readConfig() throws IOException {
-        String filename = "E:\\Studying_files\\Java\\PhoneStore\\src\\phonestoreDAO\\server.txt";//đường dẫn đến file txt
-        
+    private static void readConfig() throws IOException {
+        String filename = "src\\DAO\\server.txt"; //đường dẫn đến file txt
         Properties properties = new Properties();
         properties.load(new FileReader(filename));
         server = properties.getProperty("server");
