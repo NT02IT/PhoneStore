@@ -10,12 +10,12 @@ package DTO;
  */
 public class NhanVien {
     private static int soLuongNV = 0;
-    private int maNV, luong; // luong/thang
-    private String ten, hoLot, diaChi;
+    private int luong; // luong/thang
+    private String maNV, ten, hoLot, diaChi;
 
     public NhanVien() {
         soLuongNV++;
-        maNV += 1000 + soLuongNV;
+        maNV = "NV" + soLuongNV;
     }
 
     public NhanVien(int luong, String ten, String hoLot, String diaChi) {
@@ -24,14 +24,14 @@ public class NhanVien {
         this.hoLot = hoLot;
         this.diaChi = diaChi;
         soLuongNV++;
-        maNV += 1000 + soLuongNV;
+        maNV = "NV" + soLuongNV;
     }
 
     public static int getSoLuongNV() {
         return soLuongNV;
     }
 
-    public int getMaNV() {
+    public String getMaNV() {
         return maNV;
     }
 
@@ -51,7 +51,7 @@ public class NhanVien {
         return diaChi;
     }
 
-    public void setMaNV(int maNV) {
+    public void setMaNV(String maNV) {
         this.maNV = maNV;
     }
 

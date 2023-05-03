@@ -10,12 +10,11 @@ package DTO;
  */
 public class Loai_SP {
     private static int soLuongLoai = 0;
-    private int maLoai;
-    private String tenLoai;
+    private String maLoai, tenLoai;
 
     public Loai_SP() {
         soLuongLoai++;
-        maLoai += 100 + soLuongLoai;
+        maLoai = "ML" + soLuongLoai;
     }
 
     public Loai_SP(String tenLoai) {
@@ -28,7 +27,7 @@ public class Loai_SP {
         return soLuongLoai;
     }
 
-    public int getMaLoai() {
+    public String getMaLoai() {
         return maLoai;
     }
 
@@ -36,7 +35,7 @@ public class Loai_SP {
         return tenLoai;
     }
 
-    public void setMaLoai(int maLoai) {
+    public void setMaLoai(String maLoai) {
         this.maLoai = maLoai;
     }
 

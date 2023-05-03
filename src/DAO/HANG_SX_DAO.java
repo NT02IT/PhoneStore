@@ -33,7 +33,7 @@ public class HANG_SX_DAO {
         ResultSet rs = stmt.executeQuery(sql);
         while(rs.next()){
             Hang_SX data = new Hang_SX();
-            data.setMaHang(Integer.parseInt(rs.getString("MaHang")));
+            data.setMaHang(rs.getString("MaHang"));
             data.setTenHang(rs.getString("TenHang"));
             hsx.add(data);
         }

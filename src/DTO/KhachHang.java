@@ -10,7 +10,7 @@ package DTO;
  */
 public class KhachHang {
     private static int soLuongKH = 0;
-    private int maKH;
+    private String maKH;
     private String hoLot;
     private String ten;
     private String diaChi;
@@ -20,7 +20,7 @@ public class KhachHang {
     
     public KhachHang() {
         soLuongKH++;
-        maKH += 100 + soLuongKH;
+        maKH = "KH" + soLuongKH;
     }
 
     public KhachHang(String hoLot, String ten, String diaChi, String SDT, String username, String pass) {
@@ -38,7 +38,7 @@ public class KhachHang {
         return soLuongKH;
     }
 
-    public int getMaKH() {
+    public String getMaKH() {
         return maKH;
     }
 
@@ -66,7 +66,7 @@ public class KhachHang {
         return pass;
     }
 
-    public void setMaKH(int maKH) {
+    public void setMaKH(String maKH) {
         this.maKH = maKH;
     }
 

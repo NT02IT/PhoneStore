@@ -10,12 +10,12 @@ package DTO;
  */
 public class SanPham {
     private static int tongSLhang = 0; // Không kể loại sản phẩm 
-    private int maSP, soLuong, donGia, maLoai;
-    private String tenSP, donViTinh;
+    private int soLuong, donGia, maLoai;
+    private String maSP, tenSP, donViTinh;
 
     public SanPham() {
         tongSLhang++;
-        maSP += 10000 + tongSLhang;
+        maSP = "SP" + tongSLhang;
     }
 
     public SanPham(int soLuong, int donGia, int maLoai, String tenSP, String donViTinh) {
@@ -25,14 +25,14 @@ public class SanPham {
         this.tenSP = tenSP;
         this.donViTinh = donViTinh;
         tongSLhang++;
-        maSP += 10000 + tongSLhang;
+        maSP = "SP" + tongSLhang;
     }
 
     public static int getTongSLhang() {
         return tongSLhang;
     }
 
-    public int getMaSP() {
+    public String getMaSP() {
         return maSP;
     }
 
@@ -56,7 +56,7 @@ public class SanPham {
         return donViTinh;
     }
 
-    public void setMaSP(int maSP) {
+    public void setMaSP(String maSP) {
         this.maSP = maSP;
     }
 

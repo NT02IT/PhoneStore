@@ -10,12 +10,12 @@ package DTO;
  */
 public class PhieuNhap {
     private static int soLuongPN = 0;
-    private int maPN, tongTien, maNCC, maNV;
-    private String ngayLap;
+    private int tongTien, maNCC, maNV;
+    private String maPN, ngayLap;
 
     public PhieuNhap() {
         soLuongPN++;
-        maPN += 1000 + soLuongPN;
+        maPN = "PN" + soLuongPN;
     }
 
     public PhieuNhap(int tongTien, int maNCC, int maNV, String ngayLap) {
@@ -24,14 +24,14 @@ public class PhieuNhap {
         this.maNV = maNV;
         this.ngayLap = ngayLap;
         soLuongPN++;
-        maPN += 1000 + soLuongPN;
+        maPN = "PN" + soLuongPN;
     }
 
     public static int getSoLuongPN() {
         return soLuongPN;
     }
 
-    public int getMaPN() {
+    public String getMaPN() {
         return maPN;
     }
 
@@ -51,7 +51,7 @@ public class PhieuNhap {
         return ngayLap;
     }
 
-    public void setMaPN(int maPN) {
+    public void setMaPN(String maPN) {
         this.maPN = maPN;
     }
 

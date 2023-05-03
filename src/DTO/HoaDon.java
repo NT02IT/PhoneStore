@@ -10,15 +10,15 @@ package DTO;
  */
 public class HoaDon {
     private static int soLuongHD = 0;
-    private int maHD, maNV, maKH, tongTien, tienGiam, conLai; // conLai = tongTien - tienGiam
-    private String ngayLap;
+    private int tongTien, tienGiam, conLai; // conLai = tongTien - tienGiam
+    private String maHD, maNV, maKH, ngayLap;
 
     public HoaDon() {
         soLuongHD++;
-        maHD += 1000 + soLuongHD;
+        maHD = "HD00" + soLuongHD;
     }
 
-    public HoaDon(int maNV, int maKH, int tongTien, int tienGiam, String ngayLap) {
+    public HoaDon(String maNV, String maKH, int tongTien, int tienGiam, String ngayLap) {
         this.maNV = maNV;
         this.maKH = maKH;
         this.tongTien = tongTien;
@@ -26,22 +26,22 @@ public class HoaDon {
         this.ngayLap = ngayLap;
         this.conLai = tongTien - tienGiam;
         soLuongHD++;
-        maHD += 1000 + soLuongHD;
+        maHD = "HD00" + soLuongHD;
     }
 
     public static int getSoLuongHD() {
         return soLuongHD;
     }
         
-    public int getMaHD() {
+    public String getMaHD() {
         return maHD;
     }
 
-    public int getMaNV() {
+    public String getMaNV() {
         return maNV;
     }
 
-    public int getMaKH() {
+    public String getMaKH() {
         return maKH;
     }
 
@@ -61,15 +61,15 @@ public class HoaDon {
         return ngayLap;
     }
 
-    public void setMaHD(int maHD) {
+    public void setMaHD(String maHD) {
         this.maHD = maHD;
     }
 
-    public void setMaNV(int maNV) {
+    public void setMaNV(String maNV) {
         this.maNV = maNV;
     }
 
-    public void setMaKH(int maKH) {
+    public void setMaKH(String maKH) {
         this.maKH = maKH;
     }
 

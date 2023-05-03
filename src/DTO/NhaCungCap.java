@@ -10,12 +10,11 @@ package DTO;
  */
 public class NhaCungCap {
     private static int soLuongNCC = 0;
-    private int maNCC;
-    private String tenNCC, diaChi, SDT;
+    private String maNCC, tenNCC, diaChi, SDT;
 
     public NhaCungCap() {
         soLuongNCC++;
-        maNCC += 100 + soLuongNCC;
+        maNCC = "NCC" + soLuongNCC;
     }
 
     public NhaCungCap(String tenNCC, String diaChi, String SDT) {
@@ -23,14 +22,14 @@ public class NhaCungCap {
         this.diaChi = diaChi;
         this.SDT = SDT;
         soLuongNCC++;
-        maNCC += 100 + soLuongNCC;
+        maNCC = "NCC" + soLuongNCC;
     }  
 
     public static int getSoLuongNCC() {
         return soLuongNCC;
     }
 
-    public int getMaNCC() {
+    public String getMaNCC() {
         return maNCC;
     }
 
@@ -46,7 +45,7 @@ public class NhaCungCap {
         return SDT;
     }
 
-    public void setMaNCC(int maNCC) {
+    public void setMaNCC(String maNCC) {
         this.maNCC = maNCC;
     }
 

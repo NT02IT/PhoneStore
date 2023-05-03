@@ -10,24 +10,23 @@ package DTO;
  */
 public class Hang_SX {
     private static int soHangSX = 0;
-    private int maHang;
-    private String tenHang;
+    private String maHang, tenHang;
 
     public Hang_SX(String tenHang) {
         soHangSX++;
-        maHang += 100 + soHangSX;
+        maHang = "MH" + soHangSX;
         this.tenHang = tenHang;
     }
     public Hang_SX(){
         soHangSX++;
-        maHang += 100 + soHangSX;
+        maHang = "MH" + soHangSX;
     }
 
     public static int getSoHangSX() {
         return soHangSX;
     }
 
-    public int getMaHang() {
+    public String getMaHang() {
         return maHang;
     }
 
@@ -35,7 +34,7 @@ public class Hang_SX {
         return tenHang;
     }
 
-    public void setMaHang(int maHang) {
+    public void setMaHang(String maHang) {
         this.maHang = maHang;
     }
 
