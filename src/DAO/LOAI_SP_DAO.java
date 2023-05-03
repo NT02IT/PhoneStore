@@ -33,7 +33,7 @@ public class LOAI_SP_DAO {
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
                 Loai_SP loaisp = new Loai_SP();
-                loaisp.setMaLoai(rs.getString("MaLoai"));
+                loaisp.setMaLoai(Integer.parseInt(rs.getString("MaLoai")));
                 loaisp.setTenLoai(rs.getString("TenLoai"));
                 loai_sp.add(loaisp);
             }

@@ -1,2 +1,5 @@
 /nbproject/private/
 /build/
+/test/
+/src/DAO/testConn.java
+/dist/

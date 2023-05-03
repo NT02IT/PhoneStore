@@ -31,8 +31,10 @@ public class MyConnection {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String strConnect = "jdbc:sqlserver://"+server+":1433;databaseName="+database+";user="+username+";password="+password+";encrypt=true;trustServerCertificate=true";
             conn = DriverManager.getConnection(strConnect);
+            // System.out.print("Ket noi DB thanh cong");
         } catch (IOException ex) {
             Logger.getLogger(MyConnection.class.getName()).log(Level.SEVERE, null, ex);
+            // System.out.print("Ket noi DB that bai");
         }
     }
     

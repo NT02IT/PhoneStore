@@ -123,10 +123,15 @@ CREATE TABLE KHACHHANG (
 	DiaChi varchar(20) not null,
 	SDT varchar(10) not null
 )
+GO
+ALTER TABLE KHACHHANG
+	ADD Username VARCHAR(50) not null,
+	    Pass VARCHAR(50) not null;
 
 -- 
 -- Đổ dữ liệu cho bảng KHACHHANG
 --
+
 
 
 

@@ -9,32 +9,39 @@ package DTO;
  * @author duong
  */
 public class Loai_SP {
-    private String MaLoai;
-    private String TenLoai;
+    private static int soLuongLoai = 0;
+    private int maLoai;
+    private String tenLoai;
 
     public Loai_SP() {
+        soLuongLoai++;
+        maLoai += 100 + soLuongLoai;
     }
 
-    public Loai_SP(String MaLoai, String TenLoai) {
-        this.MaLoai = MaLoai;
-        this.TenLoai = TenLoai;
+    public Loai_SP(String tenLoai) {
+        this.tenLoai = tenLoai;
+        soLuongLoai++;
+        maLoai += 100 + soLuongLoai;
     }
 
-    public String getMaLoai() {
-        return MaLoai;
+    public int getSoLuongLoai() {
+        return soLuongLoai;
     }
 
-    public void setMaLoai(String MaLoai) {
-        this.MaLoai = MaLoai;
+    public int getMaLoai() {
+        return maLoai;
     }
 
     public String getTenLoai() {
-        return TenLoai;
+        return tenLoai;
     }
 
-    public void setTenLoai(String TenLoai) {
-        this.TenLoai = TenLoai;
+    public void setMaLoai(int maLoai) {
+        this.maLoai = maLoai;
     }
-    
+
+    public void setTenLoai(String tenLoai) {
+        this.tenLoai = tenLoai;
+    }    
     
 }

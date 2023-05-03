@@ -9,31 +9,38 @@ package DTO;
  * @author duong
  */
 public class Hang_SX {
-    private String MaHang;
-    private String TenHang;
+    private static int soHangSX = 0;
+    private int maHang;
+    private String tenHang;
 
-    public Hang_SX(String MaHang, String TenHang) {
-        this.MaHang = MaHang;
-        this.TenHang = TenHang;
+    public Hang_SX(String tenHang) {
+        soHangSX++;
+        maHang += 100 + soHangSX;
+        this.tenHang = tenHang;
     }
     public Hang_SX(){
-        
+        soHangSX++;
+        maHang += 100 + soHangSX;
     }
 
-    public String getMaHang() {
-        return MaHang;
+    public static int getSoHangSX() {
+        return soHangSX;
     }
 
-    public void setMaHang(String MaHang) {
-        this.MaHang = MaHang;
+    public int getMaHang() {
+        return maHang;
     }
 
     public String getTenHang() {
-        return TenHang;
+        return tenHang;
     }
 
-    public void setTenHang(String TenHang) {
-        this.TenHang = TenHang;
+    public void setMaHang(int maHang) {
+        this.maHang = maHang;
+    }
+
+    public void setTenHang(String tenHang) {
+        this.tenHang = tenHang;
     }
     
 }
