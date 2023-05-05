@@ -11,7 +11,7 @@ package DTO;
 public class SanPham {
     private static int tongSLhang = 0; // Không kể loại sản phẩm 
     private int soLuong, donGia;
-    private String maSP, tenSP, donViTinh, maLoai;
+    private String maSP, maLoai, tenSP, donViTinh;
 
     public SanPham() {
         tongSLhang++;
