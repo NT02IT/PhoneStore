@@ -179,6 +179,10 @@ CREATE TABLE NHANVIEN (
 	SDT varchar(10) not null,
 	Luong int not null
 )
+GO
+ALTER TABLE NHANVIEN
+	ADD Username VARCHAR(50) not null,
+	    Pass VARCHAR(50) not null;
 
 --
 -- Đổ dữ liệu cho bảng NHANVIEN

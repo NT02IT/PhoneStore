@@ -11,18 +11,20 @@ package DTO;
 public class NhanVien {
     private static int soLuongNV = 0;
     private int luong; // luong/thang
-    private String maNV, ten, hoLot, diaChi;
+    private String maNV, ten, hoLot, diaChi, username, pass;
 
     public NhanVien() {
         soLuongNV++;
         maNV = "NV" + soLuongNV;
     }
 
-    public NhanVien(int luong, String ten, String hoLot, String diaChi) {
+    public NhanVien(int luong, String ten, String hoLot, String diaChi, String username, String pass) {
         this.luong = luong;
         this.ten = ten;
         this.hoLot = hoLot;
         this.diaChi = diaChi;
+        this.username = username;
+        this.pass = pass;
         soLuongNV++;
         maNV = "NV" + soLuongNV;
     }
@@ -51,6 +53,14 @@ public class NhanVien {
         return diaChi;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
     public void setMaNV(String maNV) {
         this.maNV = maNV;
     }
@@ -69,6 +79,14 @@ public class NhanVien {
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
     
 }
