@@ -34,7 +34,8 @@ public class SanPham_DAO {
                 sp.setSoLuong(rs.getInt("SoLuong"));
                 sp.setDonGia(rs.getInt("DonGia"));
                 sp.setDonViTinh(rs.getString("DonViTinh"));
-                sp.setMaLoai(rs.getInt("MaLoai"));
+                sp.setMaLoai(rs.getString("MaLoai"));
+                sanpham.add(sp);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SanPham_DAO.class.getName()).log(Level.SEVERE, null, ex);
