@@ -10,15 +10,15 @@ package DTO;
  */
 public class SanPham {
     private static int tongSLhang = 0; // Không kể loại sản phẩm 
-    private int soLuong, donGia, maLoai;
-    private String maSP, tenSP, donViTinh;
+    private int soLuong, donGia;
+    private String maSP, maLoai, tenSP, donViTinh;
 
     public SanPham() {
         tongSLhang++;
         maSP = "SP" + tongSLhang;
     }
 
-    public SanPham(int soLuong, int donGia, int maLoai, String tenSP, String donViTinh) {
+    public SanPham(int soLuong, int donGia, String maLoai, String tenSP, String donViTinh) {
         this.soLuong = soLuong;
         this.donGia = donGia;
         this.maLoai = maLoai;
@@ -44,7 +44,7 @@ public class SanPham {
         return donGia;
     }
 
-    public int getMaLoai() {
+    public String getMaLoai() {
         return maLoai;
     }
 
@@ -68,7 +68,7 @@ public class SanPham {
         this.donGia = donGia;
     }
 
-    public void setMaLoai(int maLoai) {
+    public void setMaLoai(String maLoai) {
         this.maLoai = maLoai;
     }
 
