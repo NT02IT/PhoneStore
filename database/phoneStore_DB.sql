@@ -212,7 +212,7 @@ CREATE TABLE SANPHAM (
 	SoLuong int not null,
 	DonGia int not null,
 	DonViTinh varchar(10) not null,
-	MaLoai varchar(10) not null
+	MaLoai int not null
 )	
 
 --
