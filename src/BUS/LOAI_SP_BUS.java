@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import DAO.LOAI_SP_DAO;
+import DAO.LoaiSanPhamDAO;
 
 /**
  *
@@ -17,7 +17,7 @@ import DAO.LOAI_SP_DAO;
  */
 public class LOAI_SP_BUS {
     private ArrayList<Loai_SP> listLoaisp;
-    private LOAI_SP_DAO loaisp_DAO = new LOAI_SP_DAO();
+    private LoaiSanPhamDAO loaisp_DAO = new LoaiSanPhamDAO();
     
     public LOAI_SP_BUS(){
         readLOAI_SP_BUS();

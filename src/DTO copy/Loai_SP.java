@@ -4,23 +4,27 @@
  */
 package DTO;
 
-import java.io.IOException;
-
 /**
  *
  * @author duong
  */
-public class Loai_SP{
+public class Loai_SP {
+    private static int soLuongLoai = 0;
     private String maLoai, tenLoai;
-    DataTranferFor dt = new DataTranferFor("loaisp");
 
-    public Loai_SP() throws IOException {
-        maLoai = "ML" + dt.getMaxID();
+    public Loai_SP() {
+        soLuongLoai++;
+        maLoai = "ML" + soLuongLoai;
     }
 
-    public Loai_SP(String tenLoai) throws IOException {
+    public Loai_SP(String tenLoai) {
         this.tenLoai = tenLoai;
-        maLoai = "ML" + dt.getMaxID();
+        soLuongLoai++;
+        maLoai += 100 + soLuongLoai;
+    }
+
+    public int getSoLuongLoai() {
+        return soLuongLoai;
     }
 
     public String getMaLoai() {

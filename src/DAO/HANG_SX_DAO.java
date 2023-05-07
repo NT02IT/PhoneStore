@@ -26,7 +26,7 @@ public class HANG_SX_DAO {
     }
     
     //lấy dữ liệu các hãng sx từ database và trả về 1 arraylist chứa các hãng sx
-    public ArrayList readHANG_SX() throws SQLException{
+    public ArrayList readHANG_SX() throws SQLException, IOException{
         ArrayList<Hang_SX> hsx = new ArrayList<>();
         String sql = "Select * from HANG_SX";
         Statement stmt = MyConnection.conn.createStatement();

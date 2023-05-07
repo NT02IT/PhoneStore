@@ -4,27 +4,31 @@
  */
 package DTO;
 
-import java.io.IOException;
-
 /**
  *
  * @author agond
  */
-public class PhieuNhap{
+public class PhieuNhap {
+    private static int soLuongPN = 0;
     private int tongTien, maNCC, maNV;
     private String maPN, ngayLap;
-    DataTranferFor dt = new DataTranferFor("phieunhap");
 
-    public PhieuNhap() throws IOException {
-        maPN = "PN" + dt.getMaxID();
+    public PhieuNhap() {
+        soLuongPN++;
+        maPN = "PN" + soLuongPN;
     }
 
-    public PhieuNhap(int tongTien, int maNCC, int maNV, String ngayLap) throws IOException {
+    public PhieuNhap(int tongTien, int maNCC, int maNV, String ngayLap) {
         this.tongTien = tongTien;
         this.maNCC = maNCC;
         this.maNV = maNV;
         this.ngayLap = ngayLap;
-        maPN = "PN" + dt.getMaxID();
+        soLuongPN++;
+        maPN = "PN" + soLuongPN;
+    }
+
+    public static int getSoLuongPN() {
+        return soLuongPN;
     }
 
     public String getMaPN() {
