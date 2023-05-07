@@ -5,7 +5,9 @@
 package BUS;
 
 import DTO.SanPham;
-import DAO.SanPham_DAO;
+import DAO.SanPhamDAO;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 /**
  *
@@ -13,13 +15,14 @@ import java.util.ArrayList;
  */
 public class SanPham_BUS {
     private ArrayList <SanPham> sanpham;
-    private SanPham_DAO sanpham_DAO = new SanPham_DAO();
+    private SanPhamDAO sanpham_DAO;
     
-    public SanPham_BUS(){
+    public SanPham_BUS() throws IOException, ClassNotFoundException, SQLException{
+        this.sanpham_DAO = new SanPhamDAO();
         readSANPHAM_BUS();
     }
     
-    public void readSANPHAM_BUS(){
+    public void readSANPHAM_BUS() throws IOException{
         this.sanpham = sanpham_DAO.readSANPHAM();
     }
 }

@@ -4,8 +4,6 @@
  */
 package DTO;
 
-import java.io.IOException;
-
 /**
  *
  * @author agond
@@ -13,14 +11,13 @@ import java.io.IOException;
 public class NhanVien extends User{
     private int luong; // luong/thang
     private String maNV, ten, hoLot, diaChi, SDT;
-    DataTranferFor dt = new DataTranferFor("nhanvien");
 
-    public NhanVien() throws IOException {
-        maNV = "NV" + dt.getMaxID();
+    public NhanVien() {
+        super.setNhanVien(true);
     }
 
-    public NhanVien(int luong, String ten, String hoLot, String diaChi, String SDT, String username, String pass) throws IOException {
-        maNV = "NV" + dt.getMaxID();
+    public NhanVien(String maNV, int luong, String ten, String hoLot, String diaChi, String SDT, String username, String pass) {
+        this.maNV = maNV;
         this.luong = luong;
         this.ten = ten;
         this.hoLot = hoLot;

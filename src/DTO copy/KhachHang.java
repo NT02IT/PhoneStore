@@ -4,29 +4,37 @@
  */
 package DTO;
 
-import java.io.IOException;
-
 /**
  *
  * @author agond
  */
 public class KhachHang extends User{
-    private String maKH, hoLot, ten, diaChi, SDT;
-    DataTranferFor dt = new DataTranferFor("khachhang");
-        
-    public KhachHang() throws IOException {
-        maKH = "KH" + dt.getMaxID();
+    private static int soLuongKH = 0;
+    private String maKH;
+    private String hoLot;
+    private String ten;
+    private String diaChi;
+    private String SDT;
+    
+    public KhachHang() {
+        soLuongKH++;
+        maKH = "KH" + soLuongKH;
     }
 
-    public KhachHang(String hoLot, String ten, String diaChi, String SDT, String username, String pass) throws IOException {
+    public KhachHang(String hoLot, String ten, String diaChi, String SDT, String username, String pass) {
         this.hoLot = hoLot;
         this.ten = ten;
         this.diaChi = diaChi;
         this.SDT = SDT;
         super.setUsername(username);
         super.setPassword(pass);
-        super.setNhanVien(false);  
-        maKH = "KH" + dt.getMaxID();
+        super.setNhanVien(false);        
+        soLuongKH++;
+        maKH += 100 + soLuongKH;
+    }
+
+    public static int getSoLuongKH() {
+        return soLuongKH;
     }
 
     public String getMaKH() {

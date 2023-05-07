@@ -1,0 +1,9 @@
+#Mon May 08 00:36:33 ICT 2023
+hangsx=0
+hoadon=0
+khachhang=0
+loaisp=0
+nhacungcap=0
+nhanvien=0
+phieunhap=0
+sanpham=12

@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  *
  * @author duong
  */
-public class LOAI_SP_DAO {
+public class LoaiSanPhamDAO {
     
-    public LOAI_SP_DAO(){
+    public LoaiSanPhamDAO(){
         
     }
     
@@ -38,7 +38,7 @@ public class LOAI_SP_DAO {
                 loai_sp.add(loaisp);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(LOAI_SP_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return loai_sp;
     }

@@ -4,22 +4,26 @@
  */
 package DTO;
 
-import java.io.IOException;
-
 /**
  *
  * @author duong
  */
-public class Hang_SX{
+public class Hang_SX {
+    private static int soHangSX = 0;
     private String maHang, tenHang;
-    DataTranferFor dt = new DataTranferFor("hangsx");
 
-    public Hang_SX(String tenHang) throws IOException {
-        maHang = "MH" + dt.getMaxID();
+    public Hang_SX(String tenHang) {
+        soHangSX++;
+        maHang = "MH" + soHangSX;
         this.tenHang = tenHang;
     }
-    public Hang_SX() throws IOException{
-        maHang = "MH" + dt.getMaxID();
+    public Hang_SX(){
+        soHangSX++;
+        maHang = "MH" + soHangSX;
+    }
+
+    public static int getSoHangSX() {
+        return soHangSX;
     }
 
     public String getMaHang() {

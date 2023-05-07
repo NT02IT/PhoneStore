@@ -18,11 +18,11 @@ public class HANG_SX_BUS {
     private ArrayList<Hang_SX> listHang;
     private HANG_SX_DAO hangsx_DAO = new HANG_SX_DAO();
        
-    public HANG_SX_BUS(){
+    public HANG_SX_BUS() throws IOException{
         readHANG_SX_BUS();
     }
     
-    public void readHANG_SX_BUS(){
+    public void readHANG_SX_BUS() throws IOException{
         try {
             this.listHang = hangsx_DAO.readHANG_SX();
         } catch (SQLException ex) {
