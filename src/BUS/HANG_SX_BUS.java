@@ -24,7 +24,7 @@ public class HANG_SX_BUS {
     
     public void readHANG_SX_BUS(){
         try {
-            this.listHang = hangsx_DAO.readHANG_SX();
+            listHang = hangsx_DAO.readHANG_SX();
         } catch (SQLException ex) {
             Logger.getLogger(HANG_SX_BUS.class.getName()).log(Level.SEVERE, null, ex);
         }
