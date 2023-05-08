@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author duong
  */
-public class LoaiSanPhamDAO {
+public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
     private ArrayList<Loai_SP> list = new ArrayList<>();    
     private ArrayList<Loai_SP> listLoaiSP_DK = new ArrayList<>(); 
     private static int soLuong = 0;
@@ -38,34 +38,34 @@ public class LoaiSanPhamDAO {
     }
     
     public ArrayList<Loai_SP> readData() throws IOException{
-    try {
-        String sql = "Select * from LOAI_SP";
-        Statement stmt = MyConnection.conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
-        while(rs.next()){   
-            loaiSP.setMaLoai(rs.getString(1));
-            loaiSP.setTenLoai(rs.getString(2));
-            list.add(loaiSP);
-            soLuong++;
+        try {
+            String sql = "Select * from LOAI_SP";
+            Statement stmt = MyConnection.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){   
+                loaiSP.setMaLoai(rs.getString(1));
+                loaiSP.setTenLoai(rs.getString(2));
+                list.add(loaiSP);
+                soLuong++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return list;
+        return list;
     }
     
     public boolean writeData(Loai_SP loaiSP) {
-    try {
-        String sql = "INSERT INTO LOAI_SP (MaLoai, TenLoai) VALUES (?, ?)";
-        PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
-        pstmt.setString(1, loaiSP.getMaLoai());
-        pstmt.setString(2, loaiSP.getTenLoai());
-        pstmt.executeUpdate();    
-        return true;
-    } catch (SQLException ex) {
-        Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return false;
+        try {
+            String sql = "INSERT INTO LOAI_SP (MaLoai, TenLoai) VALUES (?, ?)";
+            PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
+            pstmt.setString(1, loaiSP.getMaLoai());
+            pstmt.setString(2, loaiSP.getTenLoai());
+            pstmt.executeUpdate();    
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
     public ArrayList<Loai_SP> readDatabyKey(String maLoai) throws IOException {
