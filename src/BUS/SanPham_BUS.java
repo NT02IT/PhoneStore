@@ -23,6 +23,6 @@ public class SanPham_BUS {
     }
     
     public void readSANPHAM_BUS() throws IOException{
-        this.sanpham = sanpham_DAO.readSANPHAM();
+        this.sanpham = sanpham_DAO.getList();
     }
 }
