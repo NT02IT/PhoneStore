@@ -4,33 +4,31 @@
  */
 package DTO;
 
+import java.io.IOException;
+
 /**
  *
  * @author agond
  */
-public class NhanVien {
-    private static int soLuongNV = 0;
+public class NhanVien extends User{
     private int luong; // luong/thang
-    private String maNV, ten, hoLot, diaChi, username, pass;
+    private String maNV, ten, hoLot, diaChi, SDT;
+    DataTranferFor dt = new DataTranferFor("nhanvien");
 
-    public NhanVien() {
-        soLuongNV++;
-        maNV = "NV" + soLuongNV;
+    public NhanVien() throws IOException {
+        maNV = "NV" + dt.getMaxID();
     }
 
-    public NhanVien(int luong, String ten, String hoLot, String diaChi, String username, String pass) {
+    public NhanVien(int luong, String ten, String hoLot, String diaChi, String SDT, String username, String pass) throws IOException {
+        maNV = "NV" + dt.getMaxID();
         this.luong = luong;
         this.ten = ten;
         this.hoLot = hoLot;
         this.diaChi = diaChi;
-        this.username = username;
-        this.pass = pass;
-        soLuongNV++;
-        maNV = "NV" + soLuongNV;
-    }
-
-    public static int getSoLuongNV() {
-        return soLuongNV;
+        this.SDT = SDT;
+        super.setUsername(username);
+        super.setPassword(pass);
+        super.setNhanVien(true);
     }
 
     public String getMaNV() {
@@ -52,13 +50,9 @@ public class NhanVien {
     public String getDiaChi() {
         return diaChi;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPass() {
-        return pass;
+    
+    public String getSDT() {
+        return SDT;
     }
 
     public void setMaNV(String maNV) {
@@ -80,13 +74,9 @@ public class NhanVien {
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
+    
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
     }
     
 }

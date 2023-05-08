@@ -4,38 +4,29 @@
  */
 package DTO;
 
+import java.io.IOException;
+
 /**
  *
  * @author agond
  */
-public class KhachHang {
-    private static int soLuongKH = 0;
-    private String maKH;
-    private String hoLot;
-    private String ten;
-    private String diaChi;
-    private String SDT;
-    private String username;
-    private String pass; 
-    
-    public KhachHang() {
-        soLuongKH++;
-        maKH = "KH" + soLuongKH;
+public class KhachHang extends User{
+    private String maKH, hoLot, ten, diaChi, SDT;
+    DataTranferFor dt = new DataTranferFor("khachhang");
+        
+    public KhachHang() throws IOException {
+        maKH = "KH" + dt.getMaxID();
     }
 
-    public KhachHang(String hoLot, String ten, String diaChi, String SDT, String username, String pass) {
+    public KhachHang(String hoLot, String ten, String diaChi, String SDT, String username, String pass) throws IOException {
         this.hoLot = hoLot;
         this.ten = ten;
         this.diaChi = diaChi;
         this.SDT = SDT;
-        this.username = username;
-        this.pass = pass;
-        soLuongKH++;
-        maKH += 100 + soLuongKH;
-    }
-
-    public static int getSoLuongKH() {
-        return soLuongKH;
+        super.setUsername(username);
+        super.setPassword(pass);
+        super.setNhanVien(false);  
+        maKH = "KH" + dt.getMaxID();
     }
 
     public String getMaKH() {
@@ -58,14 +49,6 @@ public class KhachHang {
         return SDT;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
     public void setMaKH(String maKH) {
         this.maKH = maKH;
     }
@@ -84,14 +67,6 @@ public class KhachHang {
 
     public void setSDT(String SDT) {
         this.SDT = SDT;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
     }
         
 //    Test phương thức

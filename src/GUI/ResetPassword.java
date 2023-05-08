@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class ResetPassword extends javax.swing.JFrame {
 
     /**
-     * Creates new form Signin
+     * Creates new form ResetPassword
      */
     public ResetPassword() {
         initComponents();

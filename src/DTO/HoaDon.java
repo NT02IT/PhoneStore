@@ -4,33 +4,29 @@
  */
 package DTO;
 
+import java.io.IOException;
+
 /**
  *
  * @author agond
  */
-public class HoaDon {
-    private static int soLuongHD = 0;
+public class HoaDon{
     private int tongTien, tienGiam, conLai; // conLai = tongTien - tienGiam
     private String maHD, maNV, maKH, ngayLap;
+    DataTranferFor dt = new DataTranferFor("hoadon");
 
-    public HoaDon() {
-        soLuongHD++;
-        maHD = "HD00" + soLuongHD;
+    public HoaDon() throws IOException {
+        maHD = "HD" + dt.getMaxID();
     }
 
-    public HoaDon(String maNV, String maKH, int tongTien, int tienGiam, String ngayLap) {
+    public HoaDon(String maNV, String maKH, int tongTien, int tienGiam, String ngayLap) throws IOException {
+        maHD = "HD" + dt.getMaxID();
         this.maNV = maNV;
         this.maKH = maKH;
         this.tongTien = tongTien;
         this.tienGiam = tienGiam;
         this.ngayLap = ngayLap;
-        this.conLai = tongTien - tienGiam;
-        soLuongHD++;
-        maHD = "HD00" + soLuongHD;
-    }
-
-    public static int getSoLuongHD() {
-        return soLuongHD;
+        this.conLai = tongTien - tienGiam;        
     }
         
     public String getMaHD() {
@@ -83,6 +79,10 @@ public class HoaDon {
 
     public void setNgayLap(String ngayLap) {
         this.ngayLap = ngayLap;
+    }
+
+    public void setConLai(int conLai) {
+        this.conLai = conLai;
     }
         
 }

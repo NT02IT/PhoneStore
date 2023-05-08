@@ -7,6 +7,9 @@ package BUS;
 import DTO.SanPham;
 import DTO.CT_SanPham;
 import DAO.SanPham_DAO;
+import DAO.SanPhamDAO;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 /**
  *
@@ -14,15 +17,16 @@ import java.util.ArrayList;
  */
 public class SanPham_BUS {
     private ArrayList <SanPham> sanpham;
-    private SanPham_DAO sanpham_DAO = new SanPham_DAO();
+    private SanPhamDAO sanpham_DAO;
     
-    public SanPham_BUS(){
+    public SanPham_BUS() throws IOException, ClassNotFoundException, SQLException{
+        this.sanpham_DAO = new SanPhamDAO();
         readSANPHAM_BUS();
     }
     
     //Đọc dữ liệu sản phẩm lên arraylist trung gian
     public void readSANPHAM_BUS(){
-        sanpham = sanpham_DAO.readSANPHAM();
+        sanpham = sanpham_DAO.getList();
     }
     
     //Đọc số lượng toàn bộ sản phẩm trong arraylist trung gian
@@ -91,7 +95,7 @@ public class SanPham_BUS {
             int soluong,
             int dongia,
             String dvt,
-            String mota) {
+            String mota) throws IOException {
         //Hàm xử lý các textfield (thông tin sản phẩm) còn trống
         
         

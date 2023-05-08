@@ -4,32 +4,28 @@
  */
 package DTO;
 
+import java.io.IOException;
+
 /**
  *
  * @author agond
  */
-public class SanPham {
-    private static int tongSLhang = 0; // Không kể loại sản phẩm 
+public class SanPham{
     private int soLuong, donGia;
     private String maSP, maLoai, tenSP, donViTinh;
+    DataTranferFor dt = new DataTranferFor("sanpham");
 
-    public SanPham() {
-        tongSLhang++;
-        maSP = "SP" + tongSLhang;
+    public SanPham() throws IOException {
+        maSP = "SP" + dt.getMaxID();
     }
 
-    public SanPham(int soLuong, int donGia, String maLoai, String tenSP, String donViTinh) {
+    public SanPham(int soLuong, int donGia, String maLoai, String tenSP, String donViTinh) throws IOException {
         this.soLuong = soLuong;
         this.donGia = donGia;
         this.maLoai = maLoai;
         this.tenSP = tenSP;
         this.donViTinh = donViTinh;
-        tongSLhang++;
-        maSP = "SP" + tongSLhang;
-    }
-
-    public static int getTongSLhang() {
-        return tongSLhang;
+        maSP = "SP" + dt.getMaxID();
     }
 
     public String getMaSP() {

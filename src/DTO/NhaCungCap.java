@@ -4,30 +4,26 @@
  */
 package DTO;
 
+import java.io.IOException;
+
 /**
  *
  * @author agond
  */
-public class NhaCungCap {
-    private static int soLuongNCC = 0;
+public class NhaCungCap{
     private String maNCC, tenNCC, diaChi, SDT;
+    DataTranferFor dt = new DataTranferFor("nhacungcap");
 
-    public NhaCungCap() {
-        soLuongNCC++;
-        maNCC = "NCC" + soLuongNCC;
+    public NhaCungCap() throws IOException {
+        maNCC = "NCC" + dt.getMaxID();
     }
 
-    public NhaCungCap(String tenNCC, String diaChi, String SDT) {
+    public NhaCungCap(String tenNCC, String diaChi, String SDT) throws IOException {
         this.tenNCC = tenNCC;
         this.diaChi = diaChi;
         this.SDT = SDT;
-        soLuongNCC++;
-        maNCC = "NCC" + soLuongNCC;
+        maNCC = "NCC" + dt.getMaxID();
     }  
-
-    public static int getSoLuongNCC() {
-        return soLuongNCC;
-    }
 
     public String getMaNCC() {
         return maNCC;

@@ -6,6 +6,7 @@ package DAO;
 
 import java.util.ArrayList;
 import DTO.SanPham;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +24,7 @@ public class SanPham_DAO {
     
     //Hàm đọc sản phẩm từ db
     //lấy dữ liệu các sản phẩm từ database và trả về 1 arraylist chứa các sản phẩm
-    public ArrayList readSANPHAM() {
+    public ArrayList readSANPHAM() throws IOException {
         ArrayList<SanPham> sanpham = new ArrayList<>();
         try {
             String sql = "Select * from SAN_PHAM";
@@ -47,7 +48,7 @@ public class SanPham_DAO {
     
     //Hàm lấy sản phẩm từ db
     //Đầu vào là mã sản phẩm, trả về là sản phẩm tìm đc trong db hoặc null (ko tìm thấy)
-    public SanPham getSANPHAM(String ma){
+    public SanPham getSANPHAM(String ma) throws IOException{
         try {
             String sql = "Select * from SAN_PHAM where MaSP = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
@@ -72,7 +73,7 @@ public class SanPham_DAO {
     
     //Hàm lấy các sản phẩm từ db
     //Đầu vào là mã loại, trả về là 1 arraylist chứa các sản phẩm thuộc loại tương ứng hoặc null (ko tìm thấy)
-    public ArrayList<SanPham> getSanPhamTheoLoai(int maLoai) {
+    public ArrayList<SanPham> getSanPhamTheoLoai(int maLoai) throws IOException {
         try {
             String sql = "Select * from SAN_PHAM Where MaLoai = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
