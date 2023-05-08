@@ -23,6 +23,6 @@ public class CT_SanPham_BUS {
     }
     
     public void readCT_SANPHAM(){
-        ctsanpham = ct_sanpham.readCT_SANPHAM();
+        this.ctsanpham = ct_sanpham.readCT_SANPHAM();
     }
 }

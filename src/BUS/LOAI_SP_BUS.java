@@ -25,7 +25,7 @@ public class LOAI_SP_BUS {
     
     public void readLOAI_SP_BUS(){
         try {
-            listLoaisp = loaisp_DAO.readLOAI_SP();
+            this.listLoaisp = loaisp_DAO.readLOAI_SP();
         } catch (IOException ex) {
             Logger.getLogger(LOAI_SP_BUS.class.getName()).log(Level.SEVERE, null, ex);
         }

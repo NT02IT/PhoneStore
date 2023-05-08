@@ -4,7 +4,7 @@
  */
 package DTO;
 
-import DAO.SanPham_DAO;
+import DAO.SanPhamDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -22,17 +22,17 @@ public class testmain {
         SanPham newNV4 = new SanPham( 10, 10000, "4", "0327531105", "ntoan");
         SanPham newNV5 = new SanPham( 10, 10000, "5", "0327531105", "ntoan");
         
-        SanPham_DAO khDAO = new SanPham_DAO();
+        SanPhamDAO khDAO = new SanPhamDAO();
         
-        khDAO.addSANPHAM(newNV5);
-        khDAO.addSANPHAM(newNV5);
-        khDAO.readSANPHAM();
-        System.out.print(khDAO.readSANPHAM());
-        khDAO.addSANPHAM(newNV5);
-        khDAO.addSANPHAM(newNV5);
-        khDAO.addSANPHAM(newNV5);
-        khDAO.readSANPHAM();
-        System.out.print(khDAO.readSANPHAM());
+        khDAO.writeData(newNV1);
+        khDAO.writeData(newNV2);
+        khDAO.readData();
+        System.out.print(khDAO.getList());
+        khDAO.writeData(newNV3);
+        khDAO.writeData(newNV4);
+        khDAO.writeData(newNV5);
+        khDAO.readData();
+        System.out.print(khDAO.getList());
     }
     
 }
