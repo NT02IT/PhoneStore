@@ -22,7 +22,8 @@ public class SanPham_BUS {
         readSANPHAM_BUS();
     }
     
+    //Hàm đọc sản phẩm khi khởi chạy chương trình
     public void readSANPHAM_BUS() throws IOException{
-        this.sanpham = sanpham_DAO.readSANPHAM();
+        this.sanpham = sanpham_DAO.readData();
     }
 }

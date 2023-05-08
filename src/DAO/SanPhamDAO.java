@@ -29,6 +29,7 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
         MyConnection myConn = new MyConnection();
     }
 
+    
     public ArrayList<SanPham> getList() {
         return list;
     }
@@ -36,7 +37,8 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
     public static int getSoLuong() {
         return soLuong;
     }
-        
+    
+    //Hàm đọc sản phẩm từ db và trả về arraylist
     public ArrayList<SanPham> readData() throws IOException{
         try {
             String sql = "Select * from SANPHAM";

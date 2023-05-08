@@ -16,17 +16,14 @@ import DAO.HangSxDAO;
  */
 public class HANG_SX_BUS {
     private ArrayList<Hang_SX> listHang;
-    private HangSxDAO hangsx_DAO = new HangSxDAO();
+    private HangSxDAO hangsx_DAO;
        
-    public HANG_SX_BUS() throws IOException{
+    public HANG_SX_BUS() throws IOException, ClassNotFoundException, SQLException{
+        this.hangsx_DAO = new HangSxDAO();
         readHANG_SX_BUS();
     }
     
     public void readHANG_SX_BUS() throws IOException{
-        try {
-            this.listHang = hangsx_DAO.readHANG_SX();
-        } catch (SQLException ex) {
-            Logger.getLogger(HANG_SX_BUS.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.listHang = hangsx_DAO.readData();
     }
 }

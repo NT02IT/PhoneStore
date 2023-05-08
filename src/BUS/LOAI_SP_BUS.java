@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import DAO.LoaiSanPhamDAO;
+import java.sql.SQLException;
 
 /**
  *
@@ -17,15 +18,16 @@ import DAO.LoaiSanPhamDAO;
  */
 public class LOAI_SP_BUS {
     private ArrayList<Loai_SP> listLoaisp;
-    private LoaiSanPhamDAO loaisp_DAO = new LoaiSanPhamDAO();
+    private LoaiSanPhamDAO loaisp_DAO;
     
-    public LOAI_SP_BUS(){
+    public LOAI_SP_BUS() throws IOException, SQLException, ClassNotFoundException{
+        this.loaisp_DAO = new LoaiSanPhamDAO();
         readLOAI_SP_BUS();
     }
     
     public void readLOAI_SP_BUS(){
         try {
-            this.listLoaisp = loaisp_DAO.readLOAI_SP();
+            this.listLoaisp = loaisp_DAO.readData();
         } catch (IOException ex) {
             Logger.getLogger(LOAI_SP_BUS.class.getName()).log(Level.SEVERE, null, ex);
         }
