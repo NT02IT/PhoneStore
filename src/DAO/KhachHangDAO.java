@@ -19,7 +19,8 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class KhachHangDAO {
-    private ArrayList<KhachHang> list = new ArrayList<>();
+    private ArrayList<KhachHang> list = new ArrayList<>();    
+    private ArrayList<KhachHang> listKH_DK = new ArrayList<>();
     private static int soLuong = 0;
     private KhachHang kh;
 
@@ -36,7 +37,7 @@ public class KhachHangDAO {
         return soLuong;
     }
         
-    public void readData() throws IOException{
+    public ArrayList<KhachHang> readData() throws IOException{
         try {
             String sql = "Select * from KHACHHANG";
             Statement stmt = MyConnection.conn.createStatement();
@@ -55,9 +56,10 @@ public class KhachHangDAO {
         } catch (SQLException ex) {
             Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return list;
     }
     
-    public void writeData(KhachHang kh) {
+    public boolean writeData(KhachHang kh) {
         try {
             String sql = "INSERT INTO KHACHHANG (MaKH, Ten, HoLot, DiaChi, SDT, Username, Pass) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
@@ -68,9 +70,33 @@ public class KhachHangDAO {
             pstmt.setString(5, kh.getSDT());
             pstmt.setString(6, kh.getUsername());
             pstmt.setString(7, kh.getPassword());
-            pstmt.executeUpdate();        
+            pstmt.executeUpdate();   
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
+    }
+    
+    public ArrayList<KhachHang> getDatabyMaNV(String maKH) throws IOException {
+        try {
+            String sql = "Select * from KHACHHANG Where MaKH = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, maKH);
+            ResultSet rs = pre.executeQuery();            
+            while (rs.next()) {
+                kh.setMaKH(rs.getString(1));
+                kh.setTen(rs.getString(2));
+                kh.setHoLot(rs.getString(3));
+                kh.setDiaChi(rs.getString(4));
+                kh.setSDT(rs.getString(5));
+                kh.setUsername(rs.getString(6));
+                kh.setPassword(rs.getString(7));
+                listKH_DK.add(kh);
+            }
+            return listKH_DK;
+        } catch (SQLException e) {
+        }
+        return null;
     }
 }

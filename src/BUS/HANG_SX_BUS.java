@@ -9,14 +9,14 @@ import DTO.Hang_SX;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import DAO.HANG_SX_DAO;
+import DAO.HangSxDAO;
 /**
  *
  * @author duong
  */
 public class HANG_SX_BUS {
     private ArrayList<Hang_SX> listHang;
-    private HANG_SX_DAO hangsx_DAO = new HANG_SX_DAO();
+    private HangSxDAO hangsx_DAO = new HangSxDAO();
        
     public HANG_SX_BUS() throws IOException{
         readHANG_SX_BUS();

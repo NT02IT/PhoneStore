@@ -6,7 +6,7 @@ package DAO;
 
 import DTO.Loai_SP;
 import java.io.IOException;
-import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,27 +19,70 @@ import java.util.logging.Logger;
  * @author duong
  */
 public class LoaiSanPhamDAO {
+    private ArrayList<Loai_SP> list = new ArrayList<>();    
+    private ArrayList<Loai_SP> listLoaiSP_DK = new ArrayList<>(); 
+    private static int soLuong = 0;
+    private Loai_SP loaiSP;
     
-    public LoaiSanPhamDAO(){
-        
+    public LoaiSanPhamDAO() throws IOException, ClassNotFoundException, SQLException{
+        loaiSP = new Loai_SP();
+        MyConnection myConn = new MyConnection();        
     }
     
-    //lấy dữ liệu các loại sp từ database và trả về 1 arraylist chứa các loại sp
-    public ArrayList readLOAI_SP() throws IOException{
-        ArrayList<Loai_SP> loai_sp = new ArrayList<>();
-        try {
-            String sql = "Select * from LOAI_SP";
-            Statement stmt = MyConnection.conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                Loai_SP loaisp = new Loai_SP();
-                loaisp.setMaLoai(rs.getString("MaLoai"));
-                loaisp.setTenLoai(rs.getString("TenLoai"));
-                loai_sp.add(loaisp);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+    public ArrayList<Loai_SP> getList() {
+        return list;
+    }
+
+    public static int getSoLuong() {
+        return soLuong;
+    }
+    
+    public ArrayList<Loai_SP> readData() throws IOException{
+    try {
+        String sql = "Select * from LOAI_SP";
+        Statement stmt = MyConnection.conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){   
+            loaiSP.setMaLoai(rs.getString(1));
+            loaiSP.setTenLoai(rs.getString(2));
+            list.add(loaiSP);
+            soLuong++;
         }
-        return loai_sp;
+    } catch (SQLException ex) {
+        Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return list;
+    }
+    
+    public boolean writeData(Loai_SP loaiSP) {
+    try {
+        String sql = "INSERT INTO LOAI_SP (MaLoai, TenLoai) VALUES (?, ?)";
+        PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
+        pstmt.setString(1, loaiSP.getMaLoai());
+        pstmt.setString(2, loaiSP.getTenLoai());
+        pstmt.executeUpdate();    
+        return true;
+    } catch (SQLException ex) {
+        Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return false;
+    }
+    
+    public ArrayList<Loai_SP> getDatabyMaNV(String maLoai) throws IOException {
+        try {
+            String sql = "Select * from LOAI_SP Where MaLoai = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, maLoai);
+            ResultSet rs = pre.executeQuery();            
+            while (rs.next()) {
+                loaiSP.setMaLoai(rs.getString(1));
+                loaiSP.setTenLoai(rs.getString(2));
+                listLoaiSP_DK.add(loaiSP);
+            }
+            return listLoaiSP_DK;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
 }

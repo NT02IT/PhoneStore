@@ -1,5 +1,5 @@
 server=localhost
-database=DoAn
+database=PhoneStore
 username=sa
 password=123
 port=1433
