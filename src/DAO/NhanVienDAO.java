@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author agond
  */
-public class NhanVienDAO {
+public class NhanVienDAO implements DataTranfer<NhanVien> {
     private ArrayList<NhanVien> list = new ArrayList<>();    
     private ArrayList<NhanVien> listNV_DK = new ArrayList<>();
     private static int soLuong = 0;
@@ -60,18 +60,18 @@ public class NhanVienDAO {
         return list;
     }
     
-    public boolean writeData(NhanVien nv) {
+    public boolean writeData(NhanVien data) {
         try {
             String sql = "INSERT INTO NHANVIEN (MaNV, Ten, HoLot, DiaChi, SDT, Luong, Username, Pass) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
-            pstmt.setString(1, nv.getMaNV());
-            pstmt.setString(2, nv.getTen());
-            pstmt.setString(3, nv.getHoLot());
-            pstmt.setString(4, nv.getDiaChi());
-            pstmt.setString(5, nv.getSDT());
-            pstmt.setInt(6, nv.getLuong());
-            pstmt.setString(7, nv.getUsername());
-            pstmt.setString(8, nv.getPassword());
+            pstmt.setString(1, data.getMaNV());
+            pstmt.setString(2, data.getTen());
+            pstmt.setString(3, data.getHoLot());
+            pstmt.setString(4, data.getDiaChi());
+            pstmt.setString(5, data.getSDT());
+            pstmt.setInt(6, data.getLuong());
+            pstmt.setString(7, data.getUsername());
+            pstmt.setString(8, data.getPassword());
             pstmt.executeUpdate();    
             return true;
         } catch (SQLException ex) {
@@ -80,11 +80,11 @@ public class NhanVienDAO {
         return false;
     }
     
-    public ArrayList<NhanVien> readDatabyKey(String maNV) throws IOException {
+    public ArrayList<NhanVien> readDatabyKey(String key) throws IOException { //key = maNV
         try {
             String sql = "Select * from NHANVIEN Where MaNV = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, maNV);
+            pre.setString(1, key);
             ResultSet rs = pre.executeQuery();            
             while (rs.next()) {
                 nv.setMaNV(rs.getString(1));

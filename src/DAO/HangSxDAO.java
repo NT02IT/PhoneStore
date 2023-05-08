@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author duong
  */
-public class HangSxDAO {
+public class HangSxDAO implements DataTranfer<Hang_SX> {
     private ArrayList<Hang_SX> list = new ArrayList<>();
     private ArrayList<Hang_SX> listHSX_DK = new ArrayList<>(); 
     private static int soLuong = 0;
@@ -54,12 +54,12 @@ public class HangSxDAO {
         return list;
     } 
     
-    public boolean writeData(Hang_SX hsx) {
+    public boolean writeData(Hang_SX data) {
         try {
             String sql = "INSERT INTO HANG_SX (MaHang, TenHang) VALUES (?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
-            pstmt.setString(1, hsx.getMaHang());
-            pstmt.setString(2, hsx.getTenHang());
+            pstmt.setString(1, data.getMaHang());
+            pstmt.setString(2, data.getTenHang());
             pstmt.executeUpdate();    
             return true;
         } catch (SQLException ex) {
@@ -68,11 +68,11 @@ public class HangSxDAO {
         return false;
     }
     
-    public ArrayList<Hang_SX> readDatabyKey(String maHang) throws IOException {
+    public ArrayList<Hang_SX> readDatabyKey(String key) throws IOException { //key = maHang
         try {
             String sql = "Select * from HANG_SX Where MaHang = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, maHang);
+            pre.setString(1, key);
             ResultSet rs = pre.executeQuery();            
             while (rs.next()) {
                 hsx.setMaHang(rs.getString("MaHang"));

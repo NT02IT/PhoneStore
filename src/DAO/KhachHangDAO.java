@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author agond
  */
-public class KhachHangDAO {
+public class KhachHangDAO implements DataTranfer<KhachHang> {
     private ArrayList<KhachHang> list = new ArrayList<>();    
     private ArrayList<KhachHang> listKH_DK = new ArrayList<>();
     private static int soLuong = 0;
@@ -59,17 +59,17 @@ public class KhachHangDAO {
         return list;
     }
     
-    public boolean writeData(KhachHang kh) {
+    public boolean writeData(KhachHang data) {
         try {
             String sql = "INSERT INTO KHACHHANG (MaKH, Ten, HoLot, DiaChi, SDT, Username, Pass) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
-            pstmt.setString(1, kh.getMaKH());
-            pstmt.setString(2, kh.getTen());
-            pstmt.setString(3, kh.getHoLot());
-            pstmt.setString(4, kh.getDiaChi());
-            pstmt.setString(5, kh.getSDT());
-            pstmt.setString(6, kh.getUsername());
-            pstmt.setString(7, kh.getPassword());
+            pstmt.setString(1, data.getMaKH());
+            pstmt.setString(2, data.getTen());
+            pstmt.setString(3, data.getHoLot());
+            pstmt.setString(4, data.getDiaChi());
+            pstmt.setString(5, data.getSDT());
+            pstmt.setString(6, data.getUsername());
+            pstmt.setString(7, data.getPassword());
             pstmt.executeUpdate();   
             return true;
         } catch (SQLException ex) {
@@ -78,11 +78,11 @@ public class KhachHangDAO {
         return false;
     }
     
-    public ArrayList<KhachHang> readDatabyKey(String maKH) throws IOException {
+    public ArrayList<KhachHang> readDatabyKey(String key) throws IOException { //key = maKH
         try {
             String sql = "Select * from KHACHHANG Where MaKH = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, maKH);
+            pre.setString(1, key);
             ResultSet rs = pre.executeQuery();            
             while (rs.next()) {
                 kh.setMaKH(rs.getString(1));
