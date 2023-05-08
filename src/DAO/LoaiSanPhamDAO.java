@@ -54,12 +54,12 @@ public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
         return list;
     }
     
-    public boolean writeData(Loai_SP loaiSP) {
+    public boolean writeData(Loai_SP data) { 
         try {
             String sql = "INSERT INTO LOAI_SP (MaLoai, TenLoai) VALUES (?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
-            pstmt.setString(1, loaiSP.getMaLoai());
-            pstmt.setString(2, loaiSP.getTenLoai());
+            pstmt.setString(1, data.getMaLoai());
+            pstmt.setString(2, data.getTenLoai());
             pstmt.executeUpdate();    
             return true;
         } catch (SQLException ex) {
@@ -68,11 +68,11 @@ public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
         return false;
     }
     
-    public ArrayList<Loai_SP> readDatabyKey(String maLoai) throws IOException {
+    public ArrayList<Loai_SP> readDatabyKey(String key) throws IOException { //key = maLoai
         try {
             String sql = "Select * from LOAI_SP Where MaLoai = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, maLoai);
+            pre.setString(1, key);
             ResultSet rs = pre.executeQuery();            
             while (rs.next()) {
                 loaiSP.setMaLoai(rs.getString(1));
