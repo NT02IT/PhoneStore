@@ -7,7 +7,6 @@ package BUS;
 import DTO.SanPham;
 import DTO.CT_SanPham;
 import DAO.SanPham_DAO;
-import DAO.SanPhamDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,16 +16,16 @@ import java.util.ArrayList;
  */
 public class SanPham_BUS {
     private ArrayList <SanPham> sanpham;
-    private SanPhamDAO sanpham_DAO;
+    private SanPham_DAO sanpham_DAO;
     
     public SanPham_BUS() throws IOException, ClassNotFoundException, SQLException{
-        this.sanpham_DAO = new SanPhamDAO();
+        this.sanpham_DAO = new SanPham_DAO();
         readSANPHAM_BUS();
     }
     
     //Đọc dữ liệu sản phẩm lên arraylist trung gian
-    public void readSANPHAM_BUS(){
-        sanpham = sanpham_DAO.getList();
+    public void readSANPHAM_BUS() throws IOException{
+        sanpham = sanpham_DAO.readSANPHAM();
     }
     
     //Đọc số lượng toàn bộ sản phẩm trong arraylist trung gian
@@ -96,22 +95,9 @@ public class SanPham_BUS {
             int dongia,
             String dvt,
             String mota) throws IOException {
-        //Hàm xử lý các textfield (thông tin sản phẩm) còn trống
         
-        
-        //Gọi các biến chứa các dữ liệu sản phẩm lấy từ textfield
-        String ten_sp = null;
-        String ma_sp = null;
-        String ma_loai = null;
-        String ma_hang = null;
-        int sl = 0;
-        int dg = 0;
-        String donvitinh = null;
-        String mt = null;
-        
-        SanPham sp = new SanPham(sl, dg, ma_loai, ten_sp, donvitinh);
-        ma_sp = sp.getMaSP();
-        CT_SanPham ctsp = new CT_SanPham(ma_sp, ma_loai, ma_hang, mt);
+        SanPham sp = new SanPham(soluong, dongia, maloai, ten, dvt);
+        CT_SanPham ctsp = new CT_SanPham(sp.getMaSP(), maloai, mahang, mota);
         
         return false;
     }
