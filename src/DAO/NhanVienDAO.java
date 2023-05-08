@@ -80,7 +80,7 @@ public class NhanVienDAO {
         return false;
     }
     
-    public ArrayList<NhanVien> getDatabyMaNV(String maNV) throws IOException {
+    public ArrayList<NhanVien> readDatabyKey(String maNV) throws IOException {
         try {
             String sql = "Select * from NHANVIEN Where MaNV = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);

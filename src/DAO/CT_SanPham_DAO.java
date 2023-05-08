@@ -73,7 +73,7 @@ public class CT_SanPham_DAO {
         return false;
     }
     
-    public ArrayList<CT_SanPham> getDatabyMaLoai(String maSP) throws IOException {
+    public ArrayList<CT_SanPham> readDatabyKey(String maSP) throws IOException {
         try {
             String sql = "Select * from CT_SP Where MaSP = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);

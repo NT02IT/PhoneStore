@@ -68,7 +68,7 @@ public class LoaiSanPhamDAO {
     return false;
     }
     
-    public ArrayList<Loai_SP> getDatabyMaNV(String maLoai) throws IOException {
+    public ArrayList<Loai_SP> readDatabyKey(String maLoai) throws IOException {
         try {
             String sql = "Select * from LOAI_SP Where MaLoai = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);

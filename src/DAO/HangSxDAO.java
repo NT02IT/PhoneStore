@@ -68,7 +68,7 @@ public class HangSxDAO {
         return false;
     }
     
-    public ArrayList<Hang_SX> getDatabyMaLoai(String maHang) throws IOException {
+    public ArrayList<Hang_SX> readDatabyKey(String maHang) throws IOException {
         try {
             String sql = "Select * from HANG_SX Where MaHang = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);

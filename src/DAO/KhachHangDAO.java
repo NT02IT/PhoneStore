@@ -78,7 +78,7 @@ public class KhachHangDAO {
         return false;
     }
     
-    public ArrayList<KhachHang> getDatabyMaNV(String maKH) throws IOException {
+    public ArrayList<KhachHang> readDatabyKey(String maKH) throws IOException {
         try {
             String sql = "Select * from KHACHHANG Where MaKH = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
