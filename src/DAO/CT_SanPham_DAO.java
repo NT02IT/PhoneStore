@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author duong
  */
-public class CT_SanPham_DAO {
+public class CT_SanPham_DAO implements DataTranfer<CT_SanPham> {
     private ArrayList<CT_SanPham> list = new ArrayList<>();
     private ArrayList<CT_SanPham> listSP_DK = new ArrayList<>();
     private static int soLuong = 0;
@@ -57,14 +57,14 @@ public class CT_SanPham_DAO {
     
     //Hàm thêm sản phẩm vào db
     //Đầu vào là đối tượng sản phẩm, trả về true (thêm thành công) hoặc false (thêm thất bại)
-    public boolean writeData(CT_SanPham ctsp) {
+    public boolean writeData(CT_SanPham data) {
         try {
             String sql = "INSERT INTO CT_SP (MaSP, MaLoai, MaHang, MoTaSP) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
-            pstmt.setString(1, ctsp.getMaSP());
-            pstmt.setString(2, ctsp.getMaLoai());
-            pstmt.setString(3, ctsp.getMaHang());   
-            pstmt.setString(4, ctsp.getMoTaSP());
+            pstmt.setString(1, data.getMaSP());
+            pstmt.setString(2, data.getMaLoai());
+            pstmt.setString(3, data.getMaHang());   
+            pstmt.setString(4, data.getMoTaSP());
             pstmt.executeUpdate();    
             return true;
         } catch (SQLException ex) {
@@ -73,11 +73,11 @@ public class CT_SanPham_DAO {
         return false;
     }
     
-    public ArrayList<CT_SanPham> readDatabyKey(String maSP) throws IOException {
+    public ArrayList<CT_SanPham> readDatabyKey(String key) throws IOException { //key = maSP
         try {
             String sql = "Select * from CT_SP Where MaSP = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, maSP);
+            pre.setString(1, key);
             ResultSet rs = pre.executeQuery();            
             while (rs.next()) {
                 ctsp.setMaSP(rs.getString("MaSP"));
