@@ -99,7 +99,6 @@ public class NhanVienDAO implements DataTranfer<NhanVien> {
             }
             return listNV_DK;
         } catch (SQLException e) {
-            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
