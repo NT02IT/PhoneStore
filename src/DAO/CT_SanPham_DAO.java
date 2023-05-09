@@ -92,4 +92,38 @@ public class CT_SanPham_DAO {
         return null;
     }
     
+    //Hàm xóa chi tiết sản phẩm
+    //Đầu vào là đối tượng, đầu ra là true (thêm thành công) hoặc false (thêm thất bại)
+    public boolean deleteData(String ma){
+        try {
+            String sql = "Delete * from CT_SP where MaSP = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, ma);
+            pre.executeQuery();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CT_SanPham_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    //Hàm cập nhật chi tiết hóa đơn
+    //Đầu vào là đối tượng, đầu ra là true (thêm thành công) hoặc false (thêm thất bại)
+    public boolean updateData(CT_SanPham ctsp){
+        try {
+            String sql = "Update CT_SP set (MaSP, MaLoai, MaHang, MoTaSP)"
+                    + " values (?, ?, ?, ?)";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, ctsp.getMaSP());
+            pre.setString(2, ctsp.getMaLoai());
+            pre.setString(3, ctsp.getMaHang());
+            pre.setString(4, ctsp.getMoTaSP());
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CT_SanPham_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
 }
