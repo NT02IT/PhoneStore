@@ -75,7 +75,7 @@ public class NhanVienDAO implements DataTranfer<NhanVien> {
             pstmt.executeUpdate();    
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -99,6 +99,7 @@ public class NhanVienDAO implements DataTranfer<NhanVien> {
             }
             return listNV_DK;
         } catch (SQLException e) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
