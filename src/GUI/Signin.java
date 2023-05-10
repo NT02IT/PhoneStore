@@ -30,16 +30,19 @@ public class Signin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPasswordField1 = new javax.swing.JPasswordField();
         lblTitle = new javax.swing.JLabel();
         ctnUsername = new javax.swing.JPanel();
-        txtUsername = new javax.swing.JTextField();
+        txtdangnhap = new javax.swing.JTextField();
         lblUsername = new javax.swing.JLabel();
         ctnPass = new javax.swing.JPanel();
         lblPass = new javax.swing.JLabel();
-        txtPass = new javax.swing.JPasswordField();
+        txtmatkhau = new javax.swing.JTextField();
         btnSignin = new javax.swing.JButton();
         btnSignup = new javax.swing.JButton();
         btnForgotPwd = new javax.swing.JButton();
+
+        jPasswordField1.setText("jPasswordField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PhoneStore: Sign in");
@@ -53,10 +56,10 @@ public class Signin extends javax.swing.JFrame {
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Đăng nhập");
 
-        txtUsername.setForeground(new java.awt.Color(25, 25, 25));
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+        txtdangnhap.setForeground(new java.awt.Color(25, 25, 25));
+        txtdangnhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
+                txtdangnhapActionPerformed(evt);
             }
         });
 
@@ -69,9 +72,9 @@ public class Signin extends javax.swing.JFrame {
         ctnUsernameLayout.setHorizontalGroup(
             ctnUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctnUsernameLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 6, Short.MAX_VALUE)
                 .addGroup(ctnUsernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtdangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         ctnUsernameLayout.setVerticalGroup(
@@ -79,16 +82,17 @@ public class Signin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctnUsernameLayout.createSequentialGroup()
                 .addComponent(lblUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtdangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         lblPass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblPass.setForeground(new java.awt.Color(25, 25, 25));
         lblPass.setText("Mật khẩu");
 
-        txtPass.addActionListener(new java.awt.event.ActionListener() {
+        txtmatkhau.setForeground(new java.awt.Color(25, 25, 25));
+        txtmatkhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassActionPerformed(evt);
+                txtmatkhauActionPerformed(evt);
             }
         });
 
@@ -98,16 +102,19 @@ public class Signin extends javax.swing.JFrame {
             ctnPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctnPassLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(ctnPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
+            .addGroup(ctnPassLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtmatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ctnPassLayout.setVerticalGroup(
             ctnPassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctnPassLayout.createSequentialGroup()
                 .addComponent(lblPass)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtmatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         btnSignin.setBackground(new java.awt.Color(25, 25, 25));
@@ -144,10 +151,6 @@ public class Signin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(353, 353, 353)
-                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -158,9 +161,17 @@ public class Signin extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSignin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ctnUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ctnPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(322, 322, 322))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(353, 353, 353)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(306, 306, 306)
+                        .addComponent(ctnPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +188,7 @@ public class Signin extends javax.swing.JFrame {
                 .addComponent(btnSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnForgotPwd)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -185,11 +196,10 @@ public class Signin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        txtUsername.addActionListener((ActionEvent e) -> {
-            txtPass.requestFocus(); // Thiết lập focus cho txtPwd
+    private void txtdangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdangnhapActionPerformed
+        txtdangnhap.addActionListener((ActionEvent e) -> {
         });
-    }//GEN-LAST:event_txtUsernameActionPerformed
+    }//GEN-LAST:event_txtdangnhapActionPerformed
 
     private void btnSigninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSigninActionPerformed
         // TODO add your handling code here:
@@ -201,17 +211,15 @@ public class Signin extends javax.swing.JFrame {
         this.dispose(); // Ẩn form hiện tại (Signin)
     }//GEN-LAST:event_btnSignupActionPerformed
 
-    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        txtPass.addActionListener((ActionEvent e) -> {
-            btnSignin.requestFocus(); // Thiết lập focus cho btnSignin
-        });
-    }//GEN-LAST:event_txtPassActionPerformed
-
     private void btnForgotPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForgotPwdActionPerformed
         ResetPassword ResetPasswordForm = new ResetPassword(); 
         ResetPasswordForm.setVisible(true); // Hiển thị form "ResetPassword"
         this.dispose(); // Ẩn form hiện tại (Signin)
     }//GEN-LAST:event_btnForgotPwdActionPerformed
+
+    private void txtmatkhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmatkhauActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtmatkhauActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,10 +262,11 @@ public class Signin extends javax.swing.JFrame {
     private javax.swing.JButton btnSignup;
     private javax.swing.JPanel ctnPass;
     private javax.swing.JPanel ctnUsername;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUsername;
-    private javax.swing.JPasswordField txtPass;
-    private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtdangnhap;
+    private javax.swing.JTextField txtmatkhau;
     // End of variables declaration//GEN-END:variables
 }

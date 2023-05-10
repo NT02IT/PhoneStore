@@ -103,4 +103,39 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
         return null;
     }
     
+    //Hàm xóa sản phẩm từ db
+    //Đầu vào là đối tượng, trả về true (xóa thành công) hoặc false (ko thành công)
+    public boolean deleteData(String ma){
+        try {
+            String sql = "Delete * from SAN_PHAM where MaSP = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, ma);
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    //Hàm sửa sản phẩm từ db
+    //Đầu vào là đố tượng cần sửa, đầu ra là true (sửa thành công) hoặc false (sửa thất bại)
+    public boolean updateData(SanPham sp){
+        try {
+            String sql = "Update SAN_PHAM set (MaSP, TenSP, SoLuong, DonGia, DonViTinh, MaLoai)"
+                    + " values (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, sp.getMaSP());
+            pre.setString(2, sp.getTenSP());
+            pre.setInt(3, sp.getSoLuong());
+            pre.setInt(4, sp.getDonGia());
+            pre.setString(5, sp.getDonViTinh());
+            pre.setString(6, sp.getMaLoai());
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }
