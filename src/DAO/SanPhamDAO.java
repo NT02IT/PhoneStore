@@ -122,15 +122,21 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
     //Đầu vào là đố tượng cần sửa, đầu ra là true (sửa thành công) hoặc false (sửa thất bại)
     public boolean updateData(SanPham sp){
         try {
-            String sql = "Update SAN_PHAM set (MaSP, TenSP, SoLuong, DonGia, DonViTinh, MaLoai)"
-                    + " values (?, ?, ?, ?, ?, ?)";
+            String sql = "Update SAN_PHAM set "
+                    + "TenSP = ?, "
+                    + "SoLuong = ?, "
+                    + "DonGia = ?, "
+                    + "DonViTinh = ?, "
+                    + "MaLoai = ? "
+                    + "values (?, ?, ?, ?, ?) "
+                    + "where MaSP = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, sp.getMaSP());
-            pre.setString(2, sp.getTenSP());
-            pre.setInt(3, sp.getSoLuong());
-            pre.setInt(4, sp.getDonGia());
-            pre.setString(5, sp.getDonViTinh());
-            pre.setString(6, sp.getMaLoai());
+            pre.setString(1, sp.getTenSP());
+            pre.setInt(2, sp.getSoLuong());
+            pre.setInt(3, sp.getDonGia());
+            pre.setString(4, sp.getDonViTinh());
+            pre.setString(5, sp.getMaLoai());
+            pre.setString(6, sp.getMaSP());
             pre.executeUpdate();
             return true;
         } catch (SQLException ex) {
