@@ -38,7 +38,7 @@ public class CT_SanPham_BUS {
     
     //Hàm xóa chi tiết sản phẩm
     public boolean deleteCT_SANPHAM_BUS(String ma){
-        ma.trim().toLowerCase();
+        ma = ma.trim().toLowerCase();
         for(CT_SanPham ct : ctsanpham){
             if(ct.getMaSP().trim().toLowerCase().equals(ma)){
                 ctsanpham.remove(ct);
@@ -54,7 +54,7 @@ public class CT_SanPham_BUS {
     public boolean updateCT_SANPHAM_BUS(CT_SanPham ctsp){
         String ma = ctsp.getMaSP();
         int i=0;
-        ma.trim().toLowerCase();
+        ma = ma.trim().toLowerCase();
         for(CT_SanPham ct : ctsanpham){
             if(ct.getMaSP().trim().toLowerCase().equals(ma)){
                 ctsanpham.set(i, ctsp);

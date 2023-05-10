@@ -54,6 +54,7 @@ public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
         return list;
     }
     
+    //Hàm thêm loại sản phẩm
     public boolean writeData(Loai_SP data) { 
         try {
             String sql = "INSERT INTO LOAI_SP (MaLoai, TenLoai) VALUES (?, ?)";
@@ -85,4 +86,33 @@ public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
         return null;
     }
 
+    //Hàm xóa loại sản phẩm
+    public boolean deleteData(String ma){
+        try {
+            String sql = "Delete * from LOAI_SP where MaLoai = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, ma);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    //Hàm sửa loại sản phẩm
+    public boolean updateData(Loai_SP lsp){
+        try {
+            String sql = "Update LOAI_SP set "
+                    + "TenLoai = ? "
+                    + "where MaLoai = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, lsp.getTenLoai());
+            pre.setString(2, lsp.getMaLoai());
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }
