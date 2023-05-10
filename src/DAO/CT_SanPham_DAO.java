@@ -92,4 +92,42 @@ public class CT_SanPham_DAO implements DataTranfer<CT_SanPham> {
         return null;
     }
     
+    //Hàm xóa chi tiết sản phẩm
+    //Đầu vào là đối tượng, đầu ra là true (thêm thành công) hoặc false (thêm thất bại)
+    public boolean deleteData(String ma){
+        try {
+            String sql = "Delete * from CT_SP where MaSP = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, ma);
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CT_SanPham_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    //Hàm cập nhật chi tiết hóa đơn
+    //Đầu vào là đối tượng, đầu ra là true (thêm thành công) hoặc false (thêm thất bại)
+    public boolean updateData(CT_SanPham ctsp){
+        try {
+            String sql = "Update CT_SP set "
+                    + "MaLoai = ?, "
+                    + "MaHang = ?, "
+                    + "MoTaSP = ?, "
+                    + "values (?, ?, ?) "
+                    + "where MaSP = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, ctsp.getMaLoai());
+            pre.setString(2, ctsp.getMaHang());
+            pre.setString(3, ctsp.getMoTaSP());
+            pre.setString(4, ctsp.getMaSP());
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(CT_SanPham_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
 }
