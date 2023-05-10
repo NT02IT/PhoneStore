@@ -54,6 +54,7 @@ public class HangSxDAO implements DataTranfer<Hang_SX> {
         return list;
     } 
     
+    //Hàm thêm hãng sản xuất
     public boolean writeData(Hang_SX data) {
         try {
             String sql = "INSERT INTO HANG_SX (MaHang, TenHang) VALUES (?, ?)";
@@ -83,5 +84,35 @@ public class HangSxDAO implements DataTranfer<Hang_SX> {
         } catch (SQLException e) {
         }
         return null;
+    }
+    
+    //Hàm xóa hãng sản xuất
+    public boolean deleteData(String ma){
+        try {
+            String sql = "Delete * from HANG_SX where MaHang = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(HangSxDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    //Hàm sửa hãng sản xuất
+    public boolean updateData(Hang_SX hsx){
+        try {
+            String sql = "Update HANG_SX set "
+                    + "TenHang = ? "
+                    + "where MaHang = ?";
+            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
+            pre.setString(1, hsx.getTenHang());
+            pre.setString(2, hsx.getMaHang());
+            pre.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(HangSxDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
