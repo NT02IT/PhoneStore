@@ -26,4 +26,43 @@ public class SanPham_BUS {
     public void readSANPHAM_BUS() throws IOException{
         this.sanpham = sanpham_DAO.readData();
     }
+    
+    //Hàm thêm sản phẩm
+    public boolean addSANPHAM_BUS(SanPham sp){
+        sanpham.add(sp);
+        if(sanpham_DAO.writeData(sp) == true){
+            return true;
+        } else return false;
+    }
+    
+    //Hàm xóa sản phẩm
+    public boolean deleteSANPHAM_BUS(String ma){
+        ma.trim().toLowerCase();
+        for(SanPham s : sanpham){
+            if(s.getMaSP().trim().toLowerCase().equals(ma)){
+                sanpham.remove(s);
+                if(sanpham_DAO.deleteData(ma) == true){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    //Hàm sửa sản phẩm
+    public boolean updateSANPHAM_BUS(SanPham sp){
+        String ma = sp.getMaSP();
+        int i=0;
+        ma.trim().toLowerCase();
+        for(SanPham s : sanpham){
+            if(s.getMaSP().trim().toLowerCase().equals(ma)){
+                sanpham.set(i, sp);
+                if(sanpham_DAO.updateData(sp) == true){
+                    return true;
+                } 
+            }
+            i++;
+        }
+        return false;
+    }
 }

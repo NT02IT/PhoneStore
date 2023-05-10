@@ -27,4 +27,43 @@ public class CT_SanPham_BUS {
     public void readCT_SANPHAM() throws IOException{
         this.ctsanpham = ct_sanpham.readData();
     }
+    
+    //Hàm thêm chi tiết sản phẩm
+    public boolean addCT_SANPHAM_BUS(CT_SanPham ctsp){
+        ctsanpham.add(ctsp);
+        if(ct_sanpham.writeData(ctsp) == true){
+            return true;
+        } else return false;
+    }
+    
+    //Hàm xóa chi tiết sản phẩm
+    public boolean deleteCT_SANPHAM_BUS(String ma){
+        ma.trim().toLowerCase();
+        for(CT_SanPham ct : ctsanpham){
+            if(ct.getMaSP().trim().toLowerCase().equals(ma)){
+                ctsanpham.remove(ct);
+                if(ct_sanpham.deleteData(ma) == true){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    //Hàm sửa chi tiết sản phẩm
+    public boolean updateCT_SANPHAM_BUS(CT_SanPham ctsp){
+        String ma = ctsp.getMaSP();
+        int i=0;
+        ma.trim().toLowerCase();
+        for(CT_SanPham ct : ctsanpham){
+            if(ct.getMaSP().trim().toLowerCase().equals(ma)){
+                ctsanpham.set(i, ctsp);
+                if(ct_sanpham.updateData(ctsp) == true){
+                    return true;
+                }
+            }
+            i++;
+        }
+        return false;
+    }
 }
