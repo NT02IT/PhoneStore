@@ -41,16 +41,18 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
     //Hàm đọc sản phẩm từ db và trả về arraylist
     public ArrayList<SanPham> readData() throws IOException{
         try {
-            String sql = "Select * from SANPHAM";
+            String sql = "SELECT SANPHAM.MaSP, SANPHAM.TenSP, SANPHAM.SoLuong, SANPHAM.DonGia, SANPHAM.DonViTinh, HANG_SX.TenHang, CT_SP.MotaSP, LOAI_SP.TenLoai FROM SANPHAM, CT_SP, LOAI_SP, HANG_SX WHERE SANPHAM.MaSP = CT_SP.MaSP AND SANPHAM.MaLoai = LOAI_SP.MaLoai AND CT_SP.MaHang = HANG_SX.MaHang";
             Statement stmt = MyConnection.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){   
                 sp.setMaSP(rs.getString(1));
                 sp.setTenSP(rs.getString(2));
-                sp.setSoLuong(rs.getInt(3));
+                sp.setSLTrongKho(rs.getInt(3));
                 sp.setDonGia(rs.getInt(4));
                 sp.setDonViTinh(rs.getString(5));
-                sp.setMaLoai(rs.getString(6));
+                sp.setHangSX(rs.getString(6));
+                sp.setMoTaSP(rs.getString(7));
+                sp.setLoaiSP(rs.getString(8));
                 list.add(sp);
                 soLuong++;
             }
@@ -64,14 +66,19 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
     //Đầu vào là đối tượng sản phẩm, trả về true (thêm thành công) hoặc false (thêm thất bại)
     public boolean writeData(SanPham data) {
         try {
-            String sql = "INSERT INTO SANPHAM (MaSP, TenSP, SoLuong, DonGia, DonViTinh, MaLoai) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO SANPHAM (MaSP, TenSP, SoLuong, DonGia, DonViTinh, MaLoai) VALUES (?, ?, ?, ?, ?, ?)"
+                    + " GO INSERT INTO CT_SP (MaSP, MaLoai, MaHang, MoTaSP) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
             pstmt.setString(1, data.getMaSP());
             pstmt.setString(2, data.getTenSP());
-            pstmt.setInt(3, data.getSoLuong());
+            pstmt.setInt(3, data.getSLTrongKho());
             pstmt.setInt(4, data.getDonGia());
             pstmt.setString(5, data.getDonViTinh());
             pstmt.setString(6, data.getMaLoai());
+            pstmt.setString(7, data.getMaSP());
+            pstmt.setString(8, data.getMaLoai());
+            pstmt.setString(9, data.getMaHang());
+            pstmt.setString(10, data.getMoTaSP());
             pstmt.executeUpdate();    
             return true;
         } catch (SQLException ex) {
@@ -91,7 +98,7 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
             while (rs.next()) {
                 sp.setMaSP(rs.getString(1));
                 sp.setTenSP(rs.getString(2));
-                sp.setSoLuong(rs.getInt(3));
+                sp.setSLTrongKho(rs.getInt(3));
                 sp.setDonGia(rs.getInt(4));
                 sp.setDonViTinh(rs.getString(5));
                 sp.setMaLoai(rs.getString(6));
@@ -132,7 +139,7 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
                     + "where MaSP = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
             pre.setString(1, sp.getTenSP());
-            pre.setInt(2, sp.getSoLuong());
+            pre.setInt(2, sp.getSLTrongKho());
             pre.setInt(3, sp.getDonGia());
             pre.setString(4, sp.getDonViTinh());
             pre.setString(5, sp.getMaLoai());
