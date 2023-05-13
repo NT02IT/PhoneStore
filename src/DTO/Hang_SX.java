@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class Hang_SX{
     private String maHang, tenHang;
-    DataTranferFor dt = new DataTranferFor("hangsx");
+    ID dt = new ID("hangsx");
 
     public Hang_SX(String tenHang) throws IOException {
         maHang = "MH" + dt.getMaxID();

@@ -11,10 +11,11 @@ import java.util.ArrayList;
  *
  * @author duong
  */
-public interface DataTranfer<A> {
+public interface Action<A> {
     public ArrayList<A> getList();
-    public ArrayList<A> readData() throws IOException;
-    public boolean writeData(A data);
-    public ArrayList<A> readDatabyKey(String key) throws IOException;
-    
+    public ArrayList<A> read() throws IOException;
+    public boolean write(A data) throws IOException;   
+    public boolean delete(A data) throws IOException;   
+    public boolean update(A data) throws IOException;   
+    public int searchByID(String ID);
 }

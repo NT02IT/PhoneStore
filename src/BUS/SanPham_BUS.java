@@ -28,7 +28,7 @@ public class SanPham_BUS {
     }
     
     //Hàm thêm sản phẩm
-    public boolean addSANPHAM_BUS(SanPham sp){
+    public boolean addSANPHAM_BUS(SanPham sp) throws IOException{
         sanpham.add(sp);
         if(sanpham_DAO.writeData(sp) == true){
             return true;
@@ -36,7 +36,7 @@ public class SanPham_BUS {
     }
     
     //Hàm xóa sản phẩm
-    public boolean deleteSANPHAM_BUS(String ma){
+    public boolean deleteSANPHAM_BUS(String ma) throws IOException{
         ma = ma.trim().toLowerCase();
         for(SanPham s : sanpham){
             if(s.getMaSP().trim().toLowerCase().equals(ma)){

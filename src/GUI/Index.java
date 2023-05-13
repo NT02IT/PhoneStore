@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author agond
@@ -97,7 +102,16 @@ public class Index extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiginActionPerformed
-        Signin signinForm = new Signin(); 
+        Signin signinForm = null; 
+        try {
+            signinForm = new Signin();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+        }
         signinForm.setVisible(true); // Hiển thị form "Signin"
         this.dispose(); // Ẩn form hiện tại (Index)
     }//GEN-LAST:event_btnSiginActionPerformed

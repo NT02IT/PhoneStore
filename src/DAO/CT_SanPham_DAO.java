@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author duong
  */
-public class CT_SanPham_DAO implements DataTranfer<CT_SanPham> {
+public class CT_SanPham_DAO implements Action<CT_SanPham> {
     private ArrayList<CT_SanPham> list = new ArrayList<>();
     private ArrayList<CT_SanPham> listSP_DK = new ArrayList<>();
     private static int soLuong = 0;

@@ -6,27 +6,29 @@ package DAO;
 
 import DTO.NhanVien;
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Connection.MyConnection;
+import DTO.ID;
 
 /**
  *
  * @author agond
  */
-public class NhanVienDAO implements DataTranfer<NhanVien> {
+public class NhanVienDAO implements Action<NhanVien> {
     private ArrayList<NhanVien> list = new ArrayList<>();    
-    private ArrayList<NhanVien> listNV_DK = new ArrayList<>();
     private static int soLuong = 0;
     private NhanVien nv;
+    ID maxMaNV = new ID("nhanvien");
 
     public NhanVienDAO() throws ClassNotFoundException, SQLException, IOException {
-        nv = new NhanVien();
         MyConnection myConn = new MyConnection();
+        read();
     }
 
     public ArrayList<NhanVien> getList() {
@@ -37,12 +39,13 @@ public class NhanVienDAO implements DataTranfer<NhanVien> {
         return soLuong;
     }
     
-    public ArrayList<NhanVien> readData() throws IOException{
+    public ArrayList<NhanVien> read() throws IOException{
         try {
             String sql = "Select * from NHANVIEN";
             Statement stmt = MyConnection.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
+                NhanVien nv = new NhanVien();
                 nv.setMaNV(rs.getString(1));
                 nv.setTen(rs.getString(2));
                 nv.setHoLot(rs.getString(3));
@@ -60,8 +63,9 @@ public class NhanVienDAO implements DataTranfer<NhanVien> {
         return list;
     }
     
-    public boolean writeData(NhanVien data) {
+    public boolean write(NhanVien data) {
         try {
+            data.setMaNV("NV" + maxMaNV.getMax());
             String sql = "INSERT INTO NHANVIEN (MaNV, Ten, HoLot, DiaChi, SDT, Luong, Username, Pass) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
             pstmt.setString(1, data.getMaNV());
@@ -73,33 +77,59 @@ public class NhanVienDAO implements DataTranfer<NhanVien> {
             pstmt.setString(7, data.getUsername());
             pstmt.setString(8, data.getPassword());
             pstmt.executeUpdate();    
+            soLuong++;
+            list.add(data);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
-    public ArrayList<NhanVien> readDatabyKey(String key) throws IOException { //key = maNV
+
+    public boolean delete(NhanVien data) {
         try {
-            String sql = "Select * from NHANVIEN Where MaNV = ?";
-            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, key);
-            ResultSet rs = pre.executeQuery();            
-            while (rs.next()) {
-                nv.setMaNV(rs.getString(1));
-                nv.setTen(rs.getString(2));
-                nv.setHoLot(rs.getString(3));
-                nv.setDiaChi(rs.getString(4));
-                nv.setSDT(rs.getString(5));
-                nv.setLuong(rs.getInt(6));
-                nv.setUsername(rs.getString(7));
-                nv.setPassword(rs.getString(8));
-                listNV_DK.add(nv);
-            }
-            return listNV_DK;
-        } catch (SQLException e) {
+            String sql = "DELETE FROM NHANVIEN WHERE MaNV = ?;";
+            PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
+            pstmt.setString(1, data.getMaNV());
+            pstmt.executeUpdate();     
+            soLuong--;
+            list.remove(searchByID(data.getMaNV()));
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return false;
+    }
+
+    public boolean update(NhanVien data) {
+        try {
+            String sql = "UPDATE KHACHHANG SET Ten = ?, HoLot = ?, DiaChi = ?, SDT = ?, Luong = ?, Username = ?, Pass = ? WHERE MaNV = ?;";
+            PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
+            pstmt.setString(1, data.getTen());
+            pstmt.setString(2, data.getHoLot());
+            pstmt.setString(3, data.getDiaChi());
+            pstmt.setString(4, data.getSDT());
+            pstmt.setInt(5, data.getLuong());
+            pstmt.setString(6, data.getUsername());
+            pstmt.setString(7, data.getPassword());
+            pstmt.setString(8, data.getMaNV());
+            pstmt.executeUpdate();              
+            list.set(searchByID(data.getMaNV()), data);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public int searchByID(String ID) { // ID = MaNV
+        int index = -1; // giá trị trả về mặc định nếu không tìm thấy
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getMaNV().equals(ID)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }

@@ -4,19 +4,29 @@
  */
 package GUI;
 
+import BUS.KhachHangBUS;
+import DTO.KhachHang;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author agond
  */
 public class Signin extends javax.swing.JFrame {
-
+    KhachHang kh;
+    KhachHangBUS khBUS;
     /**
      * Creates new form Signin
      */
-    public Signin() {
+    public Signin() throws ClassNotFoundException, SQLException, IOException{
+        this.khBUS = new KhachHangBUS();
+        this.kh = new KhachHang();
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -34,11 +44,11 @@ public class Signin extends javax.swing.JFrame {
         lblTitle = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         lblUsername = new javax.swing.JLabel();
-        txtPass = new javax.swing.JTextField();
         lblPass = new javax.swing.JLabel();
         btnSignin = new javax.swing.JButton();
         btnSignup = new javax.swing.JButton();
         btnForgotPwd = new javax.swing.JButton();
+        txtPass = new javax.swing.JPasswordField();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -64,13 +74,6 @@ public class Signin extends javax.swing.JFrame {
         lblUsername.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(25, 25, 25));
         lblUsername.setText("Tên đăng nhập");
-
-        txtPass.setForeground(new java.awt.Color(25, 25, 25));
-        txtPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassActionPerformed(evt);
-            }
-        });
 
         lblPass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblPass.setForeground(new java.awt.Color(25, 25, 25));
@@ -106,34 +109,40 @@ public class Signin extends javax.swing.JFrame {
             }
         });
 
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(353, 353, 353)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 52, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnForgotPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(306, 306, 306)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSignin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(353, 353, 353)
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(306, 306, 306)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtUsername)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, Short.MAX_VALUE)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnForgotPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtPass, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtUsername)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(322, 322, 322))
         );
         layout.setVerticalGroup(
@@ -148,8 +157,8 @@ public class Signin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblPass)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(btnSignin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,17 +174,36 @@ public class Signin extends javax.swing.JFrame {
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         txtUsername.addActionListener((ActionEvent e) -> {
+            txtPass.requestFocus();
         });
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnSigninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSigninActionPerformed
-        MuaHang muaHangForm = new MuaHang(); 
-        muaHangForm.setVisible(true); 
-        this.dispose();
+        kh.setUsername(txtUsername.getText());
+        kh.setPassword(txtPass.getText());
+        KhachHang khSearch = khBUS.searchObjectByUsername(kh.getUsername());
+        if(khSearch != null){
+            if(kh.getPassword().equals(khSearch.getPassword())){
+                MuaHang muaHangForm = new MuaHang(); 
+                muaHangForm.setVisible(true); 
+                this.dispose();
+            }
+            else JOptionPane.showMessageDialog(null,"Sai mật khẩu!", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null,"Tài khoản không tồn tại", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSigninActionPerformed
 
     private void btnSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignupActionPerformed
-        Signup signupForm = new Signup(); 
+        Signup signupForm = null; 
+        try {
+            signupForm = new Signup();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        }
         signupForm.setVisible(true); // Hiển thị form "Signup"
         this.dispose(); // Ẩn form hiện tại (Signin)
     }//GEN-LAST:event_btnSignupActionPerformed
@@ -187,7 +215,20 @@ public class Signin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnForgotPwdActionPerformed
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        // TODO add your handling code here:
+        txtPass.addActionListener((ActionEvent e) -> {
+            kh.setUsername(txtUsername.getText());
+            kh.setPassword(txtPass.getText());
+            KhachHang khSearch = khBUS.searchObjectByUsername(kh.getUsername());
+            if(khSearch != null){
+                if(kh.getPassword().equals(khSearch.getPassword())){
+                    MuaHang muaHangForm = new MuaHang(); 
+                    muaHangForm.setVisible(true); 
+                    this.dispose();
+                }
+                else JOptionPane.showMessageDialog(null,"Sai mật khẩu!", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(null,"Tài khoản không tồn tại", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
+        });
     }//GEN-LAST:event_txtPassActionPerformed
 
     /**
@@ -220,7 +261,15 @@ public class Signin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Signin().setVisible(true);
+                try {
+                    new Signin().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -233,7 +282,7 @@ public class Signin extends javax.swing.JFrame {
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUsername;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

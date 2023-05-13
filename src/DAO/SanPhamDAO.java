@@ -13,12 +13,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import Connection.MyConnection;
 /**
  *
  * @author agond
  */
 
-public class SanPhamDAO implements DataTranfer<SanPham> {
+public class SanPhamDAO implements Action<SanPham> {
     private ArrayList<SanPham> list = new ArrayList<>();
     private ArrayList<SanPham> listSP_DK = new ArrayList<>(); // Không có nhu cầu lưu trữ list theo loại hay theo đkiện khác nên đặt tên listSP_DK : list sản phẩm với điều kiện -> để có thể dùng chung nếu sau này có thêm phươngthwucs get theo điều kiện khác nữa
     private static int soLuong = 0;
@@ -64,7 +66,7 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
     
     //Hàm thêm sản phẩm vào db
     //Đầu vào là đối tượng sản phẩm, trả về true (thêm thành công) hoặc false (thêm thất bại)
-    public boolean writeData(SanPham data) {
+    public boolean writeData(SanPham data) throws IOException{
         try {
             String sql = "INSERT INTO SANPHAM (MaSP, TenSP, SoLuong, DonGia, DonViTinh, MaLoai) VALUES (?, ?, ?, ?, ?, ?)"
                     + " GO INSERT INTO CT_SP (MaSP, MaLoai, MaHang, MoTaSP) VALUES (?, ?, ?, ?)";
@@ -79,7 +81,8 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
             pstmt.setString(8, data.getMaLoai());
             pstmt.setString(9, data.getMaHang());
             pstmt.setString(10, data.getMoTaSP());
-            pstmt.executeUpdate();    
+            pstmt.executeUpdate(); 
+            list.add(sp);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,12 +115,13 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
     
     //Hàm xóa sản phẩm từ db
     //Đầu vào là đối tượng, trả về true (xóa thành công) hoặc false (ko thành công)
-    public boolean deleteData(String ma){
+    public boolean deleteData(SanPham sp) throws IOException{
         try {
             String sql = "Delete * from SAN_PHAM where MaSP = ?";
             PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, ma);
+            pre.setString(1, sp.getMaSP());
             pre.executeUpdate();
+            list.remove(sp);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,6 +149,7 @@ public class SanPhamDAO implements DataTranfer<SanPham> {
             pre.setString(5, sp.getMaLoai());
             pre.setString(6, sp.getMaSP());
             pre.executeUpdate();
+            list.
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);

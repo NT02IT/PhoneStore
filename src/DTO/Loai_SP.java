@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class Loai_SP{
     private String maLoai, tenLoai;
-    DataTranferFor dt = new DataTranferFor("loaisp");
+    ID dt = new ID("loaisp");
 
     public Loai_SP() throws IOException {
         maLoai = "ML" + dt.getMaxID();

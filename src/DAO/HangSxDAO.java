@@ -14,11 +14,13 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import Connection.MyConnection;
+
 /**
  *
  * @author duong
  */
-public class HangSxDAO implements DataTranfer<Hang_SX> {
+public class HangSxDAO implements Action<Hang_SX> {
     private ArrayList<Hang_SX> list = new ArrayList<>();
     private ArrayList<Hang_SX> listHSX_DK = new ArrayList<>(); 
     private static int soLuong = 0;

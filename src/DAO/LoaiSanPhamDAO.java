@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import Connection.MyConnection;
+
 /**
  *
  * @author duong
  */
-public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
+public class LoaiSanPhamDAO implements Action<Loai_SP> {
     private ArrayList<Loai_SP> list = new ArrayList<>();    
     private ArrayList<Loai_SP> listLoaiSP_DK = new ArrayList<>(); 
     private static int soLuong = 0;

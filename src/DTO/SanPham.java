@@ -13,10 +13,10 @@ import java.io.IOException;
 public class SanPham{
     private int SLTrongKho, SLKhachChon = 0, donGia;
     private String maSP, maLoai, maHang, tenSP, donViTinh, loaiSP, hangSX, moTaSP;
-    DataTranferFor dt = new DataTranferFor("sanpham");
+    ID dt = new ID("sanpham");
 
     public SanPham() throws IOException {
-        maSP = "SP" + dt.getMaxID();
+        maSP = "SP" + dt.getMax();
     }
 
     public SanPham(int SLTrongKho, int donGia, String tenSP, String donViTinh, String loaiSP, String hangSX, String moTaSP) throws IOException {
@@ -27,7 +27,7 @@ public class SanPham{
         this.loaiSP = loaiSP;
         this.hangSX = hangSX;
         this.moTaSP = moTaSP;
-        maSP = "SP" + dt.getMaxID();
+        maSP = "SP" + dt.getMax();
     }
 
     public String getMaSP() {

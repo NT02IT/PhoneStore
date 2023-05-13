@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class NhaCungCap{
     private String maNCC, tenNCC, diaChi, SDT;
-    DataTranferFor dt = new DataTranferFor("nhacungcap");
+    ID dt = new ID("nhacungcap");
 
     public NhaCungCap() throws IOException {
         maNCC = "NCC" + dt.getMaxID();

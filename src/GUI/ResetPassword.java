@@ -6,6 +6,10 @@ package GUI;
 
 import DTO.Common;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -212,7 +216,16 @@ public class ResetPassword extends javax.swing.JFrame {
         Common.choiceDialog = JOptionPane.showConfirmDialog(this, "Thay đổi password thành công\nTrở lại trang đăng nhập", "Reset Password Success",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (Common.choiceDialog == JOptionPane.YES_OPTION){
-            Signin SigninForm = new Signin(); 
+            Signin SigninForm = null; 
+            try {
+                SigninForm = new Signin();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+            }
             SigninForm.setVisible(true);
             this.dispose();
         }
@@ -231,7 +244,16 @@ public class ResetPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_txtConfirmNewPassActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
-        Signin signinForm = new Signin();
+        Signin signinForm = null;
+        try {
+            signinForm = new Signin();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
         signinForm.setVisible(true); // Hiển thị form "Signin"
         this.dispose(); // Ẩn form hiện tại (Signup)
     }//GEN-LAST:event_btnReturnActionPerformed
