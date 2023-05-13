@@ -39,6 +39,7 @@ public class KhachHangDAO implements Action<KhachHang> {
         return soLuong;
     }
         
+    @Override
     public ArrayList<KhachHang> read() throws IOException{
         try {
             String sql = "Select * from KHACHHANG";

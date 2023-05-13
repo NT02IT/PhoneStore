@@ -79,4 +79,30 @@ public class SanPhamBUS {
         }
         return index;
     }
+    
+    public String getTenSPbyMaSP(String maSP){
+        for (SanPham sp : list){
+            if(maSP.equals(sp.getMaSP()))
+                return sp.getTenSP();
+        }
+        return null;
+    }
+    
+    public int getDonGiabyMaSP(String maSP){
+        for (SanPham sp : list){
+            if(maSP.equals(sp.getMaSP())){
+                return sp.getDonGia();
+            }
+        }
+        return -1;
+    }
+    
+    public SanPham getSanPhamByID(String maSP){
+        for (SanPham sp : list){
+            if(maSP.equals(sp.getMaSP())){
+                return sp;
+            }
+        }
+        return null;
+    }
 }

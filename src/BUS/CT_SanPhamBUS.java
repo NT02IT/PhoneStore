@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Connection.MyConnection;
+import DTO.SanPham;
 
 import java.util.ArrayList;
 
@@ -81,5 +82,14 @@ public class CT_SanPhamBUS {
             }
         }
         return index;
+    }
+    
+    public CT_SanPham getCTSPBySP(SanPham sp){
+        for(CT_SanPham ctsp : list){
+            if(ctsp.getMaSP().equals(sp.getMaSP())){
+                return ctsp;
+            }
+        }
+        return null;
     }
 }

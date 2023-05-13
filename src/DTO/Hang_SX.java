@@ -12,14 +12,11 @@ import java.io.IOException;
  */
 public class Hang_SX{
     private String maHang, tenHang;
-    ID dt = new ID("hangsx");
 
     public Hang_SX(String tenHang) throws IOException {
-        maHang = "MH" + dt.getMaxID();
         this.tenHang = tenHang;
     }
     public Hang_SX() throws IOException{
-        maHang = "MH" + dt.getMaxID();
     }
 
     public String getMaHang() {

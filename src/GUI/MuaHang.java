@@ -4,27 +4,70 @@
  */
 package GUI;
 
+import BUS.CT_SanPhamBUS;
+import BUS.HangSxBUS;
+import BUS.LoaiSPBUS;
+import BUS.SanPhamBUS;
+import DTO.CT_SanPham;
 import DTO.Common;
+import DTO.Hang_SX;
 import DTO.SanPham;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author agond
  */
 public class MuaHang extends javax.swing.JFrame {
-    private ArrayList<SanPham> list;
+    int pos = 0;
+    String tenSP, hangSx, loaiSp, moTaSP;
+    int donGia, soLuongChon;
+    int STT =0;
+    
+    CT_SanPham ctsp;
+    SanPham spDangChon;
+    CT_SanPhamBUS ctspBUS;    
+    SanPhamBUS spBUS;
+    HangSxBUS hsxBUS;
+    LoaiSPBUS loaiSpBUS;
+    private ArrayList<CT_SanPham> listSP;
+    private ArrayList<CT_SanPham> listGioHang;
+    DefaultTableModel sanPhamModel;
+    DefaultTableModel gioHangModel;
     /**
      * Creates new form MuaHang
      */
-    public MuaHang() {
+    public MuaHang() throws IOException, ClassNotFoundException, SQLException {
         initComponents();
         setLocationRelativeTo(null);
         
-        list = new ArrayList<>();
+        ctspBUS = new CT_SanPhamBUS();
+        listSP = new ArrayList<>(ctspBUS.getList());        
+        spBUS = new SanPhamBUS();
+        hsxBUS = new HangSxBUS();
+        loaiSpBUS = new LoaiSPBUS();      
+        sanPhamModel = (DefaultTableModel) tbSanPham.getModel();
+        showSanPham();
+        
+        listGioHang = new ArrayList<>(); 
+        gioHangModel = (DefaultTableModel) tbGioHang.getModel();
+    }
+    
+    public void showSanPham(){
+        int i = 1;
+        for (CT_SanPham ctsp : listSP){
+            tenSP = spBUS.getTenSPbyMaSP(ctsp.getMaSP());
+            donGia = spBUS.getDonGiabyMaSP(ctsp.getMaSP());
+            sanPhamModel.addRow(new Object[]{i++, tenSP, donGia});
+        }
     }
 
     /**
@@ -197,6 +240,11 @@ public class MuaHang extends javax.swing.JFrame {
         btnThemVaoGio.setBorderPainted(false);
         btnThemVaoGio.setFocusPainted(false);
         btnThemVaoGio.setFocusable(false);
+        btnThemVaoGio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemVaoGioActionPerformed(evt);
+            }
+        });
 
         tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -222,7 +270,14 @@ public class MuaHang extends javax.swing.JFrame {
             }
         });
         tbSanPham.setMinimumSize(new java.awt.Dimension(12, 0));
+        tbSanPham.setSelectionBackground(new java.awt.Color(60, 90, 180));
+        tbSanPham.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbSanPham.setShowGrid(false);
+        tbSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbSanPhamMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbSanPham);
         if (tbSanPham.getColumnModel().getColumnCount() > 0) {
             tbSanPham.getColumnModel().getColumn(0).setPreferredWidth(8);
@@ -326,6 +381,7 @@ public class MuaHang extends javax.swing.JFrame {
 
         txtTenSP.setEditable(false);
         txtTenSP.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTenSP.setForeground(new java.awt.Color(60, 90, 180));
         txtTenSP.setToolTipText("Tên sản phẩm");
         jScrollPane4.setViewportView(txtTenSP);
 
@@ -351,6 +407,11 @@ public class MuaHang extends javax.swing.JFrame {
         btnAdd.setText("+");
         btnAdd.setToolTipText("");
         btnAdd.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         txtSoLuongThem.setBackground(new java.awt.Color(255, 255, 255));
         txtSoLuongThem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -362,6 +423,11 @@ public class MuaHang extends javax.swing.JFrame {
         btnSub.setText("-");
         btnSub.setToolTipText("");
         btnSub.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnSub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnInfoSPLayout = new javax.swing.GroupLayout(pnInfoSP);
         pnInfoSP.setLayout(pnInfoSPLayout);
@@ -370,18 +436,6 @@ public class MuaHang extends javax.swing.JFrame {
             .addGroup(pnInfoSPLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnInfoSPLayout.createSequentialGroup()
-                        .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnInfoSPLayout.createSequentialGroup()
-                                .addComponent(btnSub, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSoLuongThem, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(74, Short.MAX_VALUE))
                     .addComponent(jScrollPane4)
                     .addGroup(pnInfoSPLayout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -391,7 +445,19 @@ public class MuaHang extends javax.swing.JFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
                         .addComponent(jScrollPane5))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnInfoSPLayout.createSequentialGroup()
+                        .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnInfoSPLayout.createSequentialGroup()
+                                .addComponent(btnSub, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSoLuongThem, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(74, Short.MAX_VALUE))))
         );
         pnInfoSPLayout.setVerticalGroup(
             pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -400,19 +466,19 @@ public class MuaHang extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane5)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -486,10 +552,10 @@ public class MuaHang extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnContentLayout.createSequentialGroup()
-                        .addComponent(pnInfoSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnInfoSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnThemVaoGio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
@@ -560,6 +626,56 @@ public class MuaHang extends javax.swing.JFrame {
         scrollBar.setValue(currentValue + scrollValue);
     }//GEN-LAST:event_pbBodyMouseWheelMoved
 
+    private void tbSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSanPhamMouseClicked
+        pos = this.tbSanPham.getSelectedRow();
+        ctsp = listSP.get(pos);
+        spDangChon = spBUS.getSanPhamByID(ctsp.getMaSP());
+        spDangChon.setSLKhachChon(1);
+        soLuongChon = spDangChon.getSLKhachChon();
+        
+        tenSP = spBUS.getTenSPbyMaSP(ctsp.getMaSP());
+        hangSx = hsxBUS.getTenHangByID(ctsp.getMaHang());
+        loaiSp = loaiSpBUS.getLoaiSPbyID(ctsp.getMaLoai());
+        moTaSP = ctsp.getMoTaSP();    
+        
+        txtTenSP.setText(tenSP);
+        txtHangSX.setText(hangSx);
+        txtLoaiSP.setText(loaiSp);
+        txtChiTietSP.setText(moTaSP);
+        txtSoLuongThem.setText(Integer.toString(soLuongChon));
+ 
+//        ctsp = ctspBUS.getCTSPBySP(sp);
+//        hsx = hangSxBUS.getHangSXbyCTSP(ctsp);        
+//        txtHangSX.setText(hsx.getTenHang());
+    }//GEN-LAST:event_tbSanPhamMouseClicked
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        soLuongChon++;
+        spDangChon.setSLKhachChon(soLuongChon);
+        txtSoLuongThem.setText(Integer.toString(spDangChon.getSLKhachChon()));
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubActionPerformed
+        soLuongChon = spDangChon.getSLKhachChon();
+        if (soLuongChon > 0){
+            soLuongChon--;
+            spDangChon.setSLKhachChon(soLuongChon);
+            txtSoLuongThem.setText(Integer.toString(spDangChon.getSLKhachChon()));
+        }
+        else JOptionPane.showMessageDialog(null,"Số lượng không được nhỏ hơn 0!", "Số lượng không được nhỏ hơn 0",JOptionPane.INFORMATION_MESSAGE);
+        
+    }//GEN-LAST:event_btnSubActionPerformed
+
+    private void btnThemVaoGioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemVaoGioActionPerformed
+        listGioHang.add(ctsp);
+        STT++;
+        tenSP = spBUS.getTenSPbyMaSP(ctsp.getMaSP());
+        donGia = spBUS.getDonGiabyMaSP(ctsp.getMaSP());
+        hangSx = hsxBUS.getTenHangByID(ctsp.getMaHang());
+        soLuongChon = spBUS.getSanPhamByID(ctsp.getMaSP()).getSLKhachChon();
+        gioHangModel.addRow(new Object[]{STT, tenSP, hangSx,donGia, soLuongChon}); 
+    }//GEN-LAST:event_btnThemVaoGioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -597,7 +713,15 @@ public class MuaHang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MuaHang().setVisible(true);
+                try {
+                    new MuaHang().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

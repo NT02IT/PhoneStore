@@ -31,6 +31,8 @@ public class Signin extends javax.swing.JFrame {
     public Signin() throws ClassNotFoundException, SQLException, IOException{
         this.khBUS = new KhachHangBUS();
         this.kh = new KhachHang();
+        this.nvBUS = new NhanVienBUS();
+        this.nv = new NhanVien();
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -192,7 +194,16 @@ public class Signin extends javax.swing.JFrame {
         
         if(khSearch != null){
             if(kh.getPassword().equals(khSearch.getPassword())){
-                MuaHang muaHangForm = new MuaHang(); 
+                MuaHang muaHangForm = null; 
+                try {
+                    muaHangForm = new MuaHang();
+                } catch (IOException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 muaHangForm.setVisible(true); 
                 this.dispose();                
             }
@@ -200,7 +211,16 @@ public class Signin extends javax.swing.JFrame {
         }         
         else if(nvSearch != null){
             if(nv.getPassword().equals(nvSearch.getPassword())){
-                MuaHang muaHangForm = new MuaHang(); 
+                MuaHang muaHangForm = null; 
+                try {
+                    muaHangForm = new MuaHang();
+                } catch (IOException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 muaHangForm.setVisible(true); 
                 this.dispose();
             }
@@ -241,18 +261,7 @@ public class Signin extends javax.swing.JFrame {
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
         txtPass.addActionListener((ActionEvent e) -> {
-            kh.setUsername(txtUsername.getText());
-            kh.setPassword(txtPass.getText());
-            KhachHang khSearch = khBUS.searchObjectByUsername(kh.getUsername());
-            if(khSearch != null){
-                if(kh.getPassword().equals(khSearch.getPassword())){
-                    MuaHang muaHangForm = new MuaHang(); 
-                    muaHangForm.setVisible(true); 
-                    this.dispose();
-                }
-                else JOptionPane.showMessageDialog(null,"Sai mật khẩu!", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else JOptionPane.showMessageDialog(null,"Tài khoản không tồn tại", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
+            btnSigninActionPerformed(e);
         });
     }//GEN-LAST:event_txtPassActionPerformed
 

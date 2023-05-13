@@ -17,7 +17,7 @@ import java.util.Properties;
  * @author agond
  */
 public class ID{
-    private static int max;
+    private int max;
     private String filename;
     Properties props = null;
 
@@ -39,10 +39,11 @@ public class ID{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        max--;
     }
 
-    public static void setMax(int max) {
-        ID.max = max;
+    public void setMax(int max) {
+        this.max = max;
     }
 
     public int getMax() {

@@ -4,7 +4,6 @@
  */
 package BUS;
 
-import Connection.MyConnection;
 import DAO.KhachHangDAO;
 import DTO.KhachHang;
 import java.io.IOException;
@@ -21,7 +20,6 @@ public class KhachHangBUS{
     KhachHangDAO khDAO;
     
     public KhachHangBUS() throws ClassNotFoundException, SQLException, IOException {
-        MyConnection myConn = new MyConnection();
         khDAO = new KhachHangDAO();
         this.list = new ArrayList<>(khDAO.getList());
     }

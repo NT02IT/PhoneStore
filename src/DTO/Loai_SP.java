@@ -12,15 +12,12 @@ import java.io.IOException;
  */
 public class Loai_SP{
     private String maLoai, tenLoai;
-    ID dt = new ID("loaisp");
 
     public Loai_SP() throws IOException {
-        maLoai = "ML" + dt.getMaxID();
     }
 
     public Loai_SP(String tenLoai) throws IOException {
         this.tenLoai = tenLoai;
-        maLoai = "ML" + dt.getMaxID();
     }
 
     public String getMaLoai() {

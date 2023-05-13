@@ -13,7 +13,7 @@ import java.io.IOException;
 public class SanPham{
     private int SLTrongKho, SLKhachChon = 0, donGia;
     private String maSP, maLoai, tenSP, donViTinh;
-
+    
     public SanPham() {
     }
 
@@ -81,6 +81,5 @@ public class SanPham{
     public void setDonViTinh(String donViTinh) {
         this.donViTinh = donViTinh;
     }
-    
     
 }

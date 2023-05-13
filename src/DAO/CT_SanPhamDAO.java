@@ -38,17 +38,18 @@ public class CT_SanPhamDAO implements Action<CT_SanPham> {
         return soLuong;
     }
     
+    @Override
     public ArrayList<CT_SanPham> read() throws IOException{
         try {
-            ctsp = new CT_SanPham();
             String sql = "Select * from CT_SP";
             Statement stmt = MyConnection.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){   
-                ctsp.setMaSP(rs.getString("MaSP"));
-                ctsp.setMaLoai(rs.getString("MaLoai"));
-                ctsp.setMoTaSP(rs.getString("MoTaSP"));
-                ctsp.setMaHang(rs.getString("MaHang"));
+            while(rs.next()){  
+                ctsp = new CT_SanPham();
+                ctsp.setMaSP(rs.getString(1));
+                ctsp.setMaLoai(rs.getString(2));
+                ctsp.setMaHang(rs.getString(3));
+                ctsp.setMoTaSP(rs.getString(4));                
                 list.add(ctsp);
                 soLuong++;
             }
@@ -58,6 +59,7 @@ public class CT_SanPhamDAO implements Action<CT_SanPham> {
         return list;
     }
 
+    @Override
     public boolean write(CT_SanPham data) {
         try {
             String sql = "INSERT INTO CT_SP (MaSP, MaLoai, MaHang, MoTaSP) VALUES (?, ?, ?, ?)";
@@ -76,6 +78,7 @@ public class CT_SanPhamDAO implements Action<CT_SanPham> {
         return false;
     }
     
+    @Override
     public boolean delete(CT_SanPham data) {
         try {
             String sql = "DELETE FROM CT_SP WHERE MaSP = ?;";
@@ -91,6 +94,7 @@ public class CT_SanPhamDAO implements Action<CT_SanPham> {
         return false;
     }
 
+    @Override
     public boolean update(CT_SanPham data) {
         try {
             String sql = "UPDATE SANPHAM SET MaLoai = ?, MaHang = ?, MoTaSP = ? WHERE MaSP = ?;";
@@ -108,6 +112,7 @@ public class CT_SanPhamDAO implements Action<CT_SanPham> {
         return false;
     }
 
+    @Override
     public int searchByID(String ID) { // ID = MaSP
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         for (int i = 0; i < list.size(); i++) {

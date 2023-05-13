@@ -1,9 +1,9 @@
-#Sat May 13 14:09:21 ICT 2023
-hangsx=0
+#Sun May 14 02:42:31 ICT 2023
+hangsx=47
 hoadon=0
-khachhang=444
-loaisp=0
+khachhang=471
+loaisp=31
 nhacungcap=0
-nhanvien=6
+nhanvien=10
 phieunhap=0
-sanpham=0
+sanpham=69
