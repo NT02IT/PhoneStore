@@ -13,20 +13,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import DTO.ID;
+import Connection.MyConnection;
 
 /**
  *
  * @author duong
  */
-public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
+public class LoaiSanPhamDAO implements Action<Loai_SP> {
     private ArrayList<Loai_SP> list = new ArrayList<>();    
-    private ArrayList<Loai_SP> listLoaiSP_DK = new ArrayList<>(); 
     private static int soLuong = 0;
     private Loai_SP loaiSP;
+    ID maxMaLoai = new ID("loaisp");
     
     public LoaiSanPhamDAO() throws IOException, ClassNotFoundException, SQLException{
-        loaiSP = new Loai_SP();
-        MyConnection myConn = new MyConnection();        
+        MyConnection myConn = new MyConnection();   
+        read();     
     }
     
     public ArrayList<Loai_SP> getList() {
@@ -37,82 +39,79 @@ public class LoaiSanPhamDAO implements DataTranfer<Loai_SP> {
         return soLuong;
     }
     
-    public ArrayList<Loai_SP> readData() throws IOException{
+    public ArrayList<Loai_SP> read() throws IOException{
         try {
             String sql = "Select * from LOAI_SP";
             Statement stmt = MyConnection.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){   
+                loaiSP = new Loai_SP(); 
                 loaiSP.setMaLoai(rs.getString(1));
                 loaiSP.setTenLoai(rs.getString(2));
                 list.add(loaiSP);
                 soLuong++;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
     
-    //Hàm thêm loại sản phẩm
-    public boolean writeData(Loai_SP data) { 
+    public boolean write(Loai_SP data) { 
         try {
+            data.setMaLoai("ML" + maxMaLoai.getMax());
             String sql = "INSERT INTO LOAI_SP (MaLoai, TenLoai) VALUES (?, ?)";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
             pstmt.setString(1, data.getMaLoai());
             pstmt.setString(2, data.getTenLoai());
-            pstmt.executeUpdate();    
+            pstmt.executeUpdate();  
+            soLuong++;  
+            list.add(data);  
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
     
-    public ArrayList<Loai_SP> readDatabyKey(String key) throws IOException { //key = maLoai
+    public boolean delete(Loai_SP data) {
         try {
-            String sql = "Select * from LOAI_SP Where MaLoai = ?";
-            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, key);
-            ResultSet rs = pre.executeQuery();            
-            while (rs.next()) {
-                loaiSP.setMaLoai(rs.getString(1));
-                loaiSP.setTenLoai(rs.getString(2));
-                listLoaiSP_DK.add(loaiSP);
-            }
-            return listLoaiSP_DK;
-        } catch (SQLException e) {
+            String sql = "DELETE FROM LOAI_SP WHERE MaLoai = ?;";
+            PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
+            pstmt.setString(1, data.getMaLoai());
+            pstmt.executeUpdate();     
+            soLuong--;
+            list.remove(searchByID(data.getMaLoai()));
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return false;
     }
 
-    //Hàm xóa loại sản phẩm
-    public boolean deleteData(String ma){
+    public boolean update(Loai_SP data) {
         try {
-            String sql = "Delete * from LOAI_SP where MaLoai = ?";
-            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, ma);
+            String sql = "UPDATE LOAI_SP SET TenLoai = ? WHERE MaLoai = ?;";
+            PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
+            pstmt.setString(1, data.getTenLoai());
+            pstmt.setString(2, data.getMaLoai());
+            pstmt.executeUpdate();              
+            list.set(searchByID(data.getMaLoai()), data);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
-    //Hàm sửa loại sản phẩm
-    public boolean updateData(Loai_SP lsp){
-        try {
-            String sql = "Update LOAI_SP set "
-                    + "TenLoai = ? "
-                    + "where MaLoai = ?";
-            PreparedStatement pre = MyConnection.conn.prepareStatement(sql);
-            pre.setString(1, lsp.getTenLoai());
-            pre.setString(2, lsp.getMaLoai());
-            pre.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(LoaiSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+    public int searchByID(String ID) { // ID = MaLoai
+        int index = -1; // giá trị trả về mặc định nếu không tìm thấy
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getMaLoai().equals(ID)) {
+                index = i;
+                break;
+            }
         }
-        return false;
+        return index;
     }
 }

@@ -16,22 +16,22 @@ import java.util.Properties;
  *
  * @author agond
  */
-public class DataTranferFor{
-    private static int maxID;
+public class ID{
+    private int max;
     private String filename;
     Properties props = null;
 
-    public DataTranferFor(String objectName) throws FileNotFoundException, IOException{
+    public ID(String objectName) throws FileNotFoundException, IOException{
         this.filename = "src\\DTO\\MaxID.txt";
         this.props = new Properties();
         
         props.load(new FileReader(filename));
-        maxID = Integer.parseInt(props.getProperty(objectName)); // Ghi giá trị max vào biến maxID       
+        max = Integer.parseInt(props.getProperty(objectName)); // Ghi giá trị max vào biến max       
         
         try (FileInputStream inputStream = new FileInputStream(new File(filename))) {
             props.load(inputStream);
             // Set new value for the property
-            props.setProperty(objectName, Integer.toString(maxID+1));
+            props.setProperty(objectName, Integer.toString(max+1));
 
             try (FileOutputStream outputStream = new FileOutputStream(new File(filename))) {
                 props.store(outputStream, null);
@@ -39,14 +39,15 @@ public class DataTranferFor{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        max--;
     }
 
-    public static void setMaxID(int maxID) {
-        DataTranferFor.maxID = maxID;
+    public void setMax(int max) {
+        this.max = max;
     }
 
-    public int getMaxID() {
-        return maxID;
+    public int getMax() {
+        return max;
     }
 }
 

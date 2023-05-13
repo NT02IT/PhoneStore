@@ -10,35 +10,33 @@ import java.io.IOException;
  *
  * @author agond
  */
-public class KhachHang extends User{
-    private String maKH, hoLot, ten, diaChi, SDT;
-    DataTranferFor dt = new DataTranferFor("khachhang");
+public class KhachHang{
+    private String maKH, ten, hoLot, diaChi, SDT, username, password;
+    private boolean nhanVien;
         
     public KhachHang() throws IOException {
-        maKH = "KH" + dt.getMaxID();
     }
 
-    public KhachHang(String hoLot, String ten, String diaChi, String SDT, String username, String pass) throws IOException {
-        this.hoLot = hoLot;
+    public KhachHang(String ten, String hoLot, String diaChi, String SDT, String username, String pass) throws IOException { 
         this.ten = ten;
+        this.hoLot = hoLot;
         this.diaChi = diaChi;
         this.SDT = SDT;
-        super.setUsername(username);
-        super.setPassword(pass);
-        super.setNhanVien(false);  
-        maKH = "KH" + dt.getMaxID();
+        this.username = username;
+        this.password = pass;
+        nhanVien = false;
     }
-
+    
     public String getMaKH() {
         return maKH;
     }
 
-    public String getHoLot() {
-        return hoLot;
-    }
-
     public String getTen() {
         return ten;
+    }
+
+    public String getHoLot() {
+        return hoLot;
     }
 
     public String getDiaChi() {
@@ -49,16 +47,28 @@ public class KhachHang extends User{
         return SDT;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isNhanVien() {
+        return nhanVien;
+    }
+    
     public void setMaKH(String maKH) {
         this.maKH = maKH;
     }
 
-    public void setHoLot(String hoLot) {
-        this.hoLot = hoLot;
-    }
-
     public void setTen(String ten) {
         this.ten = ten;
+    }
+
+    public void setHoLot(String hoLot) {
+        this.hoLot = hoLot;
     }
 
     public void setDiaChi(String diaChi) {
@@ -68,12 +78,17 @@ public class KhachHang extends User{
     public void setSDT(String SDT) {
         this.SDT = SDT;
     }
-        
-//    Test phương thức
-//    public static void main(String[] args){
-//        KhachHang kh = new KhachHang();
-//        System.out.println(kh.maKH);
-//        KhachHang kh2 = new KhachHang();
-//        System.out.println(kh2.maKH);
-//    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNhanVien(boolean nhanVien) {
+        this.nhanVien = nhanVien;
+    }
+    
 }

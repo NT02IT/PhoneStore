@@ -13,7 +13,7 @@ import java.io.IOException;
 public class PhieuNhap{
     private int tongTien, maNCC, maNV;
     private String maPN, ngayLap;
-    DataTranferFor dt = new DataTranferFor("phieunhap");
+    ID dt = new ID("phieunhap");
 
     public PhieuNhap() throws IOException {
         maPN = "PN" + dt.getMaxID();

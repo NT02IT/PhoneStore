@@ -13,7 +13,7 @@ import java.io.IOException;
 public class HoaDon{
     private int tongTien, tienGiam, conLai; // conLai = tongTien - tienGiam
     private String maHD, maNV, maKH, ngayLap;
-    DataTranferFor dt = new DataTranferFor("hoadon");
+    ID dt = new ID("hoadon");
 
     public HoaDon() throws IOException {
         maHD = "HD" + dt.getMaxID();

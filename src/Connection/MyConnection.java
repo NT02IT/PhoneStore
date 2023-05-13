@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAO;
+package Connection;
 
 import java.io.FileReader;
 import java.sql.Connection;
@@ -39,7 +39,7 @@ public class MyConnection {
     }
     
     private static void readConfig() throws IOException {
-        String filename = "src\\DAO\\server.txt"; //đường dẫn đến file txt
+        String filename = "src\\Connection\\ServerInfo.txt"; //đường dẫn đến file txt
         Properties properties = new Properties();
         properties.load(new FileReader(filename));
         server = properties.getProperty("server");

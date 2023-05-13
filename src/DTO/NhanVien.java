@@ -10,33 +10,28 @@ import java.io.IOException;
  *
  * @author agond
  */
-public class NhanVien extends User{
-    private int luong; // luong/thang
+public class NhanVien{
     private String maNV, ten, hoLot, diaChi, SDT;
-    DataTranferFor dt = new DataTranferFor("nhanvien");
+    private int luong; // luong/thang
+    private String username, password;
+    private boolean nhanVien;
 
     public NhanVien() throws IOException {
-        maNV = "NV" + dt.getMaxID();
     }
 
     public NhanVien(int luong, String ten, String hoLot, String diaChi, String SDT, String username, String pass) throws IOException {
-        maNV = "NV" + dt.getMaxID();
         this.luong = luong;
         this.ten = ten;
         this.hoLot = hoLot;
         this.diaChi = diaChi;
         this.SDT = SDT;
-        super.setUsername(username);
-        super.setPassword(pass);
-        super.setNhanVien(true);
+        this.username = username;
+        this.password = pass;
+        this.nhanVien = true;
     }
 
     public String getMaNV() {
         return maNV;
-    }
-
-    public int getLuong() {
-        return luong;
     }
 
     public String getTen() {
@@ -50,17 +45,29 @@ public class NhanVien extends User{
     public String getDiaChi() {
         return diaChi;
     }
-    
+
     public String getSDT() {
         return SDT;
     }
 
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
+    public int getLuong() {
+        return luong;
     }
 
-    public void setLuong(int luong) {
-        this.luong = luong;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isNhanVien() {
+        return nhanVien;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
 
     public void setTen(String ten) {
@@ -74,9 +81,25 @@ public class NhanVien extends User{
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
-    
+
     public void setSDT(String SDT) {
         this.SDT = SDT;
     }
-    
+
+    public void setLuong(int luong) {
+        this.luong = luong;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNhanVien(boolean nhanVien) {
+        this.nhanVien = nhanVien;
+    }
+        
 }

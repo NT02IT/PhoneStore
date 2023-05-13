@@ -4,8 +4,16 @@
  */
 package GUI;
 
+import BUS.KhachHangBUS;
+import BUS.NhanVienBUS;
 import DTO.Common;
+import DTO.KhachHang;
+import DTO.NhanVien;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +21,19 @@ import javax.swing.JOptionPane;
  * @author agond
  */
 public class ResetPassword extends javax.swing.JFrame {
-
+    KhachHang kh;
+    KhachHangBUS khBUS;
+    NhanVien nv;
+    NhanVienBUS nvBUS;
+    String pwdConfirm;
     /**
      * Creates new form ResetPassword
      */
-    public ResetPassword() {
+    public ResetPassword() throws IOException, ClassNotFoundException, SQLException {
+        this.khBUS = new KhachHangBUS();
+        this.kh = new KhachHang();
+        this.nvBUS = new NhanVienBUS();
+        this.nv = new NhanVien();
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -209,13 +225,71 @@ public class ResetPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnResetPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPwdActionPerformed
-        Common.choiceDialog = JOptionPane.showConfirmDialog(this, "Thay đổi password thành công\nTrở lại trang đăng nhập", "Reset Password Success",
+        kh.setUsername(txtUsername.getText());
+        kh.setPassword(txtNewPass.getText());           
+        KhachHang khSearch = khBUS.searchObjectByUsername(kh.getUsername());
+        nv.setUsername(txtUsername.getText());
+        nv.setPassword(txtNewPass.getText());
+        NhanVien nvSearch = nvBUS.searchObjectByUsername(nv.getUsername());   
+        pwdConfirm = txtConfirmNewPass.getText();
+        
+        if(khSearch != null){
+            if(kh.getPassword().equals(pwdConfirm)){
+                try {
+                    khBUS.resetPassword(kh.getUsername(), pwdConfirm);
+                } catch (IOException ex) {
+                    Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Common.choiceDialog = JOptionPane.showConfirmDialog(this, "Thay đổi password thành công\nTrở lại trang đăng nhập", "Reset Password Success",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (Common.choiceDialog == JOptionPane.YES_OPTION){
-            Signin SigninForm = new Signin(); 
-            SigninForm.setVisible(true);
-            this.dispose();
+                if (Common.choiceDialog == JOptionPane.YES_OPTION){
+                    Signin SigninForm = null; 
+                    try {
+                        SigninForm = new Signin();
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    SigninForm.setVisible(true);
+                    this.dispose();
+                }               
+            }
+            else JOptionPane.showMessageDialog(null,"Mật khẩu không trùng nhau!", "Đặt lại mật khẩu thất bại",JOptionPane.INFORMATION_MESSAGE);
+        }         
+        else if(nvSearch != null){
+            if(nv.getPassword().equals(pwdConfirm)){
+                try {
+                    nvBUS.resetPassword(nv.getUsername(), pwdConfirm);
+                } catch (IOException ex) {
+                    Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Common.choiceDialog = JOptionPane.showConfirmDialog(this, "Thay đổi password thành công\nTrở lại trang đăng nhập", "Reset Password Success",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (Common.choiceDialog == JOptionPane.YES_OPTION){
+                    Signin SigninForm = null; 
+                    try {
+                        SigninForm = new Signin();
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    SigninForm.setVisible(true);
+                    this.dispose();
+                }               
+            }
+            else JOptionPane.showMessageDialog(null,"Mật khẩu không trùng nhau!", "Đặt lại mật khẩu thất bại",JOptionPane.INFORMATION_MESSAGE);
         }
+        else JOptionPane.showMessageDialog(null,"Tài khoản không tồn tại", "Đặt lại mật khẩu thất bại",JOptionPane.INFORMATION_MESSAGE);
+        
+        
+        
+        
     }//GEN-LAST:event_btnResetPwdActionPerformed
 
     private void txtNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNewPassActionPerformed
@@ -231,7 +305,16 @@ public class ResetPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_txtConfirmNewPassActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
-        Signin signinForm = new Signin();
+        Signin signinForm = null;
+        try {
+            signinForm = new Signin();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
         signinForm.setVisible(true); // Hiển thị form "Signin"
         this.dispose(); // Ẩn form hiện tại (Signup)
     }//GEN-LAST:event_btnReturnActionPerformed
@@ -269,7 +352,15 @@ public class ResetPassword extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResetPassword().setVisible(true);
+                try {
+                    new ResetPassword().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

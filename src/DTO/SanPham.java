@@ -11,33 +11,35 @@ import java.io.IOException;
  * @author agond
  */
 public class SanPham{
-    private int soLuong, donGia;
+    private int SLTrongKho, SLKhachChon = 0, donGia;
     private String maSP, maLoai, tenSP, donViTinh;
-    DataTranferFor dt = new DataTranferFor("sanpham");
-
-    public SanPham() throws IOException {
-        maSP = "SP" + dt.getMaxID();
+    
+    public SanPham() {
     }
 
-    public SanPham(int soLuong, int donGia, String maLoai, String tenSP, String donViTinh) throws IOException {
-        this.soLuong = soLuong;
+    public SanPham(int SLTrongKho, int donGia, String maSP, String maLoai, String tenSP, String donViTinh) {
+        this.SLTrongKho = SLTrongKho;
         this.donGia = donGia;
+        this.maSP = maSP;
         this.maLoai = maLoai;
         this.tenSP = tenSP;
         this.donViTinh = donViTinh;
-        maSP = "SP" + dt.getMaxID();
     }
 
-    public String getMaSP() {
-        return maSP;
+    public int getSLTrongKho() {
+        return SLTrongKho;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public int getSLKhachChon() {
+        return SLKhachChon;
     }
 
     public int getDonGia() {
         return donGia;
+    }
+
+    public String getMaSP() {
+        return maSP;
     }
 
     public String getMaLoai() {
@@ -52,16 +54,20 @@ public class SanPham{
         return donViTinh;
     }
 
-    public void setMaSP(String maSP) {
-        this.maSP = maSP;
+    public void setSLTrongKho(int SLTrongKho) {
+        this.SLTrongKho = SLTrongKho;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setSLKhachChon(int SLKhachChon) {
+        this.SLKhachChon = SLKhachChon;
     }
 
     public void setDonGia(int donGia) {
         this.donGia = donGia;
+    }
+
+    public void setMaSP(String maSP) {
+        this.maSP = maSP;
     }
 
     public void setMaLoai(String maLoai) {

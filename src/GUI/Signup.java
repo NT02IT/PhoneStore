@@ -4,8 +4,14 @@
  */
 package GUI;
 
+import BUS.KhachHangBUS;
 import DTO.Common;
+import DTO.KhachHang;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +19,15 @@ import javax.swing.JOptionPane;
  * @author agond
  */
 public class Signup extends javax.swing.JFrame {
-
+    KhachHang kh;
+    String pwdConfirm;
+    KhachHangBUS khBUS;
     /**
-     * Creates new form Signin
+     * Creates new form Signup
      */
-    public Signup() {
+    public Signup() throws ClassNotFoundException, SQLException, IOException{
+        this.khBUS = new KhachHangBUS();
+        this.kh = new KhachHang();
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -237,12 +247,37 @@ public class Signup extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignupActionPerformed
-        Common.choiceDialog = JOptionPane.showConfirmDialog(this, "Đăng ký thành công\nĐăng nhập ngay", "Sign up success",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (Common.choiceDialog == JOptionPane.YES_OPTION){
-            Signin SigninForm = new Signin(); 
-            SigninForm.setVisible(true);
-            this.dispose();
+        kh.setHoLot(txtHoLot.getText());
+        kh.setTen(txtTen.getText());
+        kh.setDiaChi(txtDiaChi.getText());
+        kh.setSDT(txtSDT.getText());
+        kh.setUsername(txtUsername.getText());
+        kh.setPassword(txtPass.getText());
+        pwdConfirm = txtConfirmPass.getText();
+        int writeContext = khBUS.write(kh, pwdConfirm);
+        if(writeContext == 0){
+            Common.choiceDialog = JOptionPane.showConfirmDialog(this, "Đăng ký thành công\nĐăng nhập ngay", "Sign up success",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (Common.choiceDialog == JOptionPane.YES_OPTION){
+                Signin SigninForm = null; 
+                try {
+                    SigninForm = new Signin();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                SigninForm.setVisible(true);
+                this.dispose();
+            }
+        }
+        else if(writeContext == 1){
+            JOptionPane.showMessageDialog(null,"Username đã tồn tại!", "Tạo tài khoản thất bại",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(writeContext == 2){
+            JOptionPane.showMessageDialog(null,"Password không khớp!", "Tạo tài khoản thất bại",JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnSignupActionPerformed
 
@@ -289,7 +324,16 @@ public class Signup extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
-        Signin signinForm = new Signin(); 
+        Signin signinForm = null; 
+        try {
+            signinForm = new Signin();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
         signinForm.setVisible(true); // Hiển thị form "Signin"
         this.dispose(); // Ẩn form hiện tại (Signup)
     }//GEN-LAST:event_btnReturnActionPerformed
@@ -325,7 +369,15 @@ public class Signup extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Signup().setVisible(true);
+                try {
+                    new Signup().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

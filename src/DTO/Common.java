@@ -10,5 +10,5 @@ package DTO;
  * @author agond
  */
 public class Common {
-    public static int choiceDialog;    
+    public static int choiceDialog;
 }
