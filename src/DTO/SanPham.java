@@ -12,26 +12,18 @@ import java.io.IOException;
  */
 public class SanPham{
     private int SLTrongKho, SLKhachChon = 0, donGia;
-    private String maSP, maLoai, maHang, tenSP, donViTinh, loaiSP, hangSX, moTaSP;
-    ID dt = new ID("sanpham");
+    private String maSP, maLoai, tenSP, donViTinh;
 
-    public SanPham() throws IOException {
-        maSP = "SP" + dt.getMax();
+    public SanPham() {
     }
 
-    public SanPham(int SLTrongKho, int donGia, String tenSP, String donViTinh, String loaiSP, String hangSX, String moTaSP) throws IOException {
+    public SanPham(int SLTrongKho, int donGia, String maSP, String maLoai, String tenSP, String donViTinh) {
         this.SLTrongKho = SLTrongKho;
         this.donGia = donGia;
+        this.maSP = maSP;
+        this.maLoai = maLoai;
         this.tenSP = tenSP;
         this.donViTinh = donViTinh;
-        this.loaiSP = loaiSP;
-        this.hangSX = hangSX;
-        this.moTaSP = moTaSP;
-        maSP = "SP" + dt.getMax();
-    }
-
-    public String getMaSP() {
-        return maSP;
     }
 
     public int getSLTrongKho() {
@@ -41,9 +33,13 @@ public class SanPham{
     public int getSLKhachChon() {
         return SLKhachChon;
     }
-    
+
     public int getDonGia() {
         return donGia;
+    }
+
+    public String getMaSP() {
+        return maSP;
     }
 
     public String getMaLoai() {
@@ -58,42 +54,6 @@ public class SanPham{
         return donViTinh;
     }
 
-    public String getLoaiSP() {
-        return loaiSP;
-    }
-
-    public String getMaHang() {
-        return maHang;
-    }
-    
-    public String getHangSX() {
-        return hangSX;
-    }
-
-    public String getMoTaSP() {
-        return moTaSP;
-    }
-
-    public void setLoaiSP(String loaiSP) {
-        this.loaiSP = loaiSP;
-    }
-
-    public void setHangSX(String hangSX) {
-        this.hangSX = hangSX;
-    }
-
-    public void setMaHang(String maHang) {
-        this.maHang = maHang;
-    }
-    
-    public void setMoTaSP(String moTaSP) {
-        this.moTaSP = moTaSP;
-    }
-    
-    public void setMaSP(String maSP) {
-        this.maSP = maSP;
-    }
-
     public void setSLTrongKho(int SLTrongKho) {
         this.SLTrongKho = SLTrongKho;
     }
@@ -101,9 +61,13 @@ public class SanPham{
     public void setSLKhachChon(int SLKhachChon) {
         this.SLKhachChon = SLKhachChon;
     }
-    
+
     public void setDonGia(int donGia) {
         this.donGia = donGia;
+    }
+
+    public void setMaSP(String maSP) {
+        this.maSP = maSP;
     }
 
     public void setMaLoai(String maLoai) {
@@ -117,5 +81,6 @@ public class SanPham{
     public void setDonViTinh(String donViTinh) {
         this.donViTinh = donViTinh;
     }
+    
     
 }

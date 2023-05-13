@@ -121,11 +121,38 @@ public class NhanVienDAO implements Action<NhanVien> {
         }
         return false;
     }
+    
+    public boolean resetPassword(String username, String newPwd) throws IOException{
+        try {
+            String sql = "UPDATE NHANVIEN SET Pass = ? WHERE Username = ?;";
+            PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
+            pstmt.setString(1, newPwd);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();    
+            int indexNV = searchByUsername(username);  
+            list.get(indexNV).setUsername(username);     
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     public int searchByID(String ID) { // ID = MaNV
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getMaNV().equals(ID)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+    
+    public int searchByUsername(String username) { 
+        int index = -1; // giá trị trả về mặc định nếu không tìm thấy
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUsername().equals(username)) {
                 index = i;
                 break;
             }

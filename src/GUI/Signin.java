@@ -5,7 +5,9 @@
 package GUI;
 
 import BUS.KhachHangBUS;
+import BUS.NhanVienBUS;
 import DTO.KhachHang;
+import DTO.NhanVien;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -21,6 +23,8 @@ import javax.swing.JOptionPane;
 public class Signin extends javax.swing.JFrame {
     KhachHang kh;
     KhachHangBUS khBUS;
+    NhanVien nv;
+    NhanVienBUS nvBUS;
     /**
      * Creates new form Signin
      */
@@ -180,10 +184,22 @@ public class Signin extends javax.swing.JFrame {
 
     private void btnSigninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSigninActionPerformed
         kh.setUsername(txtUsername.getText());
-        kh.setPassword(txtPass.getText());
+        kh.setPassword(txtPass.getText());           
         KhachHang khSearch = khBUS.searchObjectByUsername(kh.getUsername());
+        nv.setUsername(txtUsername.getText());
+        nv.setPassword(txtPass.getText());
+        NhanVien nvSearch = nvBUS.searchObjectByUsername(nv.getUsername());    
+        
         if(khSearch != null){
             if(kh.getPassword().equals(khSearch.getPassword())){
+                MuaHang muaHangForm = new MuaHang(); 
+                muaHangForm.setVisible(true); 
+                this.dispose();                
+            }
+            else JOptionPane.showMessageDialog(null,"Sai mật khẩu!", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
+        }         
+        else if(nvSearch != null){
+            if(nv.getPassword().equals(nvSearch.getPassword())){
                 MuaHang muaHangForm = new MuaHang(); 
                 muaHangForm.setVisible(true); 
                 this.dispose();
@@ -209,7 +225,16 @@ public class Signin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSignupActionPerformed
 
     private void btnForgotPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForgotPwdActionPerformed
-        ResetPassword ResetPasswordForm = new ResetPassword(); 
+        ResetPassword ResetPasswordForm = null; 
+        try {
+            ResetPasswordForm = new ResetPassword();
+        } catch (IOException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ResetPasswordForm.setVisible(true); // Hiển thị form "ResetPassword"
         this.dispose(); // Ẩn form hiện tại (Signin)
     }//GEN-LAST:event_btnForgotPwdActionPerformed

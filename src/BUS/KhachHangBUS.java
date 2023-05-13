@@ -70,6 +70,15 @@ public class KhachHangBUS{
         }        
         return false;
     }
+
+    public boolean resetPassword(String username, String newPwd) throws IOException{
+        if (khDAO.resetPassword(username, newPwd)){
+            int indexKH = searchIndexByUsername(username);  
+            list.get(indexKH).setUsername(username);     
+            return true;
+        }
+        return false;
+    }
     
     public int searchIndexByID(String ID) { // ID = MaKH
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy

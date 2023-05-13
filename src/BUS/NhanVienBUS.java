@@ -71,6 +71,15 @@ public class NhanVienBUS{
         return false;
     }
     
+    public boolean resetPassword(String username, String newPwd) throws IOException{
+        if (nvDAO.resetPassword(username, newPwd)){
+            int indexNV = searchIndexByUsername(username);  
+            list.get(indexNV).setUsername(username);     
+            return true;
+        }
+        return false;
+    }
+    
     public int searchIndexByID(String ID) { // ID = MaNV
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         for (int i = 0; i < list.size(); i++) {
