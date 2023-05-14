@@ -9,8 +9,8 @@ import DAO.SanPhamDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import Connection.MyConnection;
+
 
 /**
  *
@@ -20,7 +20,7 @@ public class SanPhamBUS {
     private ArrayList<SanPham> list;    
     private int soLuong = 0;
     private SanPhamDAO spDAO;
-    
+   
     public SanPhamBUS() throws IOException, ClassNotFoundException, SQLException{
         MyConnection myConn = new MyConnection();
         spDAO = new SanPhamDAO();
@@ -104,5 +104,19 @@ public class SanPhamBUS {
             }
         }
         return null;
+    }
+    
+    public ArrayList<SanPham> getListSanPhamByName(String searchKeyword){
+        searchKeyword = searchKeyword.toLowerCase();
+        ArrayList<SanPham> kq = new ArrayList<>();
+        for(SanPham sp : list){
+            String name = sp.getTenSP().toLowerCase();
+            if(name.contains(searchKeyword)){
+                kq.add(sp);
+            }
+        }
+        if(kq.isEmpty()){
+            return null;
+        } else return kq;
     }
 }
