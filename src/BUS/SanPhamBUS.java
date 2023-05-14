@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Connection.MyConnection;
-
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -118,5 +119,37 @@ public class SanPhamBUS {
         if(kq.isEmpty()){
             return null;
         } else return kq;
+    }
+    
+    //Hàm trả về list được sắp xếp từ A-Z
+    public ArrayList<SanPham> sortList_A_to_Z(){
+        Collections.sort(list, new StringFirstLetterAscendingComparator());
+        return list;
+    }
+    
+    //Hàm trả về list được sắp xếp từ Z-A
+    public ArrayList<SanPham> sortList_Z_to_A(){
+        Collections.sort(list, new StringFirstLetterDescendingComparator());
+        return list;
+    }
+}
+
+//Hàm sắp xếp tên sản phẩm từ A-Z
+class StringFirstLetterAscendingComparator implements Comparator<SanPham> {
+    @Override
+    public int compare(SanPham o1, SanPham o2) {
+        char firstLetter1 = o1.getTenSP().charAt(0);
+        char firstLetter2 = o2.getTenSP().charAt(0);
+        return Character.compare(firstLetter1, firstLetter2);
+    }
+}
+
+//Hàm sắp xếp tên sản phẩm từ Z-A
+class StringFirstLetterDescendingComparator implements Comparator<SanPham> {
+    @Override
+    public int compare(SanPham o1, SanPham o2) {
+        char firstLetter1 = o1.getTenSP().charAt(0);
+        char firstLetter2 = o2.getTenSP().charAt(0);
+        return Character.compare(firstLetter2, firstLetter1);
     }
 }
