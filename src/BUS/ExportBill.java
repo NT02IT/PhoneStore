@@ -91,6 +91,10 @@ public class ExportBill {
                         table.addCell(new Paragraph(value.toString()));
                     }
                 }
+                Date curDate = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                String formattedDate = dateFormat.format(curDate);
+                document.add(new Paragraph("Ngay lap: "+formattedDate));
                      
                 document.close();
                 System.out.println("PDF file saved at: " + filePath);
