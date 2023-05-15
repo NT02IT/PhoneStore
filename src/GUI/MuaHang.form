@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="PhoneStore: Reset Password"/>
+    <Property name="title" type="java.lang.String" value="PhoneStore: Mua h&#xe0;ng"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
       <Color id="Default Cursor"/>
     </Property>
@@ -160,6 +160,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThongKeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSanPham">
           <Properties>
@@ -188,6 +191,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Khuy&#x1ebf;n m&#xe3;i"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKhuyenMaiActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnPhanQuyen">
           <Properties>
@@ -262,20 +268,20 @@
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
                                                           <Group type="103" groupAlignment="1" attributes="0">
+                                                              <Component id="lblGiamGia" min="-2" pref="81" max="-2" attributes="0"/>
                                                               <Component id="lblTongCong" min="-2" pref="81" max="-2" attributes="0"/>
-                                                              <Component id="lblTongCong3" min="-2" pref="81" max="-2" attributes="0"/>
                                                           </Group>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Component id="lblTongCong1" min="-2" pref="81" max="-2" attributes="0"/>
-                                                              <Component id="lblTongCong4" min="-2" pref="81" max="-2" attributes="0"/>
+                                                              <Component id="txtTongCong" min="-2" pref="81" max="-2" attributes="0"/>
+                                                              <Component id="txtGiamGia" min="-2" pref="81" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
                                                       <Component id="jSeparator2" min="-2" pref="174" max="-2" attributes="0"/>
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="lblTongCong5" min="-2" pref="81" max="-2" attributes="0"/>
+                                                          <Component id="lblThanhTien" min="-2" pref="81" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="lblTongCong6" min="-2" pref="81" max="-2" attributes="0"/>
+                                                          <Component id="txtThanhTien" min="-2" pref="81" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                               </Group>
@@ -342,14 +348,14 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnXoaSP" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTongCong1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTongCong3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTongCong" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTongCong" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblTongCong2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTongCong" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTongCong4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblGiamGia" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtGiamGia" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -357,8 +363,8 @@
                               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblTongCong5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTongCong6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThanhTien" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtThanhTien" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -441,6 +447,7 @@
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[12, 0]"/>
                     </Property>
+                    <Property name="rowHeight" type="int" value="28"/>
                     <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="b4" green="5a" red="3c" type="rgb"/>
                     </Property>
@@ -517,10 +524,14 @@
                         </Column>
                       </TableColumnModel>
                     </Property>
+                    <Property name="rowHeight" type="int" value="28"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbGioHangMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -537,10 +548,13 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a s&#x1ea3;n ph&#x1ea9;m"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaSPActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTongCong">
+            <Component class="javax.swing.JLabel" name="lblGiamGia">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -552,7 +566,7 @@
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTongCong1">
+            <Component class="javax.swing.JLabel" name="txtTongCong">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -578,10 +592,13 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtMGG">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMGGActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator2">
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTongCong3">
+            <Component class="javax.swing.JLabel" name="lblTongCong">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -593,7 +610,7 @@
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTongCong4">
+            <Component class="javax.swing.JLabel" name="txtGiamGia">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -606,7 +623,7 @@
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTongCong5">
+            <Component class="javax.swing.JLabel" name="lblThanhTien">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
@@ -618,7 +635,7 @@
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTongCong6">
+            <Component class="javax.swing.JLabel" name="txtThanhTien">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -627,7 +644,7 @@
                   <Color blue="b4" green="5a" red="3c" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="-0"/>
+                <Property name="text" type="java.lang.String" value="0"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>

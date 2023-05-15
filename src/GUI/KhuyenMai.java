@@ -106,7 +106,7 @@ public class KhuyenMai extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PhoneStore: Reset Password");
+        setTitle("PhoneStore: Khuyến mãi");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(null);
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -124,11 +124,21 @@ public class KhuyenMai extends javax.swing.JFrame {
         btnMuaHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnMuaHang.setForeground(new java.awt.Color(75, 75, 75));
         btnMuaHang.setText("Mua hàng");
+        btnMuaHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMuaHangActionPerformed(evt);
+            }
+        });
 
         btnThongKe.setBackground(new java.awt.Color(240, 240, 240));
         btnThongKe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThongKe.setForeground(new java.awt.Color(75, 75, 75));
         btnThongKe.setText("Thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
 
         btnSanPham.setBackground(new java.awt.Color(240, 240, 240));
         btnSanPham.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -235,6 +245,7 @@ public class KhuyenMai extends javax.swing.JFrame {
             }
         });
         tbCTKM.setMinimumSize(new java.awt.Dimension(12, 0));
+        tbCTKM.setRowHeight(28);
         tbCTKM.setSelectionBackground(new java.awt.Color(60, 90, 180));
         tbCTKM.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbCTKM.setShowGrid(false);
@@ -325,7 +336,6 @@ public class KhuyenMai extends javax.swing.JFrame {
             .addGroup(pnInfoSPLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
                     .addGroup(pnInfoSPLayout.createSequentialGroup()
                         .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
@@ -334,19 +344,21 @@ public class KhuyenMai extends javax.swing.JFrame {
                         .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
                             .addComponent(jScrollPane5)))
-                    .addComponent(jScrollPane7)
                     .addGroup(pnInfoSPLayout.createSequentialGroup()
-                        .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnInfoSPLayout.createSequentialGroup()
+                        .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnInfoSPLayout.createSequentialGroup()
                                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtPhanTram, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThemMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                            .addComponent(btnThemMaKM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnInfoSPLayout.setVerticalGroup(
             pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,6 +506,36 @@ public class KhuyenMai extends javax.swing.JFrame {
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void btnMuaHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuaHangActionPerformed
+        MuaHang muaHangForm = null; 
+        try {
+            muaHangForm = new MuaHang();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        muaHangForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (Signup)
+    }//GEN-LAST:event_btnMuaHangActionPerformed
+
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+        ThongKe thongKeForm = null; 
+        try {
+            thongKeForm = new ThongKe();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        thongKeForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (MuaHang)
+    }//GEN-LAST:event_btnThongKeActionPerformed
 
     /**
      * @param args the command line arguments

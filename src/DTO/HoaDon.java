@@ -16,11 +16,11 @@ public class HoaDon{
     ID dt = new ID("hoadon");
 
     public HoaDon() throws IOException {
-        maHD = "HD" + dt.getMaxID();
+        maHD = "HD" + dt.getMax();
     }
 
     public HoaDon(String maNV, String maKH, int tongTien, int tienGiam, String ngayLap) throws IOException {
-        maHD = "HD" + dt.getMaxID();
+        maHD = "HD" + dt.getMax();
         this.maNV = maNV;
         this.maKH = maKH;
         this.tongTien = tongTien;

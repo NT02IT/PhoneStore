@@ -11,7 +11,8 @@ import java.io.IOException;
  * @author agond
  */
 public class SanPham{
-    private int SLTrongKho, SLKhachChon = 0, donGia;
+    private int SLTrongKho, donGia;
+    private int SLKhachChon = 0;
     private String maSP, maLoai, tenSP, donViTinh;
     
     public SanPham() {
