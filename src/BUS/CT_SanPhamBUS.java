@@ -48,7 +48,7 @@ public class CT_SanPhamBUS {
     }
     
     public boolean delete(CT_SanPham data){
-        String maSP = data.getMaSP();
+        String maSP = data.getMaSP().trim();
         for (CT_SanPham ctsp : list){
             if(ctsp.getMaSP().equals(maSP)){
                 if(ctspDAO.delete(data)){
@@ -61,7 +61,7 @@ public class CT_SanPhamBUS {
     }
     
     public boolean update(CT_SanPham data){
-        String maSP = data.getMaSP();
+        String maSP = data.getMaSP().trim();
         for (CT_SanPham ctsp : list){
             if(ctsp.getMaSP().equals(maSP)){
                 if(ctspDAO.update(data)){
