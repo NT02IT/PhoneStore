@@ -44,7 +44,7 @@ public class LoaiSPBUS {
     }
 
     public boolean delete(Loai_SP data){
-        String maLoai = data.getMaLoai();
+        String maLoai = data.getMaLoai().trim();
         for (Loai_SP loai : list){
             if(loai.getMaLoai().equals(maLoai)){
                 if(loaispDAO.delete(data)){
@@ -59,7 +59,7 @@ public class LoaiSPBUS {
     //Làm 1 hàm xóa hàng loạt nhiều cái
 
     public boolean update(Loai_SP data){
-        String maLoai = data.getMaLoai();
+        String maLoai = data.getMaLoai().trim();
         for (Loai_SP loai : list){
             if(loai.getMaLoai().equals(maLoai)){
                 if(loaispDAO.update(data)){

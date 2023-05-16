@@ -44,7 +44,7 @@ public class KhachHangBUS{
     }
     
     public boolean delete(KhachHang data){
-        String maKH = data.getMaKH();
+        String maKH = data.getMaKH().trim();
         for (KhachHang kh : list){
             if(kh.getMaKH().equals(maKH)){
                 if(khDAO.delete(data)){
@@ -57,7 +57,7 @@ public class KhachHangBUS{
     }
     
     public boolean update(KhachHang data){
-        String maKH = data.getMaKH();
+        String maKH = data.getMaKH().trim();
         for (KhachHang kh : list){
             if(kh.getMaKH().equals(maKH)){
                 if(khDAO.update(data)){

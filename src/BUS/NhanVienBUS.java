@@ -46,7 +46,7 @@ public class NhanVienBUS{
     }
     
     public boolean delete(NhanVien data){
-        String maNV = data.getMaNV();
+        String maNV = data.getMaNV().trim();
         for (NhanVien nv : list){
             if(nv.getMaNV().equals(maNV)){
                 if(nvDAO.delete(data)){
@@ -59,7 +59,7 @@ public class NhanVienBUS{
     }
     
     public boolean update(NhanVien data){
-        String maNV = data.getMaNV();
+        String maNV = data.getMaNV().trim();
         for (NhanVien nv : list){
             if(nv.getMaNV().equals(maNV)){
                 if(nvDAO.update(data)){

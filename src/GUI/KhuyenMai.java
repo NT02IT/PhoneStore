@@ -595,7 +595,10 @@ public class KhuyenMai extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+        CT_KhuyenMai ctkmTemp = ctkmBUS.searchObjectByID(ctkmLayRa.getMaKM());
+        ctkmBUS.delete(ctkmTemp);
+        khuyenMaiModel.removeRow(pos);
+        
     }//GEN-LAST:event_btnXoaActionPerformed
 
     /**

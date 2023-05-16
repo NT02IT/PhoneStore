@@ -42,7 +42,7 @@ public class CT_KhuyenMaiBUS{
     }
     
     public boolean delete(CT_KhuyenMai data){
-        String maKM = data.getMaKM();
+        String maKM = data.getMaKM().trim();
         for (CT_KhuyenMai ctkm : list){
             if(ctkm.getMaKM().equals(maKM)){
                 if(ctkmDAO.delete(data)){
@@ -55,7 +55,7 @@ public class CT_KhuyenMaiBUS{
     }
     
     public boolean update(CT_KhuyenMai data){
-        String maKM = data.getMaKM();
+        String maKM = data.getMaKM().trim();
         for (CT_KhuyenMai ctkm : list){
             if(ctkm.getMaKM().equals(maKM)){
                 if(ctkmDAO.update(data)){
@@ -83,9 +83,10 @@ public class CT_KhuyenMaiBUS{
         String tempMaKM;
         for(CT_KhuyenMai ctkm : list){
             tempMaKM = ctkm.getMaKM();
-            if (tempMaKM.equals(maKM))
+            if (tempMaKM.equals(maKM)){
                 result = ctkm;  
                 break;
+            }
         }
         return result;
     }

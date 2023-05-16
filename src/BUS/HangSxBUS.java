@@ -44,7 +44,7 @@ public class HangSxBUS {
     }
 
     public boolean delete(Hang_SX data){
-        String maHang = data.getMaHang();
+        String maHang = data.getMaHang().trim();
         for (Hang_SX hsx : list){
             if(hsx.getMaHang().equals(maHang)){
                 if(hangsxDAO.delete(data)){
@@ -57,7 +57,7 @@ public class HangSxBUS {
     }
 
     public boolean update(Hang_SX data){
-        String maHang = data.getMaHang();
+        String maHang = data.getMaHang().trim();
         for (Hang_SX hsx : list){
             if(hsx.getMaHang().equals(maHang)){
                 if(hangsxDAO.update(data)){
