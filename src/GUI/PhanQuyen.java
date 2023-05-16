@@ -24,6 +24,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -66,6 +68,7 @@ public class PhanQuyen extends javax.swing.JFrame {
         
         if(pos != -1){
             String user = (String) tbCTKM1.getValueAt(pos, 3);
+            user = user.trim();
             kh =  khBUS.searchObjectByUsername(user);
             txtHoLot1.setText(kh.getHoLot());
             txtTen1.setText(kh.getTen());
@@ -475,7 +478,7 @@ public class PhanQuyen extends javax.swing.JFrame {
                                     .addComponent(lblConfirmPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtConfirmPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -717,7 +720,7 @@ public class PhanQuyen extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(txtTen1, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)))
                             .addComponent(txtDiaChi1, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -773,7 +776,7 @@ public class PhanQuyen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnNav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1221,16 +1224,32 @@ public class PhanQuyen extends javax.swing.JFrame {
 
     
     //Kiểm tra các textfield có đang chọn hay ko
-    public boolean checkTextFieldInputs_Blank(Container container) {
-        for(Component c : getComponents()){
+    public boolean checkTextFieldInputs_Blank(JPanel panel) {
+        int t=0, p=0;
+        for(Component c : panel.getComponents()){
             if(c instanceof JTextField){
                 JTextField txt = (JTextField) c;
                 if(txt.getText().isEmpty()){
-                    return true;
+                    t=1;
+                    break;
                 }
             }
         }
-        return false;
+        
+        for(Component d : panel.getComponents()){
+            if(d instanceof JPasswordField){
+                JPasswordField pwtxt = (JPasswordField) d;
+                if(pwtxt.getText().isEmpty()){
+                    p=1;
+                    break;
+                }
+            }
+        }
+        System.out.println(t);
+        System.out.println(p);
+        if(t == 1 && p == 1){
+            return true;
+        } else return false;
     }
     
     
