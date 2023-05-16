@@ -14,7 +14,8 @@ import java.text.SimpleDateFormat;
  */
 public class CT_KhuyenMai {
     private String maKM, tenKM;
-    private Date ngayBD, ngayKT;
+    private Date ngayBD;
+    private Date ngayKT;
     private int phanTramGiam;
     SimpleDateFormat dateFormat;
 

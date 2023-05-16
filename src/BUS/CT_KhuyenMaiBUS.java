@@ -95,4 +95,13 @@ public class CT_KhuyenMaiBUS{
             return false;
         return true;
     }
+    
+    public CT_KhuyenMai getObjectByMaKM(String maKM){
+        //CT_KhuyenMai ctkm = new CT_KhuyenMai();
+        for (CT_KhuyenMai ctkm : list){
+            if (ctkm.getMaKM().equals(maKM))
+                return ctkm;
+        }
+        return null;
+    }
 }

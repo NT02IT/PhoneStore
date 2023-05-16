@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Connection.MyConnection;
+import java.security.Timestamp;
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  *
@@ -69,10 +71,10 @@ public class CT_KhuyenMaiDAO implements Action<CT_KhuyenMai> {
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
             pstmt.setString(1, data.getMaKM());
             pstmt.setString(2, data.getTenKM());
-            //pstmt.setDate(3, data.getNgayBD());
-            pstmt.setTimestamp(3, new java.sql.Timestamp(data.getNgayBD().getTime()));
-            //pstmt.setDate(4, data.getNgayKT());
-            pstmt.setTimestamp(4, new java.sql.Timestamp(data.getNgayBD().getTime()));
+            java.sql.Timestamp ngayBD = new java.sql.Timestamp(data.getNgayBD().getTime());
+            pstmt.setTimestamp(3, ngayBD);
+            java.sql.Timestamp ngayKT = new java.sql.Timestamp(data.getNgayKT().getTime());
+            pstmt.setTimestamp(4, ngayKT);
             pstmt.setInt(5, data.getPhanTramGiam());
             pstmt.executeUpdate();
             soLuong++;

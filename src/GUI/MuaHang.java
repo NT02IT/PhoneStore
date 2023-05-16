@@ -8,17 +8,16 @@ import BUS.CT_KhuyenMaiBUS;
 import BUS.CT_SanPhamBUS;
 import BUS.HangSxBUS;
 import BUS.LoaiSPBUS;
-import BUS.LogicHandle;
 import BUS.SanPhamBUS;
 import DTO.CT_KhuyenMai;
 import DTO.CT_SanPham;
-import DTO.Common;
-import DTO.Hang_SX;
 import DTO.SanPham;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -34,7 +33,7 @@ public class MuaHang extends javax.swing.JFrame {
     String tenSP, hangSx, loaiSp, moTaSP, MGG;
     int donGia, soLuongGUI, tongTien, phanTramGiam, giamGia, thanhTien;
     int STT =0;
-    LogicHandle logic = new LogicHandle();
+    Date today;
     
     CT_SanPham ctsp;
     SanPham spDangChon;
@@ -52,6 +51,8 @@ public class MuaHang extends javax.swing.JFrame {
     public MuaHang() throws IOException, ClassNotFoundException, SQLException {
         initComponents();
         setLocationRelativeTo(null);
+        today = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         
         ctspBUS = new CT_SanPhamBUS();
         listSP = new ArrayList<>(ctspBUS.getList());        
@@ -93,6 +94,24 @@ public class MuaHang extends javax.swing.JFrame {
             }
         }
         return 0; // Mã giảm giá sai
+    }
+    
+    public int compareDate(String MGG)throws ClassNotFoundException, SQLException, IOException{
+        CT_KhuyenMaiBUS ctkmBUS = new CT_KhuyenMaiBUS();
+        Date ngayBD;
+        Date ngayKT;
+        for (CT_KhuyenMai ctkm : ctkmBUS.getList()){
+            if (MGG.equals(ctkm.getMaKM())){
+                ngayBD = ctkm.getNgayBD();
+                ngayKT = ctkm.getNgayKT();
+                if(today.compareTo(ngayKT)>0) // Ngày hiện tại nằm sau ngày kết thúc
+                    return 1; // Sự kiện đã kết thúc
+                else if(today.compareTo(ngayBD)<0) // Ngày hiện tại nằm trước ngày bắt đầu
+                    return -1; // Sự kiện chưa bắt đầu
+                else return 0;
+            }
+        }
+        return 0;
     }
     
     public void CapNhatTT(){
@@ -815,7 +834,15 @@ public class MuaHang extends javax.swing.JFrame {
                 if (PhanTramGiam(MGG) == 0)
                     JOptionPane.showMessageDialog(null,"Mã giảm giá không hợp lệ", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
                 else{
-                    CapNhatTT();
+                    int checkday = compareDate(MGG);
+                    if (checkday == -1)
+                        JOptionPane.showMessageDialog(null,"Sự kiện chưa đến", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
+                    else if (checkday == 1)
+                        JOptionPane.showMessageDialog(null,"Sự kiện đã kết thúc", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
+                    else{
+                        JOptionPane.showMessageDialog(null,"Thêm mã giảm giá thành công\nBạn được giảm " + PhanTramGiam(MGG) + "%", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
+                        CapNhatTT();
+                    }
                 }
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
