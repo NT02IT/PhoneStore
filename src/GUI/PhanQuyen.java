@@ -8,7 +8,10 @@ import BUS.CT_KhuyenMaiBUS;
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
 import BUS.SanPhamBUS;
-import DTO.CT_KhuyenMai;
+import DTO.KhachHang;
+import DTO.NhanVien;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,13 +33,16 @@ import javax.swing.table.DefaultTableModel;
  * @author agond
  */
 public class PhanQuyen extends javax.swing.JFrame {
+    int pos = 0, stt_nv = 0, stt_kh = 0;
     private String filename;
     Properties props = null;
     SanPhamBUS spBUS;
     KhachHangBUS khBUS;
     NhanVienBUS nvBUS;
-    private int slKH, slNV, slSP;
-    private String doanhThu;
+    KhachHang kh;
+    NhanVien nv;
+    private ArrayList<KhachHang> list_kh; 
+    private ArrayList<NhanVien> list_nv; 
     /**
      * Creates new form MuaHang
      */
@@ -48,8 +55,39 @@ public class PhanQuyen extends javax.swing.JFrame {
         
         spBUS = new SanPhamBUS();
         khBUS = new KhachHangBUS();
-        nvBUS = new NhanVienBUS();
-             
+        nvBUS = new NhanVienBUS();   
+        
+        list_kh = new ArrayList<>(khBUS.getList());
+        list_nv = new ArrayList<>(nvBUS.getList());
+    }
+    
+    public void initClick_KH() throws IOException{
+        pos = this.tbCTKM1.getSelectedRow();
+        
+        if(pos != -1){
+            String user = (String) tbCTKM1.getValueAt(pos, 3);
+            kh =  khBUS.searchObjectByUsername(user);
+            txtHoLot1.setText(kh.getHoLot());
+            txtTen1.setText(kh.getTen());
+            txtDiaChi1.setText(kh.getDiaChi());
+            txtSDT1.setText(kh.getSDT());
+            txtUsername1.setText(kh.getUsername());
+        }
+    }
+    
+    public void initClick_NV(){
+        pos = this.tbCTKM3.getSelectedRow();
+        
+        if(pos != -1){
+            String user = (String) tbCTKM3.getValueAt(pos, 3);
+            nv = nvBUS.searchObjectByUsername(user);
+            txtHoLot2.setText(nv.getHoLot());
+            txtTen2.setText(nv.getTen());
+            txtDiaChi2.setText(nv.getDiaChi());
+            txtSDT2.setText(nv.getSDT());
+            txtUsername2.setText(nv.getUsername());
+            txtLuong.setText(String.valueOf(nv.getLuong()));
+        }
     }
 
     /**
@@ -73,7 +111,7 @@ public class PhanQuyen extends javax.swing.JFrame {
         btnDangXuat = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        panel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbCTKM3 = new javax.swing.JTable();
         txtDiaChi2 = new javax.swing.JTextField();
@@ -96,7 +134,7 @@ public class PhanQuyen extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtLuong = new javax.swing.JTextField();
         lblSDT5 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        panel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbCTKM1 = new javax.swing.JTable();
         lblConfirmPass1 = new javax.swing.JLabel();
@@ -124,6 +162,11 @@ public class PhanQuyen extends javax.swing.JFrame {
         setMaximumSize(null);
         setPreferredSize(new java.awt.Dimension(900, 600));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         pnNav.setBackground(new java.awt.Color(50, 50, 50));
 
@@ -382,69 +425,69 @@ public class PhanQuyen extends javax.swing.JFrame {
         lblSDT5.setForeground(new java.awt.Color(25, 25, 25));
         lblSDT5.setText("Lương");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
                         .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUpdate2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnSignup2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
+                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblHoLot2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtHoLot2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel2Layout.createSequentialGroup()
                                 .addComponent(lblTen2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtTen2)))
                     .addComponent(txtDiaChi2)
                     .addComponent(txtSDT2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
+                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel2Layout.createSequentialGroup()
                                 .addComponent(lblUsername2)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtUsername2))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblSDT5)
                             .addComponent(txtLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDiaChi2)
                             .addComponent(lblSDT4)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel2Layout.createSequentialGroup()
+                                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblConfirmPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtConfirmPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblHoLot2)
                     .addComponent(lblTen2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHoLot2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTen2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -456,36 +499,36 @@ public class PhanQuyen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSDT2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
                         .addComponent(lblSDT5)
                         .addGap(5, 5, 5)
                         .addComponent(txtLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(panel2Layout.createSequentialGroup()
                         .addComponent(lblUsername2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPass2)
                     .addComponent(lblConfirmPass2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtConfirmPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSignup2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(panel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane4)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Nhân viên", jPanel1);
+        jTabbedPane1.addTab("Nhân viên", panel2);
 
         tbCTKM1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -630,66 +673,66 @@ public class PhanQuyen extends javax.swing.JFrame {
         lblPass1.setForeground(new java.awt.Color(25, 25, 25));
         lblPass1.setText("Mật khẩu");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panel1Layout.createSequentialGroup()
                         .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUpdate1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnSignup1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDiaChi1)
                             .addComponent(lblSDT3)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel1Layout.createSequentialGroup()
+                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtConfirmPass1)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(panel1Layout.createSequentialGroup()
                                         .addComponent(lblConfirmPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 36, Short.MAX_VALUE))))
                             .addComponent(txtSDT1)
                             .addComponent(txtUsername1)
                             .addComponent(lblUsername1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(panel1Layout.createSequentialGroup()
+                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblHoLot1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtHoLot1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panel1Layout.createSequentialGroup()
                                         .addComponent(lblTen1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(txtTen1, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)))
                             .addComponent(txtDiaChi1, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblHoLot1)
                     .addComponent(lblTen1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHoLot1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTen1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -705,23 +748,23 @@ public class PhanQuyen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsername1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPass1)
                     .addComponent(lblConfirmPass1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtConfirmPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSignup1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Khách hàng", jPanel2);
+        jTabbedPane1.addTab("Khách hàng", panel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -798,7 +841,11 @@ public class PhanQuyen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThongKeActionPerformed
 
     private void tbCTKM1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTKM1MouseClicked
-        // TODO add your handling code here:
+        try {
+            initClick_KH();
+        } catch (IOException ex) {
+            Logger.getLogger(PhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_tbCTKM1MouseClicked
 
     private void tbCTKM3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTKM3MouseClicked
@@ -815,10 +862,61 @@ public class PhanQuyen extends javax.swing.JFrame {
 
     private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
         // TODO add your handling code here:
+        int pos = this.tbCTKM1.getSelectedRow();
+        if(pos == -1){
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần xóa.");
+        } else {
+            KhachHang kh_del = khBUS.searchObjectByUsername(txtUsername1.getText());
+            boolean chk_del = khBUS.delete(kh_del);
+            if(chk_del){
+                JOptionPane.showMessageDialog(null, "Xóa khách hàng " + kh_del.getUsername() + " thành công");
+                //Cập nhật bảng
+                DefaultTableModel model = (DefaultTableModel) tbCTKM1.getModel();
+                model.removeRow(pos);
+                int row = tbCTKM1.getRowCount();
+                for(int i = 1; i < row; i++){
+                    model.setValueAt(i, i, 0);
+                }
+            } else JOptionPane.showMessageDialog(null, "Xóa thất bại.");
+        }
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
     private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            boolean chk_input_blank = checkTextFieldInputs_Blank(panel1);
+            if(chk_input_blank) {
+                if(txtPass1.getText().equals(txtConfirmPass1.getText())){
+                    KhachHang chk = new KhachHang();
+                    chk.setHoLot(txtHoLot1.getText());
+                    chk.setTen(txtTen1.getText());
+                    chk.setDiaChi(txtDiaChi1.getText());
+                    chk.setSDT(txtSDT1.getText());
+                    chk.setUsername(txtUsername1.getText());
+                    chk.setPassword(txtPass1.getText());
+
+                    boolean chk_update = khBUS.update(chk);
+                    
+                    if(chk_update){
+                        JOptionPane.showMessageDialog(null, "Đăng kí khách hàng thành công.");
+                        //Cập nhật bảng
+                        DefaultTableModel model = (DefaultTableModel) tbCTKM1.getModel();
+                        int column_user = 3;
+                        int rowCount = model.getRowCount();
+                        for(int i=0; i < rowCount; i++){
+                            String user = (String) model.getValueAt(i, column_user);
+                            if(chk.getUsername().equals(user)){
+                                model.setValueAt(chk.getHoLot(), i, 1);
+                                model.setValueAt(chk.getTen(), i, 2);
+                                break;
+                            }
+                        }
+                    } else JOptionPane.showMessageDialog(null, "Đăng kí khách hàng không thành công.");                
+                }
+            } else JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin khách hàng.");
+        } catch (IOException ex) {
+            Logger.getLogger(PhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnUpdate1ActionPerformed
 
     private void txtDiaChi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaChi1ActionPerformed
@@ -834,7 +932,35 @@ public class PhanQuyen extends javax.swing.JFrame {
     }//GEN-LAST:event_txtConfirmPass1ActionPerformed
 
     private void btnSignup1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignup1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            boolean chk_input_blank = checkTextFieldInputs_Blank(panel1);
+            if(chk_input_blank) {
+                KhachHang chk = new KhachHang();
+                chk.setHoLot(txtHoLot1.getText());
+                chk.setTen(txtTen1.getText());
+                chk.setDiaChi(txtDiaChi1.getText());
+                chk.setSDT(txtSDT1.getText());
+                chk.setUsername(txtUsername1.getText());
+                chk.setPassword(txtPass1.getText());
+
+                int chk_unique = khBUS.write(chk, txtConfirmPass1.getText());
+                
+                if(chk_unique == 1){
+                    JOptionPane.showMessageDialog(null, "Username đã tồn tại trong hệ thống.");
+                } else if(chk_unique == 2){
+                    JOptionPane.showMessageDialog(null, "Xác nhận mật khẩu không đúng.");
+                } else {
+                    DefaultTableModel model = (DefaultTableModel) tbCTKM1.getModel();
+                    Object[] rowdata = {stt_kh++, kh.getHoLot(), kh.getTen(), kh.getUsername()};
+                    model.addRow(rowdata);
+                    JOptionPane.showMessageDialog(null, "Đăng kí khách hàng thành công.");
+                }
+            } else JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin khách hàng.");
+        } catch (IOException ex) {
+            Logger.getLogger(PhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnSignup1ActionPerformed
 
     private void txtSDT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDT1ActionPerformed
@@ -859,6 +985,23 @@ public class PhanQuyen extends javax.swing.JFrame {
 
     private void btnDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete2ActionPerformed
         // TODO add your handling code here:
+        int pos = this.tbCTKM3.getSelectedRow();
+        if(pos == -1){
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xóa.");
+        } else {
+            NhanVien nv_del = nvBUS.searchObjectByUsername(txtUsername2.getText());
+            boolean chk_del = nvBUS.delete(nv_del);
+            if(chk_del){
+                JOptionPane.showMessageDialog(null, "Xóa nhân viên " + nv_del.getUsername() + " thành công");
+                //Cập nhật bảng
+                DefaultTableModel model = (DefaultTableModel) tbCTKM3.getModel();
+                model.removeRow(pos);
+                int row = tbCTKM3.getRowCount();
+                for(int i = 1; i < row; i++){
+                    model.setValueAt(i, i, 0);
+                }
+            } else JOptionPane.showMessageDialog(null, "Xóa thất bại.");
+        }
     }//GEN-LAST:event_btnDelete2ActionPerformed
 
     private void txtConfirmPass2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmPass2ActionPerformed
@@ -867,6 +1010,35 @@ public class PhanQuyen extends javax.swing.JFrame {
 
     private void btnSignup2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignup2ActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            boolean chk_input_blank = checkTextFieldInputs_Blank(panel2);
+            if(chk_input_blank) {
+                NhanVien chk = new NhanVien();
+                chk.setHoLot(txtHoLot2.getText());
+                chk.setTen(txtTen2.getText());
+                chk.setDiaChi(txtDiaChi2.getText());
+                chk.setSDT(txtSDT2.getText());
+                chk.setLuong(Integer.parseInt(txtLuong.getText()));
+                chk.setUsername(txtUsername2.getText());
+                chk.setPassword(txtPass2.getText());
+
+                int chk_unique = nvBUS.write(chk, txtConfirmPass2.getText());
+                
+                if(chk_unique == 1){
+                    JOptionPane.showMessageDialog(null, "Username đã tồn tại trong hệ thống.");
+                } else if(chk_unique == 2){
+                    JOptionPane.showMessageDialog(null, "Xác nhận mật khẩu không đúng.");
+                } else {
+                    DefaultTableModel model = (DefaultTableModel) tbCTKM3.getModel();
+                    Object[] rowdata = {stt_nv++, nv.getHoLot(), nv.getTen(), nv.getUsername(), nv.getLuong()};
+                    model.addRow(rowdata);
+                    JOptionPane.showMessageDialog(null, "Đăng kí nhân viên thành công.");
+                }
+            } else JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin nhân viên.");
+        } catch (IOException ex) {
+            Logger.getLogger(PhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSignup2ActionPerformed
 
     private void txtSDT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDT2ActionPerformed
@@ -875,6 +1047,43 @@ public class PhanQuyen extends javax.swing.JFrame {
 
     private void btnUpdate2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate2ActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            boolean chk_input_blank = checkTextFieldInputs_Blank(panel2);
+            if(chk_input_blank) {
+                if(txtPass2.getText().equals(txtConfirmPass2.getText())){
+                    NhanVien chk = new NhanVien();
+                    chk.setHoLot(txtHoLot2.getText());
+                    chk.setTen(txtTen2.getText());
+                    chk.setDiaChi(txtDiaChi2.getText());
+                    chk.setSDT(txtSDT2.getText());
+                    chk.setLuong(Integer.parseInt(txtLuong.getText()));
+                    chk.setUsername(txtUsername2.getText());
+                    chk.setPassword(txtPass2.getText());
+
+                    boolean chk_update = nvBUS.update(chk);
+                    
+                    if(chk_update){
+                        JOptionPane.showMessageDialog(null, "Đăng kí nhân viên thành công.");
+                        //Cập nhật bảng
+                        DefaultTableModel model = (DefaultTableModel) tbCTKM3.getModel();
+                        int column_user = 3;
+                        int rowCount = model.getRowCount();
+                        for(int i=0; i < rowCount; i++){
+                            String user = (String) model.getValueAt(i, column_user);
+                            if(chk.getUsername().equals(user)){
+                                model.setValueAt(chk.getHoLot(), i, 1);
+                                model.setValueAt(chk.getTen(), i, 2);
+                                model.setValueAt(chk.getLuong(), i, 4);
+                                break;
+                            }
+                        }
+                    } else JOptionPane.showMessageDialog(null, "Đăng kí khách hàng không thành công.");                
+                }
+            } else JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin khách hàng.");
+        } catch (IOException ex) {
+            Logger.getLogger(PhanQuyen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnUpdate2ActionPerformed
 
     private void txtTen2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTen2ActionPerformed
@@ -888,6 +1097,21 @@ public class PhanQuyen extends javax.swing.JFrame {
     private void txtLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLuongActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLuongActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        DefaultTableModel model1 = (DefaultTableModel) tbCTKM1.getModel();
+        for(KhachHang kh : list_kh){
+            Object[] rowdata1 = {stt_kh++, kh.getHoLot(), kh.getTen(), kh.getUsername()};
+            model1.addRow(rowdata1);
+        }
+        
+        DefaultTableModel model2 = (DefaultTableModel) tbCTKM3.getModel();
+        for(NhanVien nv : list_nv){
+            Object[] rowdata2 = {stt_nv++, nv.getHoLot(), nv.getHoLot(), nv.getUsername(), nv.getLuong()};
+            model2.addRow(rowdata2);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -995,6 +1219,21 @@ public class PhanQuyen extends javax.swing.JFrame {
         });
     }
 
+    
+    //Kiểm tra các textfield có đang chọn hay ko
+    public boolean checkTextFieldInputs_Blank(Container container) {
+        for(Component c : getComponents()){
+            if(c instanceof JTextField){
+                JTextField txt = (JTextField) c;
+                if(txt.getText().isEmpty()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangXuat;
     private javax.swing.JButton btnDelete1;
@@ -1010,8 +1249,6 @@ public class PhanQuyen extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator3;
@@ -1032,6 +1269,8 @@ public class PhanQuyen extends javax.swing.JFrame {
     private javax.swing.JLabel lblTen2;
     private javax.swing.JLabel lblUsername1;
     private javax.swing.JLabel lblUsername2;
+    private javax.swing.JPanel panel1;
+    private javax.swing.JPanel panel2;
     private javax.swing.JPanel pnNav;
     private javax.swing.JTable tbCTKM1;
     private javax.swing.JTable tbCTKM3;
