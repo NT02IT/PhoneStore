@@ -4,18 +4,20 @@
  */
 package GUI;
 
+import BUS.CT_KhuyenMaiBUS;
 import BUS.CT_SanPhamBUS;
 import BUS.HangSxBUS;
 import BUS.LoaiSPBUS;
 import BUS.SanPhamBUS;
+import DTO.CT_KhuyenMai;
 import DTO.CT_SanPham;
-import DTO.Common;
-import DTO.Hang_SX;
 import DTO.SanPham;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,9 +30,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MuaHang extends javax.swing.JFrame {
     int pos = 0;
-    String tenSP, hangSx, loaiSp, moTaSP;
-    int donGia, soLuongChon;
+    String tenSP, hangSx, loaiSp, moTaSP, MGG;
+    int donGia, soLuongGUI, tongTien, phanTramGiam, giamGia, thanhTien;
     int STT =0;
+    Date today;
     
     CT_SanPham ctsp;
     SanPham spDangChon;
@@ -48,6 +51,8 @@ public class MuaHang extends javax.swing.JFrame {
     public MuaHang() throws IOException, ClassNotFoundException, SQLException {
         initComponents();
         setLocationRelativeTo(null);
+        today = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         
         ctspBUS = new CT_SanPhamBUS();
         listSP = new ArrayList<>(ctspBUS.getList());        
@@ -68,6 +73,69 @@ public class MuaHang extends javax.swing.JFrame {
             donGia = spBUS.getDonGiabyMaSP(ctsp.getMaSP());
             sanPhamModel.addRow(new Object[]{i++, tenSP, donGia});
         }
+    }
+    
+    public void showGioHang(){
+        STT++;
+        tenSP = spDangChon.getTenSP();
+        donGia = spDangChon.getDonGia();
+        hangSx = hsxBUS.getTenHangByID(ctsp.getMaHang());
+        soLuongGUI = spDangChon.getSLKhachChon();
+        gioHangModel.addRow(new Object[]{STT, tenSP, hangSx, donGia, soLuongGUI}); 
+    }
+    
+    public int PhanTramGiam(String MGG) throws ClassNotFoundException, SQLException, IOException {
+        //CT_KhuyenMai ctkm = new CT_KhuyenMai();
+        CT_KhuyenMaiBUS ctkmBUS = new CT_KhuyenMaiBUS();
+        for (CT_KhuyenMai ctkm : ctkmBUS.getList()){
+            if (MGG.equals(ctkm.getMaKM())){
+                phanTramGiam = ctkm.getPhanTramGiam();
+                return phanTramGiam;
+            }
+        }
+        return 0; // Mã giảm giá sai
+    }
+    
+    public int compareDate(String MGG)throws ClassNotFoundException, SQLException, IOException{
+        CT_KhuyenMaiBUS ctkmBUS = new CT_KhuyenMaiBUS();
+        Date ngayBD;
+        Date ngayKT;
+        for (CT_KhuyenMai ctkm : ctkmBUS.getList()){
+            if (MGG.equals(ctkm.getMaKM())){
+                ngayBD = ctkm.getNgayBD();
+                ngayKT = ctkm.getNgayKT();
+                if(today.compareTo(ngayKT)>0) // Ngày hiện tại nằm sau ngày kết thúc
+                    return 1; // Sự kiện đã kết thúc
+                else if(today.compareTo(ngayBD)<0) // Ngày hiện tại nằm trước ngày bắt đầu
+                    return -1; // Sự kiện chưa bắt đầu
+                else return 0;
+            }
+        }
+        return 0;
+    }
+    
+    public void CapNhatTT(){
+        try {
+                tongTien = spBUS.TongTien(listGioHang);
+                txtTongCong.setText(Integer.toString(tongTien));        
+                
+                if(MGG != null){
+                    giamGia = tongTien*PhanTramGiam(MGG)/100;
+                    txtGiamGia.setText('-' + Integer.toString(giamGia));
+                }
+                
+                if (giamGia != 0)
+                    thanhTien = tongTien - giamGia;
+                else thanhTien = tongTien;
+                txtThanhTien.setText(Integer.toString(thanhTien));
+                
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 
     /**
@@ -99,15 +167,15 @@ public class MuaHang extends javax.swing.JFrame {
         tbGioHang = new javax.swing.JTable();
         btnXoaSP = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        lblTongCong = new javax.swing.JLabel();
-        lblTongCong1 = new javax.swing.JLabel();
+        lblGiamGia = new javax.swing.JLabel();
+        txtTongCong = new javax.swing.JLabel();
         lblTongCong2 = new javax.swing.JLabel();
         txtMGG = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        lblTongCong3 = new javax.swing.JLabel();
-        lblTongCong4 = new javax.swing.JLabel();
-        lblTongCong5 = new javax.swing.JLabel();
-        lblTongCong6 = new javax.swing.JLabel();
+        lblTongCong = new javax.swing.JLabel();
+        txtGiamGia = new javax.swing.JLabel();
+        lblThanhTien = new javax.swing.JLabel();
+        txtThanhTien = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         pnInfoSP = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -128,7 +196,7 @@ public class MuaHang extends javax.swing.JFrame {
         btnSub = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PhoneStore: Reset Password");
+        setTitle("PhoneStore: Mua hàng");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(null);
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -151,6 +219,11 @@ public class MuaHang extends javax.swing.JFrame {
         btnThongKe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThongKe.setForeground(new java.awt.Color(75, 75, 75));
         btnThongKe.setText("Thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
 
         btnSanPham.setBackground(new java.awt.Color(240, 240, 240));
         btnSanPham.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -161,6 +234,11 @@ public class MuaHang extends javax.swing.JFrame {
         btnKhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnKhuyenMai.setForeground(new java.awt.Color(75, 75, 75));
         btnKhuyenMai.setText("Khuyến mãi");
+        btnKhuyenMai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhuyenMaiActionPerformed(evt);
+            }
+        });
 
         btnPhanQuyen.setBackground(new java.awt.Color(240, 240, 240));
         btnPhanQuyen.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -270,6 +348,7 @@ public class MuaHang extends javax.swing.JFrame {
             }
         });
         tbSanPham.setMinimumSize(new java.awt.Dimension(12, 0));
+        tbSanPham.setRowHeight(28);
         tbSanPham.setSelectionBackground(new java.awt.Color(60, 90, 180));
         tbSanPham.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbSanPham.setShowGrid(false);
@@ -312,6 +391,12 @@ public class MuaHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbGioHang.setRowHeight(28);
+        tbGioHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbGioHangMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbGioHang);
         if (tbGioHang.getColumnModel().getColumnCount() > 0) {
             tbGioHang.getColumnModel().getColumn(0).setPreferredWidth(12);
@@ -324,44 +409,55 @@ public class MuaHang extends javax.swing.JFrame {
         btnXoaSP.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXoaSP.setForeground(new java.awt.Color(240, 240, 240));
         btnXoaSP.setText("Xóa sản phẩm");
+        btnXoaSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaSPActionPerformed(evt);
+            }
+        });
 
-        lblTongCong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblTongCong.setForeground(new java.awt.Color(75, 75, 75));
-        lblTongCong.setText("Giảm giá:");
-        lblTongCong.setToolTipText("");
+        lblGiamGia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblGiamGia.setForeground(new java.awt.Color(75, 75, 75));
+        lblGiamGia.setText("Giảm giá:");
+        lblGiamGia.setToolTipText("");
 
-        lblTongCong1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTongCong1.setForeground(new java.awt.Color(75, 75, 75));
-        lblTongCong1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTongCong1.setText("0");
-        lblTongCong1.setToolTipText("");
+        txtTongCong.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtTongCong.setForeground(new java.awt.Color(75, 75, 75));
+        txtTongCong.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtTongCong.setText("0");
+        txtTongCong.setToolTipText("");
 
         lblTongCong2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblTongCong2.setForeground(new java.awt.Color(75, 75, 75));
         lblTongCong2.setText("Mã giảm giá");
         lblTongCong2.setToolTipText("");
 
-        lblTongCong3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblTongCong3.setForeground(new java.awt.Color(75, 75, 75));
-        lblTongCong3.setText("Tổng cộng:");
-        lblTongCong3.setToolTipText("");
+        txtMGG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMGGActionPerformed(evt);
+            }
+        });
 
-        lblTongCong4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTongCong4.setForeground(new java.awt.Color(220, 65, 65));
-        lblTongCong4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTongCong4.setText("-0");
-        lblTongCong4.setToolTipText("");
+        lblTongCong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblTongCong.setForeground(new java.awt.Color(75, 75, 75));
+        lblTongCong.setText("Tổng cộng:");
+        lblTongCong.setToolTipText("");
 
-        lblTongCong5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTongCong5.setForeground(new java.awt.Color(75, 75, 75));
-        lblTongCong5.setText("Thành tiền:");
-        lblTongCong5.setToolTipText("");
+        txtGiamGia.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtGiamGia.setForeground(new java.awt.Color(220, 65, 65));
+        txtGiamGia.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtGiamGia.setText("-0");
+        txtGiamGia.setToolTipText("");
 
-        lblTongCong6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTongCong6.setForeground(new java.awt.Color(60, 90, 180));
-        lblTongCong6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTongCong6.setText("-0");
-        lblTongCong6.setToolTipText("");
+        lblThanhTien.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblThanhTien.setForeground(new java.awt.Color(75, 75, 75));
+        lblThanhTien.setText("Thành tiền:");
+        lblThanhTien.setToolTipText("");
+
+        txtThanhTien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtThanhTien.setForeground(new java.awt.Color(60, 90, 180));
+        txtThanhTien.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtThanhTien.setText("0");
+        txtThanhTien.setToolTipText("");
 
         txtSearch.setBackground(new java.awt.Color(242, 242, 242));
         txtSearch.setForeground(new java.awt.Color(75, 75, 75));
@@ -510,17 +606,17 @@ public class MuaHang extends javax.swing.JFrame {
                                             .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(pnContentLayout.createSequentialGroup()
                                                     .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(lblTongCong, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(lblTongCong3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(lblGiamGia, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblTongCong, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                     .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(lblTongCong1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(lblTongCong4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(txtTongCong, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtGiamGia, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(pnContentLayout.createSequentialGroup()
-                                                    .addComponent(lblTongCong5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lblThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(lblTongCong6, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                    .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(pnContentLayout.createSequentialGroup()
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(6, 6, 6))))
@@ -565,21 +661,21 @@ public class MuaHang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXoaSP)
-                    .addComponent(lblTongCong1)
-                    .addComponent(lblTongCong3))
+                    .addComponent(txtTongCong)
+                    .addComponent(lblTongCong))
                 .addGap(18, 18, 18)
                 .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTongCong2)
-                    .addComponent(lblTongCong)
-                    .addComponent(lblTongCong4))
+                    .addComponent(lblGiamGia)
+                    .addComponent(txtGiamGia))
                 .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnContentLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTongCong5)
-                            .addComponent(lblTongCong6)))
+                            .addComponent(lblThanhTien)
+                            .addComponent(txtThanhTien)))
                     .addGroup(pnContentLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMGG, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -630,8 +726,8 @@ public class MuaHang extends javax.swing.JFrame {
         pos = this.tbSanPham.getSelectedRow();
         ctsp = listSP.get(pos);
         spDangChon = spBUS.getSanPhamByID(ctsp.getMaSP());
-        spDangChon.setSLKhachChon(1);
-        soLuongChon = spDangChon.getSLKhachChon();
+        soLuongGUI = 1;
+        spDangChon.setSLKhachChon(soLuongGUI);
         
         tenSP = spBUS.getTenSPbyMaSP(ctsp.getMaSP());
         hangSx = hsxBUS.getTenHangByID(ctsp.getMaHang());
@@ -642,7 +738,7 @@ public class MuaHang extends javax.swing.JFrame {
         txtHangSX.setText(hangSx);
         txtLoaiSP.setText(loaiSp);
         txtChiTietSP.setText(moTaSP);
-        txtSoLuongThem.setText(Integer.toString(soLuongChon));
+        txtSoLuongThem.setText(Integer.toString(soLuongGUI));
  
 //        ctsp = ctspBUS.getCTSPBySP(sp);
 //        hsx = hangSxBUS.getHangSXbyCTSP(ctsp);        
@@ -650,16 +746,24 @@ public class MuaHang extends javax.swing.JFrame {
     }//GEN-LAST:event_tbSanPhamMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        soLuongChon++;
-        spDangChon.setSLKhachChon(soLuongChon);
+        soLuongGUI++;
+        spDangChon.setSLKhachChon(soLuongGUI);
+        
+//        int index = spBUS.searchIndexByID(spDangChon.getMaSP());
+//        spBUS.setSLSanPhamKC(index, soLuongGUI);
+        
         txtSoLuongThem.setText(Integer.toString(spDangChon.getSLKhachChon()));
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubActionPerformed
-        soLuongChon = spDangChon.getSLKhachChon();
-        if (soLuongChon > 0){
-            soLuongChon--;
-            spDangChon.setSLKhachChon(soLuongChon);
+        soLuongGUI = spDangChon.getSLKhachChon();
+        if (soLuongGUI > 0){
+            soLuongGUI--;
+            spDangChon.setSLKhachChon(soLuongGUI);
+            
+//            int index = spBUS.searchIndexByID(spDangChon.getMaSP());
+//            spBUS.setSLSanPhamKC(index, soLuongGUI);
+            
             txtSoLuongThem.setText(Integer.toString(spDangChon.getSLKhachChon()));
         }
         else JOptionPane.showMessageDialog(null,"Số lượng không được nhỏ hơn 0!", "Số lượng không được nhỏ hơn 0",JOptionPane.INFORMATION_MESSAGE);
@@ -667,14 +771,103 @@ public class MuaHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSubActionPerformed
 
     private void btnThemVaoGioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemVaoGioActionPerformed
-        listGioHang.add(ctsp);
-        STT++;
-        tenSP = spBUS.getTenSPbyMaSP(ctsp.getMaSP());
-        donGia = spBUS.getDonGiabyMaSP(ctsp.getMaSP());
-        hangSx = hsxBUS.getTenHangByID(ctsp.getMaHang());
-        soLuongChon = spBUS.getSanPhamByID(ctsp.getMaSP()).getSLKhachChon();
-        gioHangModel.addRow(new Object[]{STT, tenSP, hangSx,donGia, soLuongChon}); 
+        //check trùng sản phẩm   
+        int checkTrungCTSP = 0;
+        for (CT_SanPham ctspInGh : listGioHang){
+            String ctspID = ctsp.getMaSP();
+            String ctspInGhID = ctspInGh.getMaSP();
+            if (ctspID == ctspInGhID){
+                // soLuongGUI += spBUS.getSanPhamByID(ctspInGhID).getSLKhachChon(); // cộng với số lượng chọn dưới BUS
+                JOptionPane.showMessageDialog(null,"Đã tồn tại sản phẩm trong giỏ hàng", "Sản phẩm đã tồn tại",JOptionPane.INFORMATION_MESSAGE);
+                checkTrungCTSP = 1;
+                break;
+            }
+        }        
+        if(checkTrungCTSP == 0){
+            showGioHang();
+            listGioHang.add(ctsp);
+        }
+        
+        // Set số lượng sp xuống BUS
+        int index = spBUS.searchIndexByID(spDangChon.getMaSP());
+        spBUS.setSLSanPhamKC(index, soLuongGUI);
+        
+        // Tính tổng
+        CapNhatTT();
+        
+        //reset soluongGUI
+        //soLuongGUI = 1;
+//        txtSoLuongThem.setText(Integer.toString(soLuongGUI));
     }//GEN-LAST:event_btnThemVaoGioActionPerformed
+
+    private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed
+        KhuyenMai khuyenMaiForm = null; 
+        try {
+            khuyenMaiForm = new KhuyenMai();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        khuyenMaiForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (MuaHang)
+    }//GEN-LAST:event_btnKhuyenMaiActionPerformed
+
+    private void tbGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGioHangMouseClicked
+        pos = this.tbGioHang.getSelectedRow();
+        ctsp = listSP.get(pos);
+        spDangChon = spBUS.getSanPhamByID(ctsp.getMaSP());
+    }//GEN-LAST:event_tbGioHangMouseClicked
+
+    private void btnXoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPActionPerformed
+        gioHangModel.removeRow(pos);
+        listGioHang.remove(ctsp);
+        CapNhatTT();
+    }//GEN-LAST:event_btnXoaSPActionPerformed
+
+    private void txtMGGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMGGActionPerformed
+        txtMGG.addActionListener((ActionEvent e) -> {
+            try {
+                MGG = txtMGG.getText();
+                if (PhanTramGiam(MGG) == 0)
+                    JOptionPane.showMessageDialog(null,"Mã giảm giá không hợp lệ", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
+                else{
+                    int checkday = compareDate(MGG);
+                    if (checkday == -1)
+                        JOptionPane.showMessageDialog(null,"Sự kiện chưa đến", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
+                    else if (checkday == 1)
+                        JOptionPane.showMessageDialog(null,"Sự kiện đã kết thúc", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
+                    else{
+                        JOptionPane.showMessageDialog(null,"Thêm mã giảm giá thành công\nBạn được giảm " + PhanTramGiam(MGG) + "%", "Mã giảm giá không hợp lệ",JOptionPane.INFORMATION_MESSAGE);
+                        CapNhatTT();
+                    }
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }//GEN-LAST:event_txtMGGActionPerformed
+
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+        ThongKe thongKeForm = null; 
+        try {
+            thongKeForm = new ThongKe();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        thongKeForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (MuaHang)
+    }//GEN-LAST:event_btnThongKeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -751,16 +944,13 @@ public class MuaHang extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblGiamGia;
     private javax.swing.JLabel lblGioHang;
     private javax.swing.JLabel lblPhoneStore;
     private javax.swing.JLabel lblSanPham;
+    private javax.swing.JLabel lblThanhTien;
     private javax.swing.JLabel lblTongCong;
-    private javax.swing.JLabel lblTongCong1;
     private javax.swing.JLabel lblTongCong2;
-    private javax.swing.JLabel lblTongCong3;
-    private javax.swing.JLabel lblTongCong4;
-    private javax.swing.JLabel lblTongCong5;
-    private javax.swing.JLabel lblTongCong6;
     private javax.swing.JScrollPane pbBody;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnInfoSP;
@@ -768,11 +958,14 @@ public class MuaHang extends javax.swing.JFrame {
     private javax.swing.JTable tbGioHang;
     private javax.swing.JTable tbSanPham;
     private javax.swing.JTextPane txtChiTietSP;
+    private javax.swing.JLabel txtGiamGia;
     private javax.swing.JTextPane txtHangSX;
     private javax.swing.JTextPane txtLoaiSP;
     private javax.swing.JTextField txtMGG;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JLabel txtSoLuongThem;
     private javax.swing.JTextPane txtTenSP;
+    private javax.swing.JLabel txtThanhTien;
+    private javax.swing.JLabel txtTongCong;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,7 +16,7 @@ public class PhieuNhap{
     ID dt = new ID("phieunhap");
 
     public PhieuNhap() throws IOException {
-        maPN = "PN" + dt.getMaxID();
+        maPN = "PN" + dt.getMax();
     }
 
     public PhieuNhap(int tongTien, int maNCC, int maNV, String ngayLap) throws IOException {
@@ -24,7 +24,7 @@ public class PhieuNhap{
         this.maNCC = maNCC;
         this.maNV = maNV;
         this.ngayLap = ngayLap;
-        maPN = "PN" + dt.getMaxID();
+        maPN = "PN" + dt.getMax();
     }
 
     public String getMaPN() {

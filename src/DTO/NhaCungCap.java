@@ -15,14 +15,14 @@ public class NhaCungCap{
     ID dt = new ID("nhacungcap");
 
     public NhaCungCap() throws IOException {
-        maNCC = "NCC" + dt.getMaxID();
+        maNCC = "NCC" + dt.getMax();
     }
 
     public NhaCungCap(String tenNCC, String diaChi, String SDT) throws IOException {
         this.tenNCC = tenNCC;
         this.diaChi = diaChi;
         this.SDT = SDT;
-        maNCC = "NCC" + dt.getMaxID();
+        maNCC = "NCC" + dt.getMax();
     }  
 
     public String getMaNCC() {

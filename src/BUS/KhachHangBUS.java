@@ -107,9 +107,10 @@ public class KhachHangBUS{
         String tempUsername;
         for(KhachHang kh : list){
             tempUsername = kh.getUsername();
-            if (tempUsername.equals(username))
+            if (tempUsername.equals(username)){
                 result = kh;  
                 break;
+            }
         }
         return result;
     }
