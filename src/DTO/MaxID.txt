@@ -1,10 +1,10 @@
-#Tue May 16 07:05:28 ICT 2023
+#Tue May 16 15:01:51 ICT 2023
 doanhthu=1005
-hangsx=197
+hangsx=198
 hoadon=0
-khachhang=483
-loaisp=181
+khachhang=497
+loaisp=182
 nhacungcap=0
-nhanvien=22
+nhanvien=36
 phieunhap=0
-sanpham=359
+sanpham=375

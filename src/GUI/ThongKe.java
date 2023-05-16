@@ -138,6 +138,11 @@ public class ThongKe extends javax.swing.JFrame {
         btnKhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnKhuyenMai.setForeground(new java.awt.Color(75, 75, 75));
         btnKhuyenMai.setText("Khuyến mãi");
+        btnKhuyenMai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhuyenMaiActionPerformed(evt);
+            }
+        });
 
         btnPhanQuyen.setBackground(new java.awt.Color(240, 240, 240));
         btnPhanQuyen.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -415,6 +420,21 @@ public class ThongKe extends javax.swing.JFrame {
         muaHangForm.setVisible(true); // Hiển thị form "Signin"
         this.dispose(); // Ẩn form hiện tại (Signup)
     }//GEN-LAST:event_btnMuaHangActionPerformed
+
+    private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed
+        KhuyenMai khuyenMaiForm = null; 
+        try {
+            khuyenMaiForm = new KhuyenMai();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        khuyenMaiForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (MuaHang)
+    }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     /**
      * @param args the command line arguments

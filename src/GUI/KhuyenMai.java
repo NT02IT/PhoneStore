@@ -28,8 +28,8 @@ public class KhuyenMai extends javax.swing.JFrame {
     String maKM, tenKM, ngayBD, ngayKT;
     int phanTramGiam;
     int STT =0;
-    CT_KhuyenMai ctkm;
-    CT_KhuyenMai ctkmDangChon;
+    CT_KhuyenMai ctkmLayRa;
+    CT_KhuyenMai ctkmChenVao;
     SimpleDateFormat dateView;  
     SimpleDateFormat dateDB;       
     
@@ -42,8 +42,7 @@ public class KhuyenMai extends javax.swing.JFrame {
     public KhuyenMai() throws IOException, ClassNotFoundException, SQLException {
         initComponents();
         setLocationRelativeTo(null);
-        
-        ctkm = new CT_KhuyenMai();
+
         ctkmBUS = new CT_KhuyenMaiBUS();
         listKM = new ArrayList<>(ctkmBUS.getList());          
         khuyenMaiModel = (DefaultTableModel) tbCTKM.getModel();
@@ -60,6 +59,35 @@ public class KhuyenMai extends javax.swing.JFrame {
             phanTramGiam = ctkm.getPhanTramGiam();
             khuyenMaiModel.addRow(new Object[]{i++, tenKM, maKM, phanTramGiam});
         }
+    }
+    
+    public void initCTKMChenVao(){
+        maKM = txtMaKM.getText();
+        tenKM = txtTenKM.getText();
+        ngayBD = txtNgayBD.getText();
+        ngayKT = txtNgayKT.getText();
+        phanTramGiam = Integer.parseInt(txtPhanTramGiam.getText());
+        ctkmChenVao = new CT_KhuyenMai(maKM, tenKM, ngayBD, ngayKT, phanTramGiam);
+    }
+    
+    public void initCTKMLayRa(){
+        pos = this.tbCTKM.getSelectedRow();
+        ctkmLayRa = listKM.get(pos);
+
+        maKM = ctkmLayRa.getMaKM();
+        txtMaKM.setText(maKM);
+
+        tenKM = ctkmLayRa.getTenKM();
+        txtTenKM.setText(tenKM);
+
+        phanTramGiam = ctkmLayRa.getPhanTramGiam();
+        txtPhanTramGiam.setText(Integer.toString(phanTramGiam));
+
+        ngayBD = dateView.format(ctkmLayRa.getNgayBD());
+        txtNgayBD.setText(ngayBD);
+
+        ngayKT = dateView.format(ctkmLayRa.getNgayKT());
+        txtNgayKT.setText(ngayKT);
     }
 
     /**
@@ -104,6 +132,8 @@ public class KhuyenMai extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         txtTenKM = new javax.swing.JTextPane();
         jLabel5 = new javax.swing.JLabel();
+        btnSua = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PhoneStore: Khuyến mãi");
@@ -204,7 +234,7 @@ public class KhuyenMai extends javax.swing.JFrame {
                 .addComponent(btnKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPhanQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -329,6 +359,34 @@ public class KhuyenMai extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Tên chương trình");
 
+        btnSua.setBackground(new java.awt.Color(242, 242, 242));
+        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSua.setForeground(new java.awt.Color(60, 90, 180));
+        btnSua.setText("Sửa");
+        btnSua.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(60, 90, 180), 1, true));
+        btnSua.setBorderPainted(false);
+        btnSua.setFocusPainted(false);
+        btnSua.setFocusable(false);
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
+        btnXoa.setBackground(new java.awt.Color(242, 242, 242));
+        btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnXoa.setForeground(new java.awt.Color(60, 90, 180));
+        btnXoa.setText("Xóa");
+        btnXoa.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(60, 90, 180), 1, true));
+        btnXoa.setBorderPainted(false);
+        btnXoa.setFocusPainted(false);
+        btnXoa.setFocusable(false);
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnInfoSPLayout = new javax.swing.GroupLayout(pnInfoSP);
         pnInfoSP.setLayout(pnInfoSPLayout);
         pnInfoSPLayout.setHorizontalGroup(
@@ -357,14 +415,18 @@ public class KhuyenMai extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSearch, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                             .addComponent(btnThemMaKM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnInfoSPLayout.createSequentialGroup()
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnInfoSPLayout.setVerticalGroup(
             pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnInfoSPLayout.createSequentialGroup()
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,7 +450,11 @@ public class KhuyenMai extends javax.swing.JFrame {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnThemMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnInfoSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
@@ -409,14 +475,12 @@ public class KhuyenMai extends javax.swing.JFrame {
         pnContentLayout.setVerticalGroup(
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnContentLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(13, 13, 13)
                 .addComponent(lblSanPham)
                 .addGap(25, 25, 25)
                 .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnContentLayout.createSequentialGroup()
-                        .addComponent(pnInfoSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(pnInfoSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
                 .addGap(37, 37, 37))
         );
 
@@ -460,46 +524,22 @@ public class KhuyenMai extends javax.swing.JFrame {
     }//GEN-LAST:event_pbBodyMouseWheelMoved
 
     private void tbCTKMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTKMMouseClicked
-        pos = this.tbCTKM.getSelectedRow();
-        ctkm = listKM.get(pos);  
-        
-        maKM = ctkm.getMaKM();
-        txtMaKM.setText(maKM);
-        
-        tenKM = ctkm.getTenKM();    
-        txtTenKM.setText(tenKM);
-        
-        phanTramGiam = ctkm.getPhanTramGiam();
-        txtPhanTramGiam.setText(Integer.toString(phanTramGiam));
-        
-        ngayBD = dateView.format(ctkm.getNgayBD());
-        txtNgayBD.setText(ngayBD);
-        
-        ngayKT = dateView.format(ctkm.getNgayKT());
-        txtNgayKT.setText(ngayKT);   
+        initCTKMLayRa();
+            
     }//GEN-LAST:event_tbCTKMMouseClicked
 
     private void btnThemMaKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemMaKMActionPerformed
-        try {
-            ctkmDangChon = new CT_KhuyenMai();
-            ctkmDangChon.setMaKM(txtMaKM.getText());
-            ctkmDangChon.setTenKM(txtTenKM.getText());
-            ctkmDangChon.setNgayBD(txtNgayBD.getText());
-            ctkmDangChon.setNgayKT(txtNgayKT.getText());
-            ctkmDangChon.setPhanTramGiam(Integer.parseInt(txtPhanTramGiam.getText()));   
-            
-            if (ctkmBUS.write(ctkmDangChon) == 1)
-                JOptionPane.showMessageDialog(null,"Chương trình khuyến mãi đã tồn tại!", "Tạo chương trình khuyến mãi thất bại",JOptionPane.INFORMATION_MESSAGE);
-            else{
-                listKM.add(ctkmDangChon);
-                STT = listKM.size();
-                tenKM = ctkmDangChon.getTenKM();
-                maKM = ctkmDangChon.getMaKM();
-                phanTramGiam = ctkmDangChon.getPhanTramGiam();
-                khuyenMaiModel.addRow(new Object[]{STT, tenKM, maKM, phanTramGiam});
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(KhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+        initCTKMChenVao();
+        if (ctkmBUS.write(ctkmChenVao) == 1)
+            JOptionPane.showMessageDialog(null,"Chương trình khuyến mãi đã tồn tại!", "Tạo chương trình khuyến mãi thất bại",JOptionPane.INFORMATION_MESSAGE);
+        else{
+            listKM.add(ctkmChenVao);
+            STT = listKM.size();
+            tenKM = ctkmChenVao.getTenKM();
+            maKM = ctkmChenVao.getMaKM();
+            phanTramGiam = ctkmChenVao.getPhanTramGiam();
+            khuyenMaiModel.addRow(new Object[]{STT, tenKM, maKM, phanTramGiam});
+            JOptionPane.showMessageDialog(null,"Tạo chương trình khuyến mãi thành công!", "Tạo chương trình khuyến mãi thành công",JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnThemMaKMActionPerformed
 
@@ -536,6 +576,27 @@ public class KhuyenMai extends javax.swing.JFrame {
         thongKeForm.setVisible(true); // Hiển thị form "Signin"
         this.dispose(); // Ẩn form hiện tại (MuaHang)
     }//GEN-LAST:event_btnThongKeActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        initCTKMChenVao();
+
+        if (ctkmChenVao.getMaKM().equals(txtMaKM.getText())){
+            if (ctkmBUS.update(ctkmBUS.getObjectByMaKM(ctkmChenVao.getMaKM()))){
+                khuyenMaiModel.setValueAt(txtTenKM.getText(), pos, 1);
+                khuyenMaiModel.setValueAt(txtMaKM.getText(), pos, 2);
+                khuyenMaiModel.setValueAt(txtPhanTramGiam.getText(), pos, 3);
+                JOptionPane.showMessageDialog(null,"Cập nhật chương trình khuyến mãi thành công", "Cập nhật chương trình khuyến mãi thành công",JOptionPane.INFORMATION_MESSAGE);
+            } else 
+                JOptionPane.showMessageDialog(null,"Cập nhật chương trình khuyến mãi thất bại", "Cập nhật chương trình khuyến mãi thất bại",JOptionPane.INFORMATION_MESSAGE);
+        }            
+        else{
+            JOptionPane.showMessageDialog(null,"Không được update Mã khuyến mãi\nBạn có thể xóa đi và thêm lại", "Cập nhật chương trình khuyến mãi thất bại",JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -601,8 +662,10 @@ public class KhuyenMai extends javax.swing.JFrame {
     private javax.swing.JButton btnMuaHang;
     private javax.swing.JButton btnPhanQuyen;
     private javax.swing.JButton btnSanPham;
+    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThemMaKM;
     private javax.swing.JButton btnThongKe;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

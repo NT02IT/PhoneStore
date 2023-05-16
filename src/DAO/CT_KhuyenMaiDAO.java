@@ -106,8 +106,12 @@ public class CT_KhuyenMaiDAO implements Action<CT_KhuyenMai> {
             String sql = "UPDATE CTKM SET TenKM = ?, NgayBD = ?, NgayKT = ?, PhanTramGiam = ? WHERE MaKM = ?;";
             PreparedStatement pstmt = MyConnection.conn.prepareStatement(sql);
             pstmt.setString(1, data.getTenKM());
-            pstmt.setDate(2, data.getNgayBD());
-            pstmt.setDate(3, data.getNgayKT());
+//            pstmt.setDate(2, data.getNgayBD());
+//            pstmt.setDate(3, data.getNgayKT());
+            java.sql.Timestamp ngayBD = new java.sql.Timestamp(data.getNgayBD().getTime());
+            pstmt.setTimestamp(2, ngayBD);
+            java.sql.Timestamp ngayKT = new java.sql.Timestamp(data.getNgayKT().getTime());
+            pstmt.setTimestamp(3, ngayKT);
             pstmt.setInt(4, data.getPhanTramGiam());
             pstmt.setString(5, data.getMaKM());
             pstmt.executeUpdate();              
