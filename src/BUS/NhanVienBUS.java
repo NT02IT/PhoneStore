@@ -109,9 +109,10 @@ public class NhanVienBUS{
         String tempUsername;
         for(NhanVien nv : list){
             tempUsername = nv.getUsername();
-            if (tempUsername.equals(username))
+            if (tempUsername.equals(username)){
                 result = nv;  
                 break;
+            }
         }
         return result;
     }
