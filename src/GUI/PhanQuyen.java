@@ -1013,7 +1013,7 @@ public class PhanQuyen extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             boolean chk_input_blank = checkTextFieldInputs_Blank(panel2);
-            if(chk_input_blank) {
+            if(txtTen2.getText().isEmpty() || txtHoLot2.getText().isEmpty() || txtDiaChi2.getText().isEmpty() || txtSDT2.getText().isEmpty() || txtLuong.getText().isEmpty() || txtUsername2.getText().isEmpty() || txtPass2.getText().isEmpty()) {
                 NhanVien chk = new NhanVien();
                 chk.setHoLot(txtHoLot2.getText());
                 chk.setTen(txtTen2.getText());
