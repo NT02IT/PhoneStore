@@ -9,9 +9,10 @@ import DAO.SanPhamDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import Connection.MyConnection;
 import DTO.CT_SanPham;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -21,7 +22,7 @@ public class SanPhamBUS {
     private ArrayList<SanPham> list;    
     private int soLuong = 0;
     private SanPhamDAO spDAO;
-    
+   
     public SanPhamBUS() throws IOException, ClassNotFoundException, SQLException{
         MyConnection myConn = new MyConnection();
         spDAO = new SanPhamDAO();
@@ -124,11 +125,10 @@ public class SanPhamBUS {
         }
         return null;
     }
-    
     public int TongTien(ArrayList<CT_SanPham> listCT){
         int sum = 0;
         for (CT_SanPham ctsp : listCT){
-            String maSP = ctsp.getMaSP();
+            String maSP = ctsp.getMaSP().trim();
             SanPham sp = getSanPhamByID(maSP);
             int donGia = sp.getDonGia();
             int SL = sp.getSLKhachChon();

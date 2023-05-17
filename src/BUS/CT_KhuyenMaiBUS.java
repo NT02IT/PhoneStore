@@ -82,7 +82,7 @@ public class CT_KhuyenMaiBUS{
         CT_KhuyenMai result = null;
         String tempMaKM;
         for(CT_KhuyenMai ctkm : list){
-            tempMaKM = ctkm.getMaKM();
+            tempMaKM = ctkm.getMaKM().trim();
             if (tempMaKM.equals(maKM)){
                 result = ctkm;  
                 break;

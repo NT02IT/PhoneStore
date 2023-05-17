@@ -13,16 +13,23 @@ import DTO.CT_KhuyenMai;
 import DTO.CT_SanPham;
 import DTO.SanPham;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
+import BUS.ExportBill;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -34,6 +41,9 @@ public class MuaHang extends javax.swing.JFrame {
     int donGia, soLuongGUI, tongTien, phanTramGiam, giamGia, thanhTien;
     int STT =0;
     Date today;
+    private int doanhThu;
+    private String filename;
+    Properties props = null;
     
     CT_SanPham ctsp;
     SanPham spDangChon;
@@ -64,6 +74,11 @@ public class MuaHang extends javax.swing.JFrame {
         
         listGioHang = new ArrayList<>(); 
         gioHangModel = (DefaultTableModel) tbGioHang.getModel();
+        
+        this.filename = "src\\DTO\\MaxID.txt";
+        this.props = new Properties();
+        props.load(new FileReader(filename));
+        doanhThu = Integer.parseInt(props.getProperty("doanhthu"));
     }
     
     public void showSanPham(){
@@ -194,6 +209,7 @@ public class MuaHang extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         txtSoLuongThem = new javax.swing.JLabel();
         btnSub = new javax.swing.JButton();
+        btnThanhToan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PhoneStore: Mua hàng");
@@ -244,6 +260,11 @@ public class MuaHang extends javax.swing.JFrame {
         btnPhanQuyen.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPhanQuyen.setForeground(new java.awt.Color(75, 75, 75));
         btnPhanQuyen.setText("Phân quyền");
+        btnPhanQuyen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPhanQuyenActionPerformed(evt);
+            }
+        });
 
         btnDangXuat.setBackground(new java.awt.Color(50, 50, 50));
         btnDangXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -583,6 +604,19 @@ public class MuaHang extends javax.swing.JFrame {
                     .addComponent(btnSub, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
+        btnThanhToan.setBackground(new java.awt.Color(60, 90, 180));
+        btnThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnThanhToan.setForeground(new java.awt.Color(240, 240, 240));
+        btnThanhToan.setText("Thanh toán");
+        btnThanhToan.setBorderPainted(false);
+        btnThanhToan.setFocusPainted(false);
+        btnThanhToan.setFocusable(false);
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
         pnContent.setLayout(pnContentLayout);
         pnContentLayout.setHorizontalGroup(
@@ -616,7 +650,8 @@ public class MuaHang extends javax.swing.JFrame {
                                                 .addGroup(pnContentLayout.createSequentialGroup()
                                                     .addComponent(lblThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                    .addComponent(txtThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(pnContentLayout.createSequentialGroup()
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(6, 6, 6))))
@@ -679,7 +714,9 @@ public class MuaHang extends javax.swing.JFrame {
                     .addGroup(pnContentLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMGG, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(78, 78, 78))
+                .addGap(18, 18, 18)
+                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pbBody.setViewportView(pnContent);
@@ -869,6 +906,47 @@ public class MuaHang extends javax.swing.JFrame {
         this.dispose(); // Ẩn form hiện tại (MuaHang)
     }//GEN-LAST:event_btnThongKeActionPerformed
 
+    private void btnPhanQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanQuyenActionPerformed
+        PhanQuyen phanQuyenForm = null; 
+        try {
+            phanQuyenForm = new PhanQuyen();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        phanQuyenForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (MuaHang)
+    }//GEN-LAST:event_btnPhanQuyenActionPerformed
+
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        try {                                             
+            doanhThu += thanhTien;
+            try (FileInputStream inputStream = new FileInputStream(new File(filename))) {
+                props.load(inputStream);
+                // Set new value for the property
+                props.setProperty("doanhthu", Integer.toString(doanhThu));
+                
+                try (FileOutputStream outputStream = new FileOutputStream(new File(filename))) {
+                    props.store(outputStream, null);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+
+            ExportBill exp = new ExportBill();
+            boolean save = exp.save_pdf(tbGioHang);
+            if(save){
+                System.out.println("Lưu thành công");
+            } else System.out.println("lưu thất bại");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MuaHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnThanhToanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -927,6 +1005,7 @@ public class MuaHang extends javax.swing.JFrame {
     private javax.swing.JButton btnPhanQuyen;
     private javax.swing.JButton btnSanPham;
     private javax.swing.JButton btnSub;
+    private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnThemVaoGio;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JButton btnXoaSP;

@@ -6,9 +6,16 @@ package BUS;
 
 import DAO.KhachHangDAO;
 import DTO.KhachHang;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 /**
  *
@@ -93,7 +100,7 @@ public class KhachHangBUS{
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         String tempUsername;
         for(int i = 0; i < list.size(); i++){
-            tempUsername = list.get(i).getUsername();
+            tempUsername = list.get(i).getUsername().trim();
             if (tempUsername.equals(username)) {
                 index = i;
                 break;
@@ -106,7 +113,7 @@ public class KhachHangBUS{
         KhachHang result = null;
         String tempUsername;
         for(KhachHang kh : list){
-            tempUsername = kh.getUsername();
+            tempUsername = kh.getUsername().trim();
             if (tempUsername.equals(username)){
                 result = kh;  
                 break;
@@ -125,5 +132,68 @@ public class KhachHangBUS{
         if (pwdConfirm.equals(data.getPassword()))
             return true;
         return false;
+    }
+    
+    //Hàm nếu lưu file thành công trả về true
+    public boolean export_excel(){
+        JFileChooser file = new JFileChooser();
+        file.setDialogTitle("Lưu file excel");
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("File Excel (*.xlsx)", "xlsx");
+        file.setFileFilter(filter);
+        
+        int userSelection = file.showSaveDialog(null);
+        
+        if(userSelection == JFileChooser.APPROVE_OPTION){
+            String filePath = file.getSelectedFile().getAbsolutePath();
+            System.out.println(filePath);
+            if(!filePath.toLowerCase().endsWith(".xlsx")){
+                filePath += ".xlsx";
+            }
+            saveToFile(filePath);
+            return true;
+        } else return false;
+    }
+    
+    //Hàm thực hiện đưa dữ liệu vào file và tạo file
+    private void saveToFile(String filePath){
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            // Tạo một trang trong workbook
+            XSSFSheet sheet = workbook.createSheet("Danh sách sản phẩm");
+
+            // Đặt tiêu đề cho các cột
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Mã khách hàng");
+            headerRow.createCell(1).setCellValue("Họ lót");
+            headerRow.createCell(2).setCellValue("Tên");
+            headerRow.createCell(3).setCellValue("Địa chỉ");
+            headerRow.createCell(4).setCellValue("Số điện thoại");
+            headerRow.createCell(5).setCellValue("Username");
+            headerRow.createCell(6).setCellValue("Password");
+
+            // Ghi dữ liệu sản phẩm vào từng dòng
+            int rowNum = 1;
+            for (KhachHang kh : list) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(kh.getMaKH());
+                row.createCell(1).setCellValue(kh.getHoLot());
+                row.createCell(2).setCellValue(kh.getTen());
+                row.createCell(3).setCellValue(kh.getDiaChi());
+                row.createCell(4).setCellValue(kh.getSDT());
+                row.createCell(5).setCellValue(kh.getUsername());
+                row.createCell(6).setCellValue(kh.getPassword());
+            }
+
+            // Tạo file và ghi dữ liệu ra file
+            try (FileOutputStream fileOut = new FileOutputStream(new File(filePath.toString()))) {
+                System.out.println(fileOut);
+                workbook.write(fileOut);
+                workbook.close();
+                fileOut.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

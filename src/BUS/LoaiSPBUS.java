@@ -86,7 +86,7 @@ public class LoaiSPBUS {
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         String tempTenLoai;
         for(int i = 0; i < list.size(); i++){
-            tempTenLoai = list.get(i).getTenLoai();
+            tempTenLoai = list.get(i).getTenLoai().trim();
             if (tempTenLoai.equals(tenLoai)) {
                 index = i;
                 break;
