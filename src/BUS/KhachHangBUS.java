@@ -88,7 +88,7 @@ public class KhachHangBUS{
     public int searchIndexByID(String ID) { // ID = MaKH
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getMaKH().equals(ID)) {
+            if (list.get(i).getMaKH().trim().equals(ID)) {
                 index = i;
                 break;
             }
@@ -114,7 +114,7 @@ public class KhachHangBUS{
         String tempUsername;
         for(KhachHang kh : list){
             tempUsername = kh.getUsername().trim();
-            if (tempUsername.equals(username)){
+            if (tempUsername.equals(username.trim())){
                 result = kh;  
                 break;
             }

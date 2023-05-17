@@ -1,10 +1,10 @@
-#Wed May 17 09:05:17 ICT 2023
-doanhthu=2235
-hangsx=270
+#Wed May 17 13:51:43 ICT 2023
+doanhthu=176962613
+hangsx=289
 hoadon=0
-khachhang=528
-loaisp=233
+khachhang=583
+loaisp=252
 nhacungcap=0
-nhanvien=63
+nhanvien=113
 phieunhap=0
-sanpham=443
+sanpham=502

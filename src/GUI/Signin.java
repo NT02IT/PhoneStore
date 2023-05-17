@@ -192,8 +192,10 @@ public class Signin extends javax.swing.JFrame {
         nv.setPassword(txtPass.getText());
         NhanVien nvSearch = nvBUS.searchObjectByUsername(nv.getUsername());    
         
+        System.out.println(khSearch.getPassword());
+        
         if(khSearch != null){
-            if(kh.getPassword().equals(khSearch.getPassword())){
+            if(kh.getPassword().trim().equals(khSearch.getPassword().trim())){
                 MuaHang muaHangForm = null; 
                 try {
                     muaHangForm = new MuaHang();
@@ -210,7 +212,7 @@ public class Signin extends javax.swing.JFrame {
             else JOptionPane.showMessageDialog(null,"Sai mật khẩu!", "Đăng nhập thất bại",JOptionPane.INFORMATION_MESSAGE);
         }         
         else if(nvSearch != null){
-            if(nv.getPassword().equals(nvSearch.getPassword())){
+            if(nv.getPassword().trim().equals(nvSearch.getPassword().trim())){
                 MuaHang muaHangForm = null; 
                 try {
                     muaHangForm = new MuaHang();

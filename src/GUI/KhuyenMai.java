@@ -62,6 +62,8 @@ public class KhuyenMai extends javax.swing.JFrame {
     }
     
     public void initCTKMChenVao(){
+        pos = this.tbCTKM.getSelectedRow();
+        ctkmChenVao = listKM.get(pos);
         maKM = txtMaKM.getText();
         tenKM = txtTenKM.getText();
         ngayBD = txtNgayBD.getText();

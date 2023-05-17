@@ -100,8 +100,6 @@ public class ThongKe extends javax.swing.JFrame {
         txtDoanhThu = new javax.swing.JLabel();
         btnXuatDSKH = new javax.swing.JButton();
         btnXuatDSNV = new javax.swing.JButton();
-        btnXuatDSSP = new javax.swing.JButton();
-        btnXuatDSHD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PhoneStore: Khuyến mãi");
@@ -377,26 +375,6 @@ public class ThongKe extends javax.swing.JFrame {
             }
         });
 
-        btnXuatDSSP.setBackground(new java.awt.Color(1, 166, 98));
-        btnXuatDSSP.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnXuatDSSP.setForeground(new java.awt.Color(191, 233, 221));
-        btnXuatDSSP.setText("Xuất danh sách sản phẩm");
-        btnXuatDSSP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXuatDSSPActionPerformed(evt);
-            }
-        });
-
-        btnXuatDSHD.setBackground(new java.awt.Color(239, 57, 108));
-        btnXuatDSHD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnXuatDSHD.setForeground(new java.awt.Color(251, 198, 208));
-        btnXuatDSHD.setText("Xuất danh sách hóa đơn");
-        btnXuatDSHD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXuatDSHDActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
         pnContent.setLayout(pnContentLayout);
         pnContentLayout.setHorizontalGroup(
@@ -411,14 +389,12 @@ public class ThongKe extends javax.swing.JFrame {
                         .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnXuatDSKH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnXuatDSSP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnXuatDSKH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnXuatDSNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnXuatDSHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         pnContentLayout.setVerticalGroup(
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,11 +414,7 @@ public class ThongKe extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnXuatDSSP, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXuatDSHD, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -503,20 +475,37 @@ public class ThongKe extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     private void btnXuatDSKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatDSKHActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            KhachHangBUS bus = new KhachHangBUS();
+            if(!bus.export_excel()){
+                JOptionPane.showMessageDialog(null, "Xuất danh sách khách hàng thất bại.");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnXuatDSKHActionPerformed
 
     private void btnXuatDSNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatDSNVActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            NhanVienBUS bus = new NhanVienBUS();
+            if(!bus.export_excel()){
+                JOptionPane.showMessageDialog(null, "Xuất danh sách khách hàng thất bại.");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnXuatDSNVActionPerformed
-
-    private void btnXuatDSSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatDSSPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXuatDSSPActionPerformed
-
-    private void btnXuatDSHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatDSHDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXuatDSHDActionPerformed
 
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
         // TODO add your handling code here:
@@ -618,10 +607,8 @@ public class ThongKe extends javax.swing.JFrame {
     private javax.swing.JButton btnPhanQuyen;
     private javax.swing.JButton btnSanPham;
     private javax.swing.JButton btnThongKe;
-    private javax.swing.JButton btnXuatDSHD;
     private javax.swing.JButton btnXuatDSKH;
     private javax.swing.JButton btnXuatDSNV;
-    private javax.swing.JButton btnXuatDSSP;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

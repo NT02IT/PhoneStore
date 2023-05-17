@@ -39,7 +39,7 @@ public class ExportBill {
     
     //Hàm lưu file hóa đơn pdf
     //Đầu vào là bảng giỏ hàng
-    public boolean save_pdf(JTable giohang) throws FileNotFoundException{
+    public boolean save_pdf(JTable giohang, String tt) throws FileNotFoundException{
         JFileChooser file = new JFileChooser();
         file.setDialogTitle("Save PDF file");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF file", "pdf");
@@ -54,26 +54,18 @@ public class ExportBill {
             if(!filePath.toLowerCase().endsWith(".pdf")){
                 filePath += ".pdf";
             }
-            create_pdf(filePath, giohang);
+            create_pdf(filePath, giohang, tt);
             return true;
         } else return false;
     }
     
     //Hàm thực hiện tạo và lưu file pdf
-    public void create_pdf(String filePath, JTable giohang) throws FileNotFoundException{
+    public void create_pdf(String filePath, JTable giohang, String tt) throws FileNotFoundException{
         if (filePath != null) {
             try {
                 
                 int rowCount = giohang.getRowCount();
                 int columnCount = giohang.getColumnCount();
-                for (int row = 0; row < rowCount; row++) {
-                    for (int column = 0; column < columnCount; column++) {
-                        Object value = giohang.getValueAt(row, column);
-                        // Thực hiện xử lý với giá trị của từng ô trong dòng
-                        System.out.print(value + "\t");
-                    }
-                    System.out.println(); // Xuống dòng sau khi xuất dữ liệu từng dòng
-                }   
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(filePath));
                 document.open();
@@ -98,23 +90,28 @@ public class ExportBill {
                 }
                 
                 //Đổ dữ liệu vào bảng
+                /*
                 for(int i=1; i <= row; i++){
                     // Đổ dữ liệu cho từng ô trong hàng
                     for(int j=1; j <= column; j++){
                         Object value = giohang.getValueAt(row-1, column-1);
-                        String formattedValue = null;
-                        
-                        if(value instanceof String){
-                            formattedValue = value.toString();
-                        } else if(value instanceof Integer){
-                            formattedValue = String.valueOf(value);
-                        }
-                        System.out.println(formattedValue);
-                        table.addCell(new Paragraph(formattedValue));
+                        System.out.println(value);
+                        table.addCell(new Paragraph(value.toString()));
                     }
-                }
+                } */
+                System.out.println("Table giohang");
+                for (row = 0; row < rowCount; row++) {
+                    for (column = 0; column < columnCount; column++) {
+                        Object value = giohang.getValueAt(row, column);
+                        table.addCell(new Paragraph(value.toString()));
+                    }
+                    System.out.println(); // Xuống dòng sau khi xuất dữ liệu từng dòng
+                } 
+                
+                
                 
                 document.add(table);
+                document.add(new Paragraph("Thanh tien: "+tt));
                 Date curDate = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 String formattedDate = dateFormat.format(curDate);
