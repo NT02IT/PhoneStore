@@ -1,10 +1,10 @@
-#Wed May 17 11:52:00 ICT 2023
+#Wed May 17 11:56:39 ICT 2023
 doanhthu=1000000
-hangsx=10
+hangsx=11
 hoadon=0
-khachhang=17
-loaisp=15
+khachhang=18
+loaisp=16
 nhacungcap=10
-nhanvien=17
+nhanvien=18
 phieunhap=0
-sanpham=12
+sanpham=14
