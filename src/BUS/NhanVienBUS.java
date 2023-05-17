@@ -46,7 +46,7 @@ public class NhanVienBUS{
     }
     
     public boolean delete(NhanVien data){
-        String maNV = data.getMaNV();
+        String maNV = data.getMaNV().trim();
         for (NhanVien nv : list){
             if(nv.getMaNV().equals(maNV)){
                 if(nvDAO.delete(data)){
@@ -59,7 +59,7 @@ public class NhanVienBUS{
     }
     
     public boolean update(NhanVien data){
-        String maNV = data.getMaNV();
+        String maNV = data.getMaNV().trim();
         for (NhanVien nv : list){
             if(nv.getMaNV().equals(maNV)){
                 if(nvDAO.update(data)){
@@ -95,7 +95,7 @@ public class NhanVienBUS{
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         String tempUsername;
         for(int i = 0; i < list.size(); i++){
-            tempUsername = list.get(i).getUsername();
+            tempUsername = list.get(i).getUsername().trim();
             if (tempUsername.equals(username)) {
                 index = i;
                 break;
@@ -108,7 +108,7 @@ public class NhanVienBUS{
         NhanVien result = null;
         String tempUsername;
         for(NhanVien nv : list){
-            tempUsername = nv.getUsername();
+            tempUsername = nv.getUsername().trim();
             if (tempUsername.equals(username)){
                 result = nv;  
                 break;

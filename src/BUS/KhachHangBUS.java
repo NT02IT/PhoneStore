@@ -51,7 +51,7 @@ public class KhachHangBUS{
     }
     
     public boolean delete(KhachHang data){
-        String maKH = data.getMaKH();
+        String maKH = data.getMaKH().trim();
         for (KhachHang kh : list){
             if(kh.getMaKH().equals(maKH)){
                 if(khDAO.delete(data)){
@@ -64,7 +64,7 @@ public class KhachHangBUS{
     }
     
     public boolean update(KhachHang data){
-        String maKH = data.getMaKH();
+        String maKH = data.getMaKH().trim();
         for (KhachHang kh : list){
             if(kh.getMaKH().equals(maKH)){
                 if(khDAO.update(data)){
@@ -100,7 +100,7 @@ public class KhachHangBUS{
         int index = -1; // giá trị trả về mặc định nếu không tìm thấy
         String tempUsername;
         for(int i = 0; i < list.size(); i++){
-            tempUsername = list.get(i).getUsername();
+            tempUsername = list.get(i).getUsername().trim();
             if (tempUsername.equals(username)) {
                 index = i;
                 break;
@@ -113,7 +113,7 @@ public class KhachHangBUS{
         KhachHang result = null;
         String tempUsername;
         for(KhachHang kh : list){
-            tempUsername = kh.getUsername();
+            tempUsername = kh.getUsername().trim();
             if (tempUsername.equals(username)){
                 result = kh;  
                 break;

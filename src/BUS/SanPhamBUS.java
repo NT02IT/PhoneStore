@@ -46,7 +46,7 @@ public class SanPhamBUS {
     }
     
     public boolean delete(SanPham data){
-        String maSP = data.getMaSP();
+        String maSP = data.getMaSP().trim();
         for (SanPham sp : list){
             if(sp.getMaSP().equals(maSP)){
                 if(spDAO.delete(data)){
@@ -59,7 +59,7 @@ public class SanPhamBUS {
     }
 
     public boolean update(SanPham data){
-        String maSP = data.getMaSP();
+        String maSP = data.getMaSP().trim();
         for (SanPham sp : list){
             if(sp.getMaSP().equals(maSP)){
                 if(spDAO.update(data)){
@@ -128,7 +128,7 @@ public class SanPhamBUS {
     public int TongTien(ArrayList<CT_SanPham> listCT){
         int sum = 0;
         for (CT_SanPham ctsp : listCT){
-            String maSP = ctsp.getMaSP();
+            String maSP = ctsp.getMaSP().trim();
             SanPham sp = getSanPhamByID(maSP);
             int donGia = sp.getDonGia();
             int SL = sp.getSLKhachChon();

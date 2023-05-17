@@ -29,13 +29,12 @@ import javax.swing.JTable;
  * @author duong
  */
 public class ExportBill {
-    ArrayList<SanPham> sp = new ArrayList<>();
-    ArrayList<CT_SanPham> ctsp = new ArrayList<>();
+    //ArrayList<SanPham> sp = new ArrayList<>();
+    //ArrayList<CT_SanPham> ctsp = new ArrayList<>();
     
 
-    public ExportBill(ArrayList<SanPham> sanpham, ArrayList<CT_SanPham> ct_sanpham){
-        this.sp = sanpham;
-        this.ctsp = ct_sanpham;
+    public ExportBill(){
+
     }
     
     //Hàm lưu file hóa đơn pdf
@@ -45,6 +44,8 @@ public class ExportBill {
         file.setDialogTitle("Save PDF file");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF file", "pdf");
         file.setFileFilter(filter);
+        
+        
         
         int userSelection = file.showSaveDialog(null);
         if(userSelection == JFileChooser.APPROVE_OPTION){
@@ -62,6 +63,17 @@ public class ExportBill {
     public void create_pdf(String filePath, JTable giohang) throws FileNotFoundException{
         if (filePath != null) {
             try {
+                
+                int rowCount = giohang.getRowCount();
+                int columnCount = giohang.getColumnCount();
+                for (int row = 0; row < rowCount; row++) {
+                    for (int column = 0; column < columnCount; column++) {
+                        Object value = giohang.getValueAt(row, column);
+                        // Thực hiện xử lý với giá trị của từng ô trong dòng
+                        System.out.print(value + "\t");
+                    }
+                    System.out.println(); // Xuống dòng sau khi xuất dữ liệu từng dòng
+                }   
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(filePath));
                 document.open();
@@ -70,7 +82,7 @@ public class ExportBill {
                 int column = giohang.getColumnCount();//cột
                 
                 //Tiêu đề cột
-                String[] columnHeaders = { "Tên sp", "Nhà sản xuất", "Đơn giá", "Số lượng"};
+                String[] columnHeaders = { "STT", "Ten san pham", "Nha san xuat", "Don gia", "So luong"};
                 
                 PdfPTable table = new PdfPTable(column);
                 
@@ -89,10 +101,20 @@ public class ExportBill {
                 for(int i=1; i <= row; i++){
                     // Đổ dữ liệu cho từng ô trong hàng
                     for(int j=1; j <= column; j++){
-                        Object value = giohang.getValueAt(row, column);
-                        table.addCell(new Paragraph(value.toString()));
+                        Object value = giohang.getValueAt(row-1, column-1);
+                        String formattedValue = null;
+                        
+                        if(value instanceof String){
+                            formattedValue = value.toString();
+                        } else if(value instanceof Integer){
+                            formattedValue = String.valueOf(value);
+                        }
+                        System.out.println(formattedValue);
+                        table.addCell(new Paragraph(formattedValue));
                     }
                 }
+                
+                document.add(table);
                 Date curDate = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 String formattedDate = dateFormat.format(curDate);

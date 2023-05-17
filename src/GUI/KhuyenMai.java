@@ -184,6 +184,11 @@ public class KhuyenMai extends javax.swing.JFrame {
         btnPhanQuyen.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPhanQuyen.setForeground(new java.awt.Color(75, 75, 75));
         btnPhanQuyen.setText("Phân quyền");
+        btnPhanQuyen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPhanQuyenActionPerformed(evt);
+            }
+        });
 
         btnDangXuat.setBackground(new java.awt.Color(50, 50, 50));
         btnDangXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -595,8 +600,26 @@ public class KhuyenMai extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+        CT_KhuyenMai ctkmTemp = ctkmBUS.searchObjectByID(ctkmLayRa.getMaKM());
+        ctkmBUS.delete(ctkmTemp);
+        khuyenMaiModel.removeRow(pos);
+        
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnPhanQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanQuyenActionPerformed
+        PhanQuyen phanQuyenForm = null; 
+        try {
+            phanQuyenForm = new PhanQuyen();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        phanQuyenForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (MuaHang)
+    }//GEN-LAST:event_btnPhanQuyenActionPerformed
 
     /**
      * @param args the command line arguments

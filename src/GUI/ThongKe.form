@@ -41,17 +41,14 @@
               <Component id="pnNav" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="pnContent" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <EmptySpace pref="71" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="pnNav" max="32767" attributes="0"/>
-          <Group type="102" attributes="0">
-              <Component id="pnContent" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="pnContent" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -107,7 +104,7 @@
                   <Component id="btnKhuyenMai" min="-2" pref="39" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnPhanQuyen" min="-2" pref="39" max="-2" attributes="0"/>
-                  <EmptySpace pref="177" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="btnDangXuat" min="-2" pref="39" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               </Group>
@@ -174,6 +171,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="S&#x1ea3;n Ph&#x1ea9;m"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSanPhamActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnKhuyenMai">
           <Properties>
@@ -205,6 +205,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Ph&#xe2;n quy&#x1ec1;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPhanQuyenActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnDangXuat">
           <Properties>
@@ -235,24 +238,26 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblSanPham" min="-2" pref="157" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblSanPham" min="-2" pref="157" max="-2" attributes="0"/>
+                          <EmptySpace pref="401" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
                               <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnDangXuat1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="btnDangXuat3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnXuatDSKH" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnXuatDSSP" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel2" max="32767" attributes="0"/>
+                              <Component id="btnXuatDSNV" max="32767" attributes="0"/>
                               <Component id="jPanel4" max="32767" attributes="0"/>
-                              <Component id="btnDangXuat2" max="32767" attributes="0"/>
-                              <Component id="btnDangXuat4" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnXuatDSHD" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="61" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -261,7 +266,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="lblSanPham" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jPanel2" max="32767" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -270,8 +275,8 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnDangXuat1" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="btnDangXuat2" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                              <Component id="btnXuatDSKH" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                              <Component id="btnXuatDSNV" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
@@ -280,8 +285,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnDangXuat3" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
-                      <Component id="btnDangXuat4" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnXuatDSSP" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnXuatDSHD" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="46" max="32767" attributes="0"/>
               </Group>
@@ -540,7 +545,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnDangXuat1">
+        <Component class="javax.swing.JButton" name="btnXuatDSKH">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="b1" green="63" red="0" type="rgb"/>
@@ -554,10 +559,10 @@
             <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t danh s&#xe1;ch kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangXuat1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXuatDSKHActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDangXuat2">
+        <Component class="javax.swing.JButton" name="btnXuatDSNV">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="1c" green="9d" red="fa" type="rgb"/>
@@ -571,10 +576,10 @@
             <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t danh s&#xe1;ch nh&#xe2;n vi&#xea;n"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangXuat2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXuatDSNVActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDangXuat3">
+        <Component class="javax.swing.JButton" name="btnXuatDSSP">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="62" green="a6" red="1" type="rgb"/>
@@ -588,10 +593,10 @@
             <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t danh s&#xe1;ch s&#x1ea3;n ph&#x1ea9;m"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangXuat3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXuatDSSPActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDangXuat4">
+        <Component class="javax.swing.JButton" name="btnXuatDSHD">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="6c" green="39" red="ef" type="rgb"/>
@@ -605,7 +610,7 @@
             <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t danh s&#xe1;ch h&#xf3;a &#x111;&#x1a1;n"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangXuat4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXuatDSHDActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
