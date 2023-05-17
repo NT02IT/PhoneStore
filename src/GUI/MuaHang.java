@@ -938,7 +938,8 @@ public class MuaHang extends javax.swing.JFrame {
             
 
             ExportBill exp = new ExportBill();
-            boolean save = exp.save_pdf(tbGioHang);
+            String tt = txtThanhTien.getText();
+            boolean save = exp.save_pdf(tbGioHang, tt);
             if(save){
                 System.out.println("Lưu thành công");
             } else System.out.println("lưu thất bại");
