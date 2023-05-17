@@ -36,7 +36,7 @@ public class CT_SanPhamBUS {
     }
 
     public int getSoLuong() {
-        soLuong = CT_SanPhamDAO.getSoLuong();
+        soLuong = list.size();
         return soLuong;
     }
 

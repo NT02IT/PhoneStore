@@ -36,7 +36,7 @@ public class KhachHangBUS{
     }
 
     public int getSoLuong() {
-        soLuong = KhachHangDAO.getSoLuong();
+        soLuong = list.size();
         return soLuong;
     }
     

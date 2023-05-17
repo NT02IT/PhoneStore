@@ -31,7 +31,7 @@ public class HangSxBUS {
     }
 
     public int getSoLuong() {
-        soLuong = HangSxDAO.getSoLuong();
+        soLuong = list.size();
         return soLuong;
     }
 

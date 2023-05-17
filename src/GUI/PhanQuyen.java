@@ -845,6 +845,21 @@ public class PhanQuyen extends javax.swing.JFrame {
         this.dispose(); // Ẩn form hiện tại (MuaHang)
     }//GEN-LAST:event_btnThongKeActionPerformed
 
+    private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        SanPham sanPhamForm = null; 
+        try {
+            sanPhamForm = new SanPham();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sanPhamForm.setVisible(true); // Hiển thị form "Signin"
+        this.dispose(); // Ẩn form hiện tại (MuaHang)
+    } 
+    
     private void tbCTKM1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTKM1MouseClicked
         try {
             initClick_KH();
