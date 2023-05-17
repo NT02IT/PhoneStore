@@ -39,7 +39,7 @@ public class NhanVienBUS{
     }
 
     public int getSoLuong() {
-        soLuong = NhanVienDAO.getSoLuong();
+        soLuong = list.size();
         return soLuong;
     }
     

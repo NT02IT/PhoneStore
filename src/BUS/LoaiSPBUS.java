@@ -31,7 +31,7 @@ public class LoaiSPBUS {
     }
 
     public int getSoLuong() {
-        soLuong = LoaiSanPhamDAO.getSoLuong();
+        soLuong = list.size();
         return soLuong;
     }
 

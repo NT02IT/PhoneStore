@@ -849,7 +849,7 @@ public class PhanQuyen extends javax.swing.JFrame {
         thongKeForm.setVisible(true); // Hiển thị form "Signin"
         this.dispose(); // Ẩn form hiện tại (MuaHang)
     }//GEN-LAST:event_btnThongKeActionPerformed
-
+    
     private void tbCTKM1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCTKM1MouseClicked
         try {
             initClick_KH();

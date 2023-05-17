@@ -29,7 +29,7 @@ public class CT_KhuyenMaiBUS{
     }
 
     public int getSoLuong() {
-        soLuong = CT_KhuyenMaiDAO.getSoLuong();
+        soLuong = list.size();
         return soLuong;
     }
     
